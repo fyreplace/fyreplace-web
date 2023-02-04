@@ -6,7 +6,7 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: process.env.DOCKER ? nodeAdapter() : autoAdapter()
+    adapter: process.env.DOCKER ? nodeAdapter({ precompress: true }) : autoAdapter()
   }
 };
 

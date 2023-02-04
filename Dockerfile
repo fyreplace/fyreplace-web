@@ -12,3 +12,5 @@ RUN npm run build
 RUN npm ci --omit=dev
 
 COPY . .
+
+CMD ["node", "build"]
