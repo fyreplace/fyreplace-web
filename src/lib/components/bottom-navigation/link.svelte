@@ -15,8 +15,9 @@
   .link {
     @include flex(row, $justify: center, $align: center);
     width: 100%;
-    height: 3em;
+    padding: var(--gap-small) 0;
     outline: none;
+    text-decoration: none;
 
     &.disabled {
       pointer-events: none;

@@ -22,6 +22,8 @@
 
   :global(:root) {
     --gap: 1em;
+    --gap-small: 0.5em;
+    --gap-tiny: 0.25em;
     --border-radius: 0.5em;
     --app-max-width: unset;
 

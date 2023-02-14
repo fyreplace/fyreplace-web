@@ -9,11 +9,36 @@
 </script>
 
 <nav class="navigation">
-  <Link href="/feed"><FeedIcon /></Link>
-  <Link href="/notifications" disabled={!$isAuthenticated}><NotificationsIcon /></Link>
-  <Link href="/archive" disabled={!$isAuthenticated}><ArchiveIcon /></Link>
-  <Link href="/drafts" disabled={!$isAuthenticated}><DraftsIcon /></Link>
-  <Link href="/settings"><SettingsIcon /></Link>
+  <Link href="/feed">
+    <span class="link">
+      <FeedIcon />
+      <span>Feed</span>
+    </span>
+  </Link>
+  <Link href="/notifications" disabled={!$isAuthenticated}>
+    <span class="link">
+      <NotificationsIcon />
+      <span>Notifications</span>
+    </span>
+  </Link>
+  <Link href="/archive" disabled={!$isAuthenticated}>
+    <span class="link">
+      <ArchiveIcon />
+      <span>Archive</span>
+    </span>
+  </Link>
+  <Link href="/drafts" disabled={!$isAuthenticated}>
+    <span class="link">
+      <DraftsIcon />
+      <span>Drafts</span>
+    </span>
+  </Link>
+  <Link href="/settings">
+    <span class="link">
+      <SettingsIcon />
+      <span>Settings</span>
+    </span>
+  </Link>
 </nav>
 
 <style lang="scss">
@@ -27,5 +52,12 @@
     :global(.icon) {
       stroke: var(--color-text);
     }
+  }
+
+  .link {
+    @include flex(column, center, center);
+    gap: var(--gap-tiny);
+    color: var(--color-text);
+    font-size: 0.75em;
   }
 </style>
