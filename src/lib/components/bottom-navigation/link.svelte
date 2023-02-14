@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { setClassActiveOnHref } from '$lib/actions/set-class-active-on-href';
+  import { setClassOnHref } from '$lib/actions/set-class-on-href';
 
   export let href: string;
   export let disabled = false;
 </script>
 
-<a {href} class="link" class:disabled use:setClassActiveOnHref={href}><slot /></a>
+<a {href} class="link" class:disabled use:setClassOnHref={{ href, className: 'active' }}>
+  <slot />
+</a>
 
 <style lang="scss">
   @import '../../style/global';
