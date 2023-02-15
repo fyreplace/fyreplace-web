@@ -1,4 +1,18 @@
 import { env } from '$env/dynamic/public';
+import iconAt48x48 from '$lib/assets/icon-48x48.png';
+import iconAt72x72 from '$lib/assets/icon-72x72.png';
+import iconAt96x96 from '$lib/assets/icon-96x96.png';
+import iconAt128x128 from '$lib/assets/icon-128x128.png';
+import iconAt192x192 from '$lib/assets/icon-192x192.png';
+import iconAt256x256 from '$lib/assets/icon-256x256.png';
+import iconAt512x512 from '$lib/assets/icon-512x512.png';
+import iconMaskableAt48x48 from '$lib/assets/icon-maskable-48x48.png';
+import iconMaskableAt72x72 from '$lib/assets/icon-maskable-72x72.png';
+import iconMaskableAt96x96 from '$lib/assets/icon-maskable-96x96.png';
+import iconMaskableAt128x128 from '$lib/assets/icon-maskable-128x128.png';
+import iconMaskableAt192x192 from '$lib/assets/icon-maskable-192x192.png';
+import iconMaskableAt256x256 from '$lib/assets/icon-maskable-256x256.png';
+import iconMaskableAt512x512 from '$lib/assets/icon-maskable-512x512.png';
 
 interface RelatedApplication {
   platform: string;
@@ -16,78 +30,78 @@ const manifest = {
   start_url: '/feed',
   icons: [
     {
-      src: 'icon-48x48.png',
+      src: iconAt48x48,
       type: 'image/png',
       sizes: '48x48'
     },
     {
-      src: 'icon-72x72.png',
+      src: iconAt72x72,
       type: 'image/png',
       sizes: '72x72'
     },
     {
-      src: 'icon-96x96.png',
+      src: iconAt96x96,
       type: 'image/png',
       sizes: '96x96'
     },
     {
-      src: 'icon-128x128.png',
+      src: iconAt128x128,
       type: 'image/png',
       sizes: '128x128'
     },
     {
-      src: 'icon-192x192.png',
+      src: iconAt192x192,
       type: 'image/png',
       sizes: '192x192'
     },
     {
-      src: 'icon-256x256.png',
+      src: iconAt256x256,
       type: 'image/png',
       sizes: '256x256'
     },
     {
-      src: 'icon-512x512.png',
+      src: iconAt512x512,
       type: 'image/png',
       sizes: '512x512'
     },
     {
-      src: 'icon-maskable-48x48.png',
+      src: iconMaskableAt48x48,
       type: 'image/png',
       sizes: '48x48',
       purpose: 'maskable'
     },
     {
-      src: 'icon-maskable-72x72.png',
+      src: iconMaskableAt72x72,
       type: 'image/png',
       sizes: '72x72',
       purpose: 'maskable'
     },
     {
-      src: 'icon-maskable-96x96.png',
+      src: iconMaskableAt96x96,
       type: 'image/png',
       sizes: '96x96',
       purpose: 'maskable'
     },
     {
-      src: 'icon-maskable-128x128.png',
+      src: iconMaskableAt128x128,
       type: 'image/png',
       sizes: '128x128',
       purpose: 'maskable'
     },
     {
-      src: 'icon-maskable-192x192.png',
+      src: iconMaskableAt192x192,
       type: 'image/png',
       sizes: '192x192',
       purpose: 'maskable'
     },
     {
-      src: 'icon-maskable-256x256.png',
+      src: iconMaskableAt256x256,
       type: 'image/png',
       sizes: '256x256',
       purpose: 'maskable'
     },
     {
-      src: 'icon-maskable-512x512.png',
+      src: iconMaskableAt512x512,
       type: 'image/png',
       sizes: '512x512',
       purpose: 'maskable'
