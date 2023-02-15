@@ -19,7 +19,7 @@
     sizes="180x180"
     href={faviconAppleTouch}
   />
-  <link rel="mask-icon" type="image/svg" href={faviconSafari} color="red" />
+  <link rel="mask-icon" type="image/svg" href={faviconSafari} color="coral" />
 </svelte:head>
 
 <div class="layout">
