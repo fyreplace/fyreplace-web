@@ -4,8 +4,8 @@
   import faviconAt32x32 from '$lib/assets/favicon-32x32.png';
   import faviconAppleTouch from '$lib/assets/apple-touch-icon.png';
   import faviconSafari from '$lib/assets/safari-pinned-tab.svg';
-  import TopNavigation from '$lib/components/top-navigation.svelte';
-  import BottomNavigation from '$lib/components/bottom-navigation.svelte';
+  import TopNavigation from './top-navigation.svelte';
+  import BottomNavigation from './bottom-navigation.svelte';
 </script>
 
 <svelte:head>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { isAuthenticated } from '$lib/stores/me';
-  import Link from './top-navigation/link.svelte';
+  import Link from './(top-navigation)/link.svelte';
 </script>
 
 <nav class="navigation">
@@ -12,7 +12,7 @@
 </nav>
 
 <style lang="scss">
-  @import '../style/global';
+  @import '../lib/style/global';
 
   .navigation {
     @include flex(row, $justify: space-between);

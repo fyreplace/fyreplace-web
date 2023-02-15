@@ -1,11 +1,11 @@
 <script lang="ts">
   import { isAuthenticated } from '$lib/stores/me';
-  import Link from './bottom-navigation/link.svelte';
-  import FeedIcon from './bottom-navigation/feed-icon.svelte';
-  import NotificationsIcon from './bottom-navigation/notifications-icon.svelte';
-  import ArchiveIcon from './bottom-navigation/archive-icon.svelte';
-  import DraftsIcon from './bottom-navigation/drafts-icon.svelte';
-  import SettingsIcon from './bottom-navigation/settings-icon.svelte';
+  import Link from './(bottom-navigation)/link.svelte';
+  import FeedIcon from './(bottom-navigation)/feed-icon.svelte';
+  import NotificationsIcon from './(bottom-navigation)/notifications-icon.svelte';
+  import ArchiveIcon from './(bottom-navigation)/archive-icon.svelte';
+  import DraftsIcon from './(bottom-navigation)/drafts-icon.svelte';
+  import SettingsIcon from './(bottom-navigation)/settings-icon.svelte';
 </script>
 
 <nav class="navigation">
@@ -42,7 +42,7 @@
 </nav>
 
 <style lang="scss">
-  @import '../style/global';
+  @import '../lib/style/global';
 
   .navigation {
     @include flex(row, $justify: space-evenly);
