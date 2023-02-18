@@ -5,7 +5,7 @@
   export let disabled = false;
 </script>
 
-<a {href} class="link" class:disabled use:setClassOnHref={{ href, className: 'active' }}>
+<a {href} class="link" aria-disabled={disabled} use:setClassOnHref={{ href, className: 'active' }}>
   <slot />
 </a>
 
@@ -19,7 +19,7 @@
     outline: none;
     text-decoration: none;
 
-    &.disabled {
+    &[aria-disabled='true'] {
       pointer-events: none;
       opacity: 50%;
     }

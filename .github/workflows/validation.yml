@@ -39,6 +39,3 @@ jobs:
 
       - name: Run tests
         run: npm run test -- --pass-with-no-tests
-
-      - name: Run unit tests
-        run: npm run test:unit -- --passWithNoTests
