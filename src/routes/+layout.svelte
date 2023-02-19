@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { contentScroll } from '$lib/stores/scroll';
   import favicon from '$lib/assets/favicon.ico';
   import faviconAt16x16 from '$lib/assets/favicon-16x16.png';
   import faviconAt32x32 from '$lib/assets/favicon-32x32.png';
   import faviconAppleTouch from '$lib/assets/apple-touch-icon.png';
   import faviconSafari from '$lib/assets/safari-pinned-tab.svg';
   import BottomNavigation from './bottom-navigation.svelte';
+  import Toolbar from './toolbar.svelte';
+
+  let content: HTMLElement;
 </script>
 
 <svelte:head>
@@ -22,10 +26,13 @@
 </svelte:head>
 
 <div class="layout">
-  <div class="content">
-    <slot />
+  <div class="toolbar">
+    <Toolbar />
   </div>
-  <div class="display-small">
+  <main class="content" bind:this={content} on:scroll={() => ($contentScroll = content.scrollTop)}>
+    <slot />
+  </main>
+  <div>
     <BottomNavigation />
   </div>
 </div>
@@ -78,8 +85,17 @@
     box-sizing: border-box;
   }
 
+  .toolbar {
+    @include flex(row, $align: center);
+    padding: 0 var(--gap);
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--color-border);
+  }
+
   .content {
     @include flex(column);
     flex: 1;
+    padding: var(--gap);
+    overflow: scroll;
   }
 </style>
