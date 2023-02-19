@@ -1,5 +1,6 @@
 <script>
   import { derived } from 'svelte/store';
+  import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { isContentScrolled } from '$lib/stores/scroll';
 
@@ -9,7 +10,7 @@
 </script>
 
 {#key $page.url}
-  <h1 class="title" style:font-size={$fontSize}>{document.title}</h1>
+  <h1 class="title" style:font-size={$fontSize}>{browser ? document.title : ''}</h1>
 {/key}
 
 <style lang="scss">
