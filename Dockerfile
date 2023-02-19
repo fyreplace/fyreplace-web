@@ -1,7 +1,7 @@
 FROM node:lts
 
 WORKDIR /app
-ENV DOCKER true
+ENV NODE_ADAPTER true
 
 COPY package.json .
 COPY package-lock.json .
@@ -13,4 +13,4 @@ RUN npm ci --omit=dev
 
 COPY . .
 
-CMD ["node", "build"]
+CMD ["npm", "start"]

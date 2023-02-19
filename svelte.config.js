@@ -6,7 +6,7 @@ import nodeAdapter from '@sveltejs/adapter-node';
 export default {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: process.env.DOCKER ? nodeAdapter({ precompress: true }) : autoAdapter(),
+    adapter: process.env.NODE_ADAPTER ? nodeAdapter({ precompress: true }) : autoAdapter(),
     typescript: {
       config(config) {
         // The default globs in .svelte-kit/tsconfig.json ignore paths starting with a dot
