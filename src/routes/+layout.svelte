@@ -4,7 +4,6 @@
   import faviconAt32x32 from '$lib/assets/favicon-32x32.png';
   import faviconAppleTouch from '$lib/assets/apple-touch-icon.png';
   import faviconSafari from '$lib/assets/safari-pinned-tab.svg';
-  import TopNavigation from './top-navigation.svelte';
   import BottomNavigation from './bottom-navigation.svelte';
 </script>
 
@@ -23,9 +22,6 @@
 </svelte:head>
 
 <div class="layout">
-  <div class="display-large">
-    <TopNavigation />
-  </div>
   <div class="content">
     <slot />
   </div>
@@ -36,8 +32,6 @@
 
 <style lang="scss">
   @import '../lib/style/global';
-
-  $display-large-min-width: 720px;
 
   :global(:root) {
     --gap: 1em;
@@ -54,26 +48,6 @@
 
     @media (prefers-color-scheme: dark) {
       --color-text: white;
-    }
-
-    :global(.display-large) {
-      display: none;
-    }
-
-    :global(.display-small) {
-      display: unset;
-    }
-
-    @media screen and (min-width: #{$display-large-min-width}) and (min-height: #{$display-large-min-width}) and (min-aspect-ratio: 1/1) {
-      --app-max-width: #{$display-large-min-width};
-
-      :global(.display-large) {
-        display: unset;
-      }
-
-      :global(.display-small) {
-        display: none;
-      }
     }
   }
 
@@ -99,8 +73,7 @@
 
   .layout {
     @include flex(column);
-    max-width: var(--app-max-width);
-    min-height: 100%;
+    height: 100%;
     margin: 0 auto;
     box-sizing: border-box;
   }

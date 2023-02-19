@@ -15,7 +15,6 @@
   .link {
     @include flex(row, $justify: center, $align: center);
     width: 100%;
-    padding: var(--gap-small) 0;
     outline: none;
     text-decoration: none;
 
