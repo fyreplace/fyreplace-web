@@ -10,7 +10,7 @@
 </script>
 
 {#key $page.url}
-  <h1 class="title" style:font-size={$fontSize}>{browser ? document.title : ''}</h1>
+  <h1 class="title" style:font-size={$fontSize}>{browser ? document.title : '\u00A0'}</h1>
 {/key}
 
 <style lang="scss">
