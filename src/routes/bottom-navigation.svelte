@@ -1,41 +1,42 @@
 <script lang="ts">
   import { isAuthenticated } from '$lib/stores/me';
+  import Icon from '$lib/components/icon.svelte';
+  import Home from '$lib/components/icons/home.svelte';
+  import Bell from '$lib/components/icons/bell.svelte';
+  import History from '$lib/components/icons/history.svelte';
+  import Document from '$lib/components/icons/document.svelte';
+  import Person from '$lib/components/icons/person.svelte';
   import Link from './(bottom-navigation)/link.svelte';
-  import FeedIcon from './(bottom-navigation)/feed-icon.svelte';
-  import NotificationsIcon from './(bottom-navigation)/notifications-icon.svelte';
-  import ArchiveIcon from './(bottom-navigation)/archive-icon.svelte';
-  import DraftsIcon from './(bottom-navigation)/drafts-icon.svelte';
-  import SettingsIcon from './(bottom-navigation)/settings-icon.svelte';
 </script>
 
 <nav class="navigation">
   <Link href="/feed">
     <span class="link">
-      <FeedIcon />
+      <Icon><Home /></Icon>
       <span>Feed</span>
     </span>
   </Link>
   <Link href="/notifications" disabled={!$isAuthenticated}>
     <span class="link">
-      <NotificationsIcon />
+      <Icon><Bell /></Icon>
       <span>Notifications</span>
     </span>
   </Link>
   <Link href="/archive" disabled={!$isAuthenticated}>
     <span class="link">
-      <ArchiveIcon />
+      <Icon><History /></Icon>
       <span>Archive</span>
     </span>
   </Link>
   <Link href="/drafts" disabled={!$isAuthenticated}>
     <span class="link">
-      <DraftsIcon />
+      <Icon><Document /></Icon>
       <span>Drafts</span>
     </span>
   </Link>
   <Link href="/settings">
     <span class="link">
-      <SettingsIcon />
+      <Icon><Person /></Icon>
       <span>Settings</span>
     </span>
   </Link>
@@ -48,10 +49,6 @@
     @include flex(row, $justify: space-evenly);
     width: 100%;
     border-top: 1px solid var(--color-border);
-
-    :global(.icon) {
-      stroke: var(--color-text);
-    }
   }
 
   .link {
