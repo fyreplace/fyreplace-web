@@ -96,6 +96,6 @@
     @include flex(column);
     flex: 1;
     padding: var(--gap);
-    overflow: scroll;
+    overflow: auto;
   }
 </style>
