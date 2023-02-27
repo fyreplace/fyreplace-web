@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { derived } from 'svelte/store';
+  import { slide } from 'svelte/transition';
+  import { page } from '$app/stores';
   import { contentScroll } from '$lib/stores/scroll';
   import favicon from '$lib/assets/favicon.ico';
   import faviconAt16x16 from '$lib/assets/favicon-16x16.png';
@@ -9,6 +12,10 @@
   import Toolbar from './toolbar.svelte';
 
   let content: HTMLElement;
+  const isShowingTopLevelPage = derived(page, ($page) => {
+    const urlPathParts = $page.route.id?.split('/').filter((part) => part) ?? [];
+    return urlPathParts.length <= 1;
+  });
 </script>
 
 <svelte:head>
@@ -32,29 +39,45 @@
   <main class="content" bind:this={content} on:scroll={() => ($contentScroll = content.scrollTop)}>
     <slot />
   </main>
-  <div>
-    <BottomNavigation />
-  </div>
+  {#if $isShowingTopLevelPage}
+    <div transition:slide>
+      <BottomNavigation />
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
   @import '../lib/style/global';
 
   :global(:root) {
-    --gap: 1em;
-    --gap-small: 0.5em;
-    --gap-tiny: 0.25em;
-    --border-radius: 0.5em;
-    --app-max-width: unset;
+    --gap-tiny: 0.25rem;
+    --gap-small: 0.5rem;
+    --gap-medium: 1rem;
+    --gap-large: 1.5rem;
+    --border-radius: 0.5rem;
+    --display-small-max-size: #{$display-small-max-size};
+    --display-large-min-size: #{$display-large-min-size};
 
     --color-accent: coral;
     --color-on-accent: white;
-    --color-highlight: #7f7f7f3f;
-    --color-text: black;
+    --color-text-primary: black;
+    --color-text-secondary: #3f3f3f;
+    --color-text: var(--color-text-primary);
     --color-border: #7f7f7f7f;
+    --color-yes: forestgreen;
+    --color-no: crimson;
+    --color-highlight: #7f7f7f3f;
+    --color-yes-highlight: #7fff7f2f;
+    --color-no-highlight: #ff7f7f2f;
 
     @media (prefers-color-scheme: dark) {
-      --color-text: white;
+      --color-text-primary: white;
+      --color-text-secondary: #bfbfbf;
+      --color-yes: mediumseagreen;
+      --color-no: indianred;
+      --color-highlight: #7f7f7f2f;
+      --color-yes-highlight: #7fff7f1f;
+      --color-no-highlight: #ff7f7f1f;
     }
   }
 
@@ -87,7 +110,7 @@
 
   .toolbar {
     @include flex(row, $align: center);
-    padding: 0 var(--gap);
+    padding: 0 var(--gap-medium);
     box-sizing: border-box;
     border-bottom: 1px solid var(--color-border);
   }
@@ -95,7 +118,6 @@
   .content {
     @include flex(column);
     flex: 1;
-    padding: var(--gap);
     overflow: auto;
   }
 </style>
