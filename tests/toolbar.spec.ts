@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import exp from 'constants';
 
 test('Toolbar shows current page', async ({ page }) => {
   await page.goto('/feed');
