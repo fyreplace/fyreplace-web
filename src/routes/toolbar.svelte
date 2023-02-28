@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { derived } from 'svelte/store';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
