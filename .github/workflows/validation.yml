@@ -40,3 +40,10 @@ jobs:
 
       - name: Run tests
         run: npm run test -- --pass-with-no-tests
+        env:
+          PUBLIC_WEBSITE_BASE_URL: https://example.org
+          PUBLIC_APPLE_APP_STORE_URL: https://example.org#apple-store
+          PUBLIC_GOOGLE_PLAY_STORE_URL: https://example.org#google-play
+          PUBLIC_IOS_APP_ID: org.example.App
+          PUBLIC_ANDROID_PACKAGE_NAME: org.example.app
+          PUBLIC_ANDROID_CERTS_SHA256: sha256
