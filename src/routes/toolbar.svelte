@@ -4,13 +4,17 @@
   import { page } from '$app/stores';
   import { isContentScrolled } from '$lib/stores/scroll';
 
-  let fontSize = derived(isContentScrolled, ($isContentScrolled) =>
+  const title = derived(
+    page,
+    ($page) => $page.data.title || (browser ? document.title : null) || 'Error'
+  );
+  const fontSize = derived(isContentScrolled, ($isContentScrolled) =>
     $isContentScrolled ? '1.25em' : ''
   );
 </script>
 
 {#key $page.url}
-  <h1 class="title" style:font-size={$fontSize}>{browser ? document.title : '\u00A0'}</h1>
+  <h1 class="title" style:font-size={$fontSize}>{$title}</h1>
 {/key}
 
 <style lang="scss">

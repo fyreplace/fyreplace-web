@@ -17,10 +17,6 @@
   const privacyPolicyUrl = new URL('/privacy-policy', env.PUBLIC_WEBSITE_BASE_URL);
 </script>
 
-<svelte:head>
-  <title>Settings</title>
-</svelte:head>
-
 <div class="container">
   <Avatar />
   <h2>Guest</h2>

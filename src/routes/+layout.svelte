@@ -19,6 +19,9 @@
 </script>
 
 <svelte:head>
+  {#if $page.data.title}
+    <title>{$page.data.title}</title>
+  {/if}
   <link rel="icon" type="image/png" sizes="32x32" href={faviconAt32x32} />
   <link rel="icon" type="image/png" sizes="16x16" href={faviconAt16x16} />
   <link rel="icon" type="image/x-icon" href={favicon} />
