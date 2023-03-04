@@ -10,18 +10,17 @@ on:
 
 jobs:
   tests:
-    name: "Test ${{ matrix.browser }} on ${{ matrix.os }}"
+    name: "Test on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: true
       matrix:
-        include:
-          - os: windows
-            browser: chromium
-          - os: ubuntu
-            browser: firefox
-          - os: macos
-            browser: webkit
+        os:
+          - macos
+          - ubuntu
+          - windows
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: 0
 
     steps:
       - name: Checkout code
@@ -34,22 +33,14 @@ jobs:
           check-latest: true
           cache: npm
 
-      - name: Set up Playwright cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
       - name: Install dependencies
         run: npm ci
 
       - name: Install Playwright
-        run: npx playwright install
+        run: npx playwright install --with-deps
 
       - name: Run tests
-        run: npm run test -- --browser=${{ matrix.browser }}
+        run: npm run test -- --browser=all
         env:
           PUBLIC_WEBSITE_BASE_URL: https://example.org
           PUBLIC_APPLE_APP_STORE_URL: https://example.org#apple-store
