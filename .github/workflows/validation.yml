@@ -39,7 +39,7 @@ jobs:
         run: npx playwright install
 
       - name: Run tests
-        run: npm run test -- --pass-with-no-tests
+        run: npm run test -- --browser=all
         env:
           PUBLIC_WEBSITE_BASE_URL: https://example.org
           PUBLIC_APPLE_APP_STORE_URL: https://example.org#apple-store
