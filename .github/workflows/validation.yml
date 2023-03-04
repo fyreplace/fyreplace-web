@@ -10,17 +10,17 @@ on:
 
 jobs:
   tests:
-    name: "Run tests: ${{ matrix.browser }} on ${{ matrix.os }}"
-    runs-on: ${{ matrix.os }}
+    name: "Test ${{ matrix.browser }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: true
       matrix:
         include:
-          - os: windows-latest
+          - os: windows
             browser: chromium
-          - os: ubuntu-latest
+          - os: ubuntu
             browser: firefox
-          - os: macos-latest
+          - os: macos
             browser: webkit
 
     steps:
