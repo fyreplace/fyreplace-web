@@ -16,6 +16,10 @@ const manifest = {
   start_url: '/feed',
   icons: [
     {
+      src: '/icon.svg',
+      sizes: 'any'
+    },
+    {
       src: '/icon-48x48.png',
       type: 'image/png',
       sizes: '48x48'
@@ -49,6 +53,11 @@ const manifest = {
       src: '/icon-512x512.png',
       type: 'image/png',
       sizes: '512x512'
+    },
+    {
+      src: '/icon-maskable.svg',
+      sizes: 'any',
+      purpose: 'maskable'
     },
     {
       src: '/icon-maskable-48x48.png',

@@ -3,11 +3,12 @@
   import { page } from '$app/stores';
   import { isCurrentPageTopLevel } from '$lib/stores/page';
   import { contentScroll } from '$lib/stores/scroll';
-  import favicon from '$lib/assets/favicon.ico';
+  import favicon from '$lib/assets/favicon.svg';
+  import faviconIco from '$lib/assets/favicon.ico';
   import faviconAt16x16 from '$lib/assets/favicon-16x16.png';
   import faviconAt32x32 from '$lib/assets/favicon-32x32.png';
   import faviconAppleTouch from '$lib/assets/apple-touch-icon.png';
-  import faviconSafari from '$lib/assets/safari-pinned-tab.svg';
+  import faviconMask from '$lib/assets/mask-favicon.svg';
   import Navigation from './navigation.svelte';
   import Toolbar from './toolbar.svelte';
 
@@ -18,9 +19,10 @@
   {#if $page.data.title}
     <title>{$page.data.title}</title>
   {/if}
+  <link rel="icon" type="image/svg+xml" href={favicon} />
   <link rel="icon" type="image/png" sizes="32x32" href={faviconAt32x32} />
   <link rel="icon" type="image/png" sizes="16x16" href={faviconAt16x16} />
-  <link rel="icon" type="image/x-icon" href={favicon} />
+  <link rel="icon" type="image/x-icon" href={faviconIco} />
   <link rel="apple-touch-icon" type="image/png" sizes="180x180" href={faviconAppleTouch} />
   <link
     rel="apple-touch-icon-precomposed"
@@ -28,7 +30,7 @@
     sizes="180x180"
     href={faviconAppleTouch}
   />
-  <link rel="mask-icon" type="image/svg" href={faviconSafari} color="coral" />
+  <link rel="mask-icon" type="image/svg" href={faviconMask} color="coral" />
 </svelte:head>
 
 <div class="layout">
