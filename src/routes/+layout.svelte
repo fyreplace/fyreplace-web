@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { derived } from 'svelte/store';
   import { slide } from 'svelte/transition';
   import { page } from '$app/stores';
+  import { isCurrentPageTopLevel } from '$lib/stores/page';
   import { contentScroll } from '$lib/stores/scroll';
   import favicon from '$lib/assets/favicon.ico';
   import faviconAt16x16 from '$lib/assets/favicon-16x16.png';
@@ -12,10 +12,6 @@
   import Toolbar from './toolbar.svelte';
 
   let content: HTMLElement;
-  const isShowingTopLevelPage = derived(page, ($page) => {
-    const urlPathParts = $page.route.id?.split('/').filter((part) => part) ?? [];
-    return urlPathParts.length <= 1;
-  });
 </script>
 
 <svelte:head>
@@ -36,13 +32,11 @@
 </svelte:head>
 
 <div class="layout">
-  <div class="toolbar">
-    <Toolbar />
-  </div>
+  <Toolbar />
   <main class="content" bind:this={content} on:scroll={() => ($contentScroll = content.scrollTop)}>
     <slot />
   </main>
-  {#if $isShowingTopLevelPage}
+  {#if $isCurrentPageTopLevel}
     <div transition:slide>
       <BottomNavigation />
     </div>
@@ -109,13 +103,6 @@
     height: 100%;
     margin: 0 auto;
     box-sizing: border-box;
-  }
-
-  .toolbar {
-    @include flex(row, $align: center);
-    padding: 0 var(--gap-medium);
-    box-sizing: border-box;
-    border-bottom: 1px solid var(--color-border);
   }
 
   .content {
