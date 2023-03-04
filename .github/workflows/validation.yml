@@ -20,7 +20,7 @@ jobs:
           - ubuntu
           - windows
     env:
-      PLAYWRIGHT_BROWSERS_PATH: 0
+      PLAYWRIGHT_BROWSERS_PATH: .playwright
 
     steps:
       - name: Checkout code
@@ -32,6 +32,14 @@ jobs:
           node-version: lts/*
           check-latest: true
           cache: npm
+
+      - name: Set up Playwright cache
+        uses: actions/cache@v3
+        with:
+          path: .playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Install dependencies
         run: npm ci
