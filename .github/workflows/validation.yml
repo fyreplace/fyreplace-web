@@ -10,8 +10,18 @@ on:
 
 jobs:
   tests:
-    name: Run tests
-    runs-on: ubuntu-latest
+    name: "Run tests: ${{ matrix.browser }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - os: windows-latest
+            browser: chromium
+          - os: ubuntu-latest
+            browser: firefox
+          - os: macos-latest
+            browser: webkit
 
     steps:
       - name: Checkout code
@@ -39,7 +49,7 @@ jobs:
         run: npx playwright install
 
       - name: Run tests
-        run: npm run test -- --browser=all
+        run: npm run test -- --browser=${{ matrix.browser }}
         env:
           PUBLIC_WEBSITE_BASE_URL: https://example.org
           PUBLIC_APPLE_APP_STORE_URL: https://example.org#apple-store
