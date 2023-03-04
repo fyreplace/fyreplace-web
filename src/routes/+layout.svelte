@@ -19,10 +19,10 @@
   {#if $page.data.title}
     <title>{$page.data.title}</title>
   {/if}
-  <link rel="icon" type="image/svg+xml" href={favicon} />
+  <link rel="icon" type="image/svg+xml" sizes="any" href={favicon} />
   <link rel="icon" type="image/png" sizes="32x32" href={faviconAt32x32} />
   <link rel="icon" type="image/png" sizes="16x16" href={faviconAt16x16} />
-  <link rel="icon" type="image/x-icon" href={faviconIco} />
+  <link rel="icon" type="image/x-icon" sizes="32x32 16x16" href={faviconIco} />
   <link rel="apple-touch-icon" type="image/png" sizes="180x180" href={faviconAppleTouch} />
   <link
     rel="apple-touch-icon-precomposed"

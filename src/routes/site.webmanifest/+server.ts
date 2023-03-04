@@ -17,45 +17,55 @@ const manifest = {
   icons: [
     {
       src: '/icon.svg',
-      sizes: 'any'
+      type: 'image/svg+xml',
+      sizes: 'any',
+      purpose: 'any'
     },
     {
       src: '/icon-48x48.png',
       type: 'image/png',
-      sizes: '48x48'
+      sizes: '48x48',
+      purpose: 'any'
     },
     {
       src: '/icon-72x72.png',
       type: 'image/png',
-      sizes: '72x72'
+      sizes: '72x72',
+      purpose: 'any'
     },
     {
       src: '/icon-96x96.png',
       type: 'image/png',
-      sizes: '96x96'
+      sizes: '96x96',
+      purpose: 'any'
     },
     {
       src: '/icon-128x128.png',
       type: 'image/png',
-      sizes: '128x128'
+      sizes: '128x128',
+      purpose: 'any'
     },
     {
       src: '/icon-192x192.png',
       type: 'image/png',
-      sizes: '192x192'
+      sizes: '192x192',
+      purpose: 'any'
     },
     {
       src: '/icon-256x256.png',
       type: 'image/png',
-      sizes: '256x256'
+      sizes: '256x256',
+      purpose: 'any'
     },
     {
       src: '/icon-512x512.png',
       type: 'image/png',
-      sizes: '512x512'
+      sizes: '512x512',
+      purpose: 'any'
     },
     {
       src: '/icon-maskable.svg',
+      type: 'image/svg+xml',
       sizes: 'any',
       purpose: 'maskable'
     },
@@ -100,6 +110,54 @@ const manifest = {
       type: 'image/png',
       sizes: '512x512',
       purpose: 'maskable'
+    },
+    {
+      src: '/icon-monochrome.svg',
+      type: 'image/svg+xml',
+      sizes: 'any',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-48x48.png',
+      type: 'image/png',
+      sizes: '48x48',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-72x72.png',
+      type: 'image/png',
+      sizes: '72x72',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-96x96.png',
+      type: 'image/png',
+      sizes: '96x96',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-128x128.png',
+      type: 'image/png',
+      sizes: '128x128',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-192x192.png',
+      type: 'image/png',
+      sizes: '192x192',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-256x256.png',
+      type: 'image/png',
+      sizes: '256x256',
+      purpose: 'monochrome'
+    },
+    {
+      src: '/icon-monochrome-512x512.png',
+      type: 'image/png',
+      sizes: '512x512',
+      purpose: 'monochrome'
     }
   ]
 };
