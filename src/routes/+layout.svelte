@@ -8,7 +8,7 @@
   import faviconAt32x32 from '$lib/assets/favicon-32x32.png';
   import faviconAppleTouch from '$lib/assets/apple-touch-icon.png';
   import faviconSafari from '$lib/assets/safari-pinned-tab.svg';
-  import BottomNavigation from './bottom-navigation.svelte';
+  import Navigation from './navigation.svelte';
   import Toolbar from './toolbar.svelte';
 
   let content: HTMLElement;
@@ -33,12 +33,23 @@
 
 <div class="layout">
   <Toolbar />
-  <main class="content" bind:this={content} on:scroll={() => ($contentScroll = content.scrollTop)}>
-    <slot />
-  </main>
+  <div class="content-wrapper">
+    {#if $isCurrentPageTopLevel}
+      <div data-testid="navigation-side">
+        <Navigation vertical />
+      </div>
+    {/if}
+    <main
+      class="content"
+      bind:this={content}
+      on:scroll={() => ($contentScroll = content.scrollTop)}
+    >
+      <slot />
+    </main>
+  </div>
   {#if $isCurrentPageTopLevel}
-    <div transition:slide>
-      <BottomNavigation />
+    <div data-testid="navigation-bottom" transition:slide>
+      <Navigation />
     </div>
   {/if}
 </div>
@@ -105,9 +116,19 @@
     box-sizing: border-box;
   }
 
+  .content-wrapper,
+  .content {
+    height: 100%;
+    flex: 1;
+  }
+
+  .content-wrapper {
+    @include flex(row);
+    overflow: hidden;
+  }
+
   .content {
     @include flex(column);
-    flex: 1;
     overflow: auto;
   }
 </style>
