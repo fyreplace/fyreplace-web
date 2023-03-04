@@ -10,16 +10,13 @@
     page,
     ($page) => $page.data.title || (browser ? document.title : null) || 'Error'
   );
-  const fontSize = derived(isContentScrolled, ($isContentScrolled) =>
-    $isContentScrolled ? '1.15em' : '1.5em'
-  );
 </script>
 
 <div class="toolbar" class:has-back-button={!$isCurrentPageTopLevel}>
   {#if !$isCurrentPageTopLevel}
     <BackButton />
   {/if}
-  <h1 class="title" style:font-size={$fontSize}>{$title}</h1>
+  <h1 class="title" class:small-text={$isContentScrolled}>{$title}</h1>
 </div>
 
 <style lang="scss">
@@ -36,7 +33,14 @@
     }
   }
 
-  .title {
-    transition: 0.3s;
+  @media not screen and (min-height: #{$display-large-min-size}) and (min-aspect-ratio: 1/1) {
+    .title {
+      font-size: 1.5em;
+      transition: 0.3s;
+
+      &.small-text {
+        font-size: 1.15em;
+      }
+    }
   }
 </style>
