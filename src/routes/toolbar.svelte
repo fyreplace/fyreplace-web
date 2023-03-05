@@ -24,7 +24,9 @@
 
   .toolbar {
     @include flex(row, $align: center, $gap: var(--gap-small));
-    padding: 0 var(--gap-medium);
+    padding-top: env(safe-area-inset-top);
+    padding-left: calc(env(safe-area-inset-left) + var(--gap-medium));
+    padding-right: calc(env(safe-area-inset-right) + var(--gap-medium));
     box-sizing: border-box;
     border-bottom: 1px solid var(--color-border);
 

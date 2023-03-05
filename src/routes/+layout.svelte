@@ -61,7 +61,7 @@
   <Toolbar />
   <div class="content-wrapper">
     {#if $isCurrentPageTopLevel}
-      <div data-testid="navigation-side">
+      <div class="vertical-navigation" data-testid="navigation-side">
         <Navigation vertical />
       </div>
     {/if}
@@ -125,13 +125,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  :global(body) {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  }
-
   :global(a) {
     color: var(--color-accent);
   }
@@ -143,19 +136,28 @@
     box-sizing: border-box;
   }
 
-  .content-wrapper,
-  .content {
-    height: 100%;
-    flex: 1;
+  .vertical-navigation {
+    overflow: auto;
   }
 
   .content-wrapper {
     @include flex(row);
+    height: 100%;
     overflow: hidden;
   }
 
   .content {
     @include flex(column);
+    flex: 1;
+    padding-right: calc(env(safe-area-inset-right));
     overflow: auto;
+
+    @media screen and (min-height: #{$display-large-min-size}) and (min-aspect-ratio: 1/1) {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    @media not screen and (min-height: #{$display-large-min-size}) and (min-aspect-ratio: 1/1) {
+      padding-left: env(safe-area-inset-left);
+    }
   }
 </style>

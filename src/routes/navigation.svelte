@@ -48,16 +48,24 @@
   @import '../lib/style/global';
 
   .navigation {
+    box-sizing: border-box;
+
     &.vertical {
       @include flex(column, $gap: var(--gap-small));
-      padding: var(--gap-small);
+      padding-top: var(--gap-small);
+      padding-bottom: max(env(safe-area-inset-bottom), var(--gap-small));
+      padding-left: max(env(safe-area-inset-left), var(--gap-small));
+      padding-right: var(--gap-small);
       height: 100%;
+      overflow: auto;
       border-inline-end: 1px solid var(--color-border);
     }
 
     &:not(.vertical) {
       @include flex(row, $justify: space-evenly);
-      width: 100%;
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
       border-block-start: 1px solid var(--color-border);
     }
 
