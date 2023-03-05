@@ -97,6 +97,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: sans-serif;
+    accent-color: var(--color-accent);
     -webkit-tap-highlight-color: transparent;
   }
 
