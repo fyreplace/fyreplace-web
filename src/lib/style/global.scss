@@ -11,5 +11,10 @@
   gap: $gap;
 }
 
+@mixin no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 $display-small-max-size: 400px;
 $display-large-min-size: 720px;

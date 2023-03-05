@@ -114,6 +114,7 @@
 
     .section-content {
       @include flex(column);
+      @include no-select;
       box-sizing: border-box;
       border: 1px solid var(--color-border);
       border-radius: var(--border-radius);

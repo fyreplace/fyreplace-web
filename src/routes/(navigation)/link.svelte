@@ -14,6 +14,7 @@
 
   .link {
     @include flex(row, $justify: center, $align: center);
+    @include no-select;
     width: 100%;
     outline: none;
     text-decoration: none;
