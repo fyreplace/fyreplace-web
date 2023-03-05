@@ -31,7 +31,7 @@
     border-bottom: 1px solid var(--color-border);
 
     &.has-back-button {
-      padding-inline-start: var(--gap-small);
+      padding-left: calc(env(safe-area-inset-left) + var(--gap-small));
     }
   }
 
