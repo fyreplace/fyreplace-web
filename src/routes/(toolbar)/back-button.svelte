@@ -9,6 +9,7 @@
 
 <style lang="scss">
   .back-button {
+    display: flex;
     padding: var(--gap-small);
     border-radius: 50%;
     border: none;
