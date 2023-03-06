@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { slide } from 'svelte/transition';
   import { page } from '$app/stores';
   import { isCurrentPageTopLevel } from '$lib/stores/page';
   import { contentScroll } from '$lib/stores/scroll';
@@ -32,7 +31,7 @@
     </main>
   </div>
   {#if $isCurrentPageTopLevel}
-    <div data-testid="navigation-bottom" transition:slide>
+    <div data-testid="navigation-bottom">
       <Navigation />
     </div>
   {/if}

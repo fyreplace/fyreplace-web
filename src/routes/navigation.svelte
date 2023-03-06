@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { slide } from 'svelte/transition';
   import { isAuthenticated } from '$lib/stores/me';
   import Icon from '$lib/components/icon.svelte';
   import Home from '$lib/components/icons/home.svelte';
@@ -11,7 +12,7 @@
   export let vertical = false;
 </script>
 
-<nav class="navigation" class:vertical>
+<nav class="navigation" class:vertical transition:slide={{ duration: vertical ? 0 : undefined }}>
   <Link href="/feed">
     <span class="link">
       <Icon><Home /></Icon>
