@@ -10,7 +10,7 @@ on:
 
 jobs:
   tests:
-    name: "Test on all browsers"
+    name: 'Test on all browsers'
     runs-on: ubuntu-latest
     env:
       PLAYWRIGHT_BROWSERS_PATH: .playwright
