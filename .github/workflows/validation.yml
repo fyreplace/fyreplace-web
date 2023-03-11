@@ -10,18 +10,8 @@ on:
 
 jobs:
   tests:
-    name: "Test on ${{ matrix.os-name }}"
-    runs-on: ${{ matrix.os }}-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        include:
-          - os: macos
-            os-name: macOS
-          - os: ubuntu
-            os-name: Ubuntu
-          - os: windows
-            os-name: Windows
+    name: "Test on all browsers"
+    runs-on: ubuntu-latest
     env:
       PLAYWRIGHT_BROWSERS_PATH: .playwright
 
