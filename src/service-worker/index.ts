@@ -38,5 +38,20 @@ async function evictSvelte() {
 async function respond(request: Request) {
   const cache = await caches.open(svelteCacheName);
   const url = new URL(request.url);
-  return svelteAssets.includes(url.pathname) ? cache.match(request) : fetch(request);
+
+  if (svelteAssets.includes(url.pathname)) {
+    return cache.match(request);
+  }
+
+  try {
+    const response = await fetch(request);
+
+    if (response.ok && url.origin === location.origin) {
+      await cache.put(request, response.clone());
+    }
+
+    return response;
+  } catch (error) {
+    return cache.match(request);
+  }
 }
