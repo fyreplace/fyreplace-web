@@ -1,3 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable, readonly } from 'svelte/store';
 
-export const isAuthenticated = writable(false);
+const _isAuthenticated = writable(false);
+export const isAuthenticated = readonly(_isAuthenticated);

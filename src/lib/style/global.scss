@@ -11,6 +11,15 @@
   gap: $gap;
 }
 
+@mixin shadow() {
+  box-shadow: 0 0 var(--gap-small) var(--color-border);
+
+  @media (prefers-color-scheme: dark) {
+    box-shadow: unset;
+    background: var(--color-highlight);
+  }
+}
+
 @mixin no-select {
   -webkit-user-select: none;
   user-select: none;

@@ -8,6 +8,7 @@
 
 <style lang="scss">
   .icon {
+    overflow: visible;
     stroke: var(--color-text);
     transition: 0.3s;
   }

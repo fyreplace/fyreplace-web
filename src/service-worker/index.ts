@@ -1,4 +1,3 @@
-/// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
@@ -19,6 +18,12 @@ sw.addEventListener('activate', (event) => {
 sw.addEventListener('fetch', (event) => {
   if (event.request.method === 'GET') {
     event.waitUntil(respond(event.request));
+  }
+});
+
+sw.addEventListener('message', (event) => {
+  if (event.data.action === 'skip-waiting') {
+    sw.skipWaiting();
   }
 });
 

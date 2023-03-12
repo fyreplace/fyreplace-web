@@ -1,8 +1,11 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public';
   import { page } from '$app/stores';
+  import { isUpdateAvailable, isUpdating, commitUpdate } from '$lib/stores/updates';
   import { isAuthenticated } from '$lib/stores/me';
   import Icon from '$lib/components/icon.svelte';
+  import Loader from '$lib/components/icons/loader.svelte';
+  import ArrowUpCircle from '$lib/components/icons/arrow-up-circle.svelte';
   import Gavel from '$lib/components/icons/gavel.svelte';
   import Lock from '$lib/components/icons/lock.svelte';
   import Code from '$lib/components/icons/code.svelte';
@@ -11,6 +14,7 @@
   import Trash from '$lib/components/icons/trash.svelte';
   import Fyreplace from '$lib/components/icons/fyreplace.svelte';
   import Enter from '$lib/components/icons/enter.svelte';
+  import { doOnEnterPressed } from '$lib/utils';
   import Avatar from './avatar.svelte';
 
   const termsOfServiceUrl = new URL('/terms-of-service', env.PUBLIC_WEBSITE_BASE_URL);
@@ -21,6 +25,26 @@
   <Avatar />
   <h2>Guest</h2>
   <div class="sections">
+    {#if $isUpdateAvailable}
+      <section>
+        <h3>Important</h3>
+        <div class="section-content important">
+          <p role="button" on:click={commitUpdate} on:keyup={doOnEnterPressed(commitUpdate)}>
+            {#if $isUpdating}
+              <span>Updating...</span>
+              <span>
+                <Icon><Loader /></Icon>
+              </span>
+            {:else}
+              <span>Update to latest version</span>
+              <span>
+                <Icon><ArrowUpCircle /></Icon>
+              </span>
+            {/if}
+          </p>
+        </div>
+      </section>
+    {/if}
     {#if $isAuthenticated}
       <section>
         <h3>Profile</h3>
@@ -163,6 +187,15 @@
           color: var(--color-text);
           text-align: end;
         }
+      }
+
+      &.important {
+        --color-border: var(--color-accent);
+        --color-text: var(--color-accent);
+        --color-text-secondary: var(--color-accent);
+        --color-highlight: var(--color-accent-highlight);
+
+        color: var(--color-text);
       }
 
       &.danger {

@@ -1,11 +1,31 @@
 <script lang="ts">
+  import { slide } from 'svelte/transition';
   import { page } from '$app/stores';
+  import { isUpdateAvailable, isUpdating, commitUpdate } from '$lib/stores/updates';
   import { isCurrentPageTopLevel } from '$lib/stores/page';
   import { contentScroll } from '$lib/stores/scroll';
+  import {
+    isVisible as isSnackbarVisible,
+    message as snackbarMessage,
+    buttonLabel as snackbarButtonLabel,
+    buttonAction as snackbarButtonAction,
+    isButtonLoading as isSnackbarButtonLoading
+  } from '$lib/stores/snackbar';
   import Navigation from './navigation.svelte';
   import Toolbar from './toolbar.svelte';
+  import Snackbar from './snackbar.svelte';
 
   let content: HTMLElement;
+
+  $: {
+    if ($isUpdateAvailable) {
+      $isSnackbarVisible = true;
+      $snackbarMessage = 'A new version is available';
+      $snackbarButtonLabel = 'Update';
+      $snackbarButtonAction = commitUpdate;
+      $isSnackbarButtonLoading = $isUpdating;
+    }
+  }
 </script>
 
 <svelte:head>
@@ -29,6 +49,11 @@
     >
       <slot />
     </main>
+    {#if $isSnackbarVisible}
+      <div class="snackbar-container" transition:slide>
+        <Snackbar />
+      </div>
+    {/if}
   </div>
   {#if $isCurrentPageTopLevel}
     <div data-testid="navigation-bottom">
@@ -50,24 +75,28 @@
     --display-large-min-size: #{$display-large-min-size};
 
     --color-accent: coral;
+    --color-accent-highlight: #ffbf7f2f;
     --color-on-accent: white;
+    --color-background: white;
     --color-text-primary: black;
     --color-text-secondary: #3f3f3f;
     --color-text: var(--color-text-primary);
     --color-border: #7f7f7f7f;
-    --color-yes: forestgreen;
-    --color-no: crimson;
     --color-highlight: #7f7f7f3f;
+    --color-yes: forestgreen;
     --color-yes-highlight: #7fff7f2f;
+    --color-no: crimson;
     --color-no-highlight: #ff7f7f2f;
 
     @media (prefers-color-scheme: dark) {
+      --color-accent-highlight: #ffbf7f1f;
+      --color-background: black;
       --color-text-primary: white;
       --color-text-secondary: #bfbfbf;
-      --color-yes: mediumseagreen;
-      --color-no: indianred;
       --color-highlight: #7f7f7f2f;
+      --color-yes: mediumseagreen;
       --color-yes-highlight: #7fff7f1f;
+      --color-no: indianred;
       --color-no-highlight: #ff7f7f1f;
     }
   }
@@ -101,6 +130,7 @@
 
   .content-wrapper {
     @include flex(row);
+    position: relative;
     height: 100%;
     overflow: hidden;
   }
@@ -118,5 +148,13 @@
     @media not screen and (min-height: #{$display-large-min-size}) and (min-aspect-ratio: 1/1) {
       padding-left: env(safe-area-inset-left);
     }
+  }
+
+  .snackbar-container {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: var(--gap-medium);
+    box-sizing: border-box;
   }
 </style>
