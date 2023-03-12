@@ -14,6 +14,7 @@ const manifest = {
   display: 'standalone',
   id: '/feed',
   start_url: '/feed',
+  theme_color: 'coral',
   icons: [
     {
       src: '/icon.svg',
