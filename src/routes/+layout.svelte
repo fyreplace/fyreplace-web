@@ -78,9 +78,10 @@
     --color-accent-highlight: #ffbf7f2f;
     --color-on-accent: white;
     --color-background: white;
-    --color-text-primary: black;
-    --color-text-secondary: #3f3f3f;
-    --color-text: var(--color-text-primary);
+    --color-on-background-primary: black;
+    --color-on-background-secondary: #3f3f3f;
+    --color-on-background: var(--color-on-background-primary);
+    --color-surface: #efefef;
     --color-border: #7f7f7f7f;
     --color-highlight: #7f7f7f3f;
     --color-yes: forestgreen;
@@ -91,14 +92,18 @@
     @media (prefers-color-scheme: dark) {
       --color-accent-highlight: #ffbf7f1f;
       --color-background: black;
-      --color-text-primary: white;
-      --color-text-secondary: #bfbfbf;
+      --color-on-background-primary: white;
+      --color-on-background-secondary: #bfbfbf;
+      --color-surface: #1f1f1f;
       --color-highlight: #7f7f7f2f;
       --color-yes: mediumseagreen;
       --color-yes-highlight: #7fff7f1f;
       --color-no: indianred;
       --color-no-highlight: #ff7f7f1f;
     }
+
+    background: var(--color-background);
+    color: var(--color-on-background);
   }
 
   :global(:root),

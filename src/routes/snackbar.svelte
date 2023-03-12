@@ -28,6 +28,7 @@
     margin: 0 auto;
     padding: var(--gap-medium);
     border-radius: var(--border-radius);
+    background: var(--color-background);
   }
 
   .message {

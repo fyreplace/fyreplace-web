@@ -15,8 +15,11 @@
 </button>
 
 <style lang="scss">
+  @import '../style/global';
+
   .button {
-    --color-text: var(--color-accent);
+    @include no-select;
+    --color-on-background: var(--color-accent);
 
     position: relative;
     display: inline-flex;
@@ -27,9 +30,10 @@
     border: 1px solid var(--color-accent);
     border-radius: var(--border-radius);
 
-    background: var(--color-background);
+    background: none;
     color: var(--color-accent);
-    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
     transition: 0.3s;
     cursor: pointer;
 

@@ -86,7 +86,7 @@
   .link {
     @include flex(column, center, center, var(--gap-tiny));
     padding: var(--gap-small) 0;
-    color: var(--color-text);
+    color: var(--color-on-background);
     font-size: 0.75em;
 
     @media screen and (min-aspect-ratio: 1/1) {

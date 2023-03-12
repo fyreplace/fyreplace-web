@@ -9,7 +9,7 @@
 <style lang="scss">
   .icon {
     overflow: visible;
-    stroke: var(--color-text);
+    stroke: var(--color-on-background);
     transition: 0.3s;
   }
 </style>

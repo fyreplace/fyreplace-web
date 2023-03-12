@@ -182,29 +182,29 @@
         }
 
         & :last-child {
-          --color-text: var(--color-text-secondary);
+          --color-on-background: var(--color-on-background-secondary);
 
-          color: var(--color-text);
+          color: var(--color-on-background);
           text-align: end;
         }
       }
 
       &.important {
         --color-border: var(--color-accent);
-        --color-text: var(--color-accent);
-        --color-text-secondary: var(--color-accent);
+        --color-on-background: var(--color-accent);
+        --color-on-background-secondary: var(--color-accent);
         --color-highlight: var(--color-accent-highlight);
 
-        color: var(--color-text);
+        color: var(--color-on-background);
       }
 
       &.danger {
         --color-border: var(--color-no);
-        --color-text: var(--color-no);
-        --color-text-secondary: var(--color-no);
+        --color-on-background: var(--color-no);
+        --color-on-background-secondary: var(--color-no);
         --color-highlight: var(--color-no-highlight);
 
-        color: var(--color-text);
+        color: var(--color-on-background);
       }
     }
   }

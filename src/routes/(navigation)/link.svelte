@@ -25,7 +25,7 @@
     }
 
     &:global(.active) {
-      --color-text: var(--color-accent);
+      --color-on-background: var(--color-accent);
     }
   }
 </style>
