@@ -77,6 +77,8 @@
     @include greedy;
     margin: 0;
     box-sizing: border-box;
+    overflow: hidden;
+
     font-family: sans-serif;
     accent-color: var(--color-accent);
     -webkit-tap-highlight-color: transparent;
