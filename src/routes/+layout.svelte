@@ -44,13 +44,14 @@
     {/if}
     <main
       class="content"
+      class:avoid-bottom={!$isCurrentPageTopLevel}
       bind:this={content}
       on:scroll={() => ($contentScroll = content.scrollTop)}
     >
       <slot />
     </main>
     {#if $isSnackbarVisible}
-      <div class="snackbar-container" transition:slide>
+      <div class="snackbar-container" class:avoid-bottom={!$isCurrentPageTopLevel} transition:slide>
         <Snackbar />
       </div>
     {/if}
@@ -145,6 +146,7 @@
     flex: 1;
     padding-right: calc(env(safe-area-inset-right));
     overflow: auto;
+    transition: padding 0.3s;
 
     @media screen and (min-height: #{$display-large-min-size}) and (min-aspect-ratio: 1/1) {
       padding-bottom: env(safe-area-inset-bottom);
@@ -161,5 +163,10 @@
     bottom: 0;
     padding: var(--gap-medium);
     box-sizing: border-box;
+    transition: padding 0.3s;
+  }
+
+  .avoid-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 </style>
