@@ -1,17 +1,5 @@
 import { isUpdateAvailable } from '$lib/stores/updates';
 
-function onWorkerStateChange(this: ServiceWorker) {
-  switch (this.state) {
-    case 'installed':
-      isUpdateAvailable.set(true);
-      break;
-
-    case 'activated':
-      isUpdateAvailable.set(false);
-      break;
-  }
-}
-
 async function setupRegistration() {
   const registration = await navigator.serviceWorker.getRegistration();
 
@@ -20,14 +8,11 @@ async function setupRegistration() {
   }
 
   registration.onupdatefound = function () {
-    this.installing!.onstatechange = onWorkerStateChange;
+    isUpdateAvailable.set(true);
   };
 
-  const worker = registration.waiting || registration.installing;
-
-  if (worker) {
+  if (registration.waiting || registration.installing) {
     isUpdateAvailable.set(true);
-    worker.onstatechange = onWorkerStateChange;
   }
 }
 
