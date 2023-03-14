@@ -21,9 +21,13 @@ sw.addEventListener('fetch', (event) => {
   }
 });
 
-sw.addEventListener('message', (event) => {
+sw.addEventListener('message', async (event) => {
   if (event.data.action === 'skip-waiting') {
-    sw.skipWaiting();
+    await sw.skipWaiting();
+
+    for (const client of await sw.clients.matchAll()) {
+      client.postMessage({ action: 'reload' });
+    }
   }
 });
 

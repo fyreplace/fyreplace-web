@@ -16,11 +16,17 @@ async function setupRegistration() {
   }
 }
 
-navigator.serviceWorker.oncontrollerchange = () => window.location.reload();
+navigator.serviceWorker.addEventListener('message', async (event) => {
+  if (event.data.action === 'reload') {
+    window.location.reload();
+  }
+});
+
 document.onvisibilitychange = async function () {
   if (!this.hidden) {
     const registration = await navigator.serviceWorker.getRegistration();
     registration?.update();
   }
 };
+
 setupRegistration();
