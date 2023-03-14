@@ -19,4 +19,5 @@ export async function commitUpdate() {
   _isUpdating.set(true);
   const worker = registration.waiting || registration.installing;
   worker?.postMessage({ action: 'skip-waiting' });
+  setTimeout(() => window.location.reload(), 1000);
 }
