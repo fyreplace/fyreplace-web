@@ -10,7 +10,7 @@ on:
 
 jobs:
   tests:
-    name: 'Test on all browsers'
+    name: 'Test'
     runs-on: ubuntu-latest
     env:
       PLAYWRIGHT_BROWSERS_PATH: .playwright
@@ -41,7 +41,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run tests
-        run: npm run test -- --browser=all
+        run: npm run test
         env:
           PUBLIC_WEBSITE_BASE_URL: https://example.org
           PUBLIC_APPLE_APP_STORE_URL: https://example.org#apple-store
