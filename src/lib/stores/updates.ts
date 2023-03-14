@@ -10,8 +10,13 @@ export async function commitUpdate() {
     return;
   }
 
-  _isUpdating.set(true);
   const registration = await navigator.serviceWorker.getRegistration();
-  const worker = registration?.waiting || registration?.installing;
+
+  if (!registration) {
+    return;
+  }
+
+  _isUpdating.set(true);
+  const worker = registration.waiting || registration.installing;
   worker?.postMessage({ action: 'skip-waiting' });
 }
