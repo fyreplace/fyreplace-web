@@ -155,6 +155,10 @@
     @media not screen and (min-height: #{$display-large-min-size}) and (min-aspect-ratio: 1/1) {
       padding-left: env(safe-area-inset-left);
     }
+
+    &.avoid-bottom {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
   }
 
   .snackbar-container {
@@ -164,9 +168,9 @@
     padding: var(--gap-medium);
     box-sizing: border-box;
     transition: padding 0.3s;
-  }
 
-  .avoid-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
+    &.avoid-bottom {
+      padding-bottom: max(env(safe-area-inset-bottom), var(--gap-medium));
+    }
   }
 </style>
