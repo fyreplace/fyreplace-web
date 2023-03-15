@@ -11,13 +11,13 @@ export async function commitUpdate() {
   }
 
   const registration = await navigator.serviceWorker.getRegistration();
+  const worker = registration?.waiting || registration?.installing;
 
-  if (!registration) {
+  if (!worker) {
     return;
   }
 
   _isUpdating.set(true);
-  const worker = registration.waiting || registration.installing;
-  worker?.postMessage({ action: 'skip-waiting' });
+  worker.postMessage({ action: 'skip-waiting' });
   setTimeout(() => window.location.reload(), 1000);
 }
