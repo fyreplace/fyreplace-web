@@ -1,4 +1,5 @@
 import { isUpdateAvailable } from '$lib/stores/updates';
+import { getNewWorker } from '$lib/utils';
 
 async function setupRegistration() {
   const registration = await navigator.serviceWorker.getRegistration();
@@ -8,10 +9,10 @@ async function setupRegistration() {
   }
 
   registration.onupdatefound = function () {
-    isUpdateAvailable.set(true);
+    isUpdateAvailable.set(getNewWorker(this) !== null);
   };
 
-  if (registration.waiting || registration.installing) {
+  if (getNewWorker(registration) !== null) {
     isUpdateAvailable.set(true);
   }
 }

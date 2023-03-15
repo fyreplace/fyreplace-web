@@ -1,4 +1,5 @@
 import { writable, readonly, get } from 'svelte/store';
+import { getNewWorker } from '$lib/utils';
 
 export const isUpdateAvailable = writable(false);
 
@@ -11,7 +12,12 @@ export async function commitUpdate() {
   }
 
   const registration = await navigator.serviceWorker.getRegistration();
-  const worker = registration?.waiting || registration?.installing;
+
+  if (!registration) {
+    return;
+  }
+
+  const worker = getNewWorker(registration);
 
   if (!worker) {
     return;
