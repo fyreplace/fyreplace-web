@@ -167,6 +167,6 @@
   }
 
   .avoid-bottom {
-    padding-bottom: max(env(safe-area-inset-bottom), var(--gap-medium));
+    padding-bottom: env(safe-area-inset-bottom);
   }
 </style>
