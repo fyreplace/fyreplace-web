@@ -12,18 +12,8 @@ export async function commitUpdate() {
   }
 
   const registration = await navigator.serviceWorker.getRegistration();
-
-  if (!registration) {
-    return;
-  }
-
-  const worker = getNewWorker(registration);
-
-  if (!worker) {
-    return;
-  }
-
+  const worker = registration ? getNewWorker(registration) : null;
   _isUpdating.set(true);
-  worker.postMessage({ action: 'skip-waiting' });
+  worker?.postMessage({ action: 'skip-waiting' });
   setTimeout(() => window.location.reload(), 1000);
 }
