@@ -13,8 +13,9 @@ RUN npm ci --omit=dev
 
 FROM node:lts-slim AS run
 
-COPY --from=build /app /app
 WORKDIR /app
+
+COPY --from=build /app /app
 
 EXPOSE 3000
 CMD ["npm", "start"]
