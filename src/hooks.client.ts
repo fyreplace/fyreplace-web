@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import { isUpdateAvailable } from '$lib/stores/updates';
 import { getNewWorker } from '$lib/utils';
 
@@ -9,11 +10,11 @@ async function setupRegistration() {
   }
 
   registration.onupdatefound = function () {
-    isUpdateAvailable.set(getNewWorker(this) !== null);
+    isUpdateAvailable.set(!!getNewWorker(this) && !dev);
   };
 
-  if (getNewWorker(registration) !== null) {
-    isUpdateAvailable.set(true);
+  if (getNewWorker(registration)) {
+    isUpdateAvailable.set(!dev);
   }
 }
 
