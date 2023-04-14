@@ -1,7 +1,6 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
-import { dev } from '$app/environment';
 import { build, files, version } from '$service-worker';
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
@@ -17,7 +16,7 @@ sw.addEventListener('activate', (event) => {
 });
 
 sw.addEventListener('fetch', (event) => {
-  if (event.request.method === 'GET' && !dev) {
+  if (event.request.method === 'GET') {
     event.waitUntil(respond(event.request));
   }
 });
