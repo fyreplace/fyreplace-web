@@ -29,7 +29,7 @@
       <section>
         <h3>Important</h3>
         <div class="section-content important">
-          <p role="button" on:click={commitUpdate} on:keyup={doOnEnterPressed(commitUpdate)}>
+          <button on:click={commitUpdate} on:keyup={doOnEnterPressed(commitUpdate)}>
             {#if $isUpdating}
               <span>Updating...</span>
               <span>
@@ -41,7 +41,7 @@
                 <Icon><ArrowUpCircle /></Icon>
               </span>
             {/if}
-          </p>
+          </button>
         </div>
       </section>
     {/if}
@@ -53,14 +53,14 @@
             <span>Date joined</span>
             <span>Hasn't joined yet</span>
           </p>
-          <p role="button">
+          <button>
             <span>Email</span>
             <span class="cut-text">email@example.org</span>
-          </p>
-          <p role="button">
+          </button>
+          <button>
             <span>Bio</span>
             <span class="cut-text">Empty</span>
-          </p>
+          </button>
           <a href={$page.route.id + '/blocked-users'}>
             <span>Blocked users</span>
             <span>0</span>
@@ -91,14 +91,14 @@
       <section>
         <h3>Danger zone</h3>
         <div class="section-content danger">
-          <p role="button">
+          <button>
             <span>Logout</span>
             <span><Icon><Exit /></Icon></span>
-          </p>
-          <p role="button">
+          </button>
+          <button>
             <span>Delete account</span>
             <span><Icon><Trash /></Icon></span>
-          </p>
+          </button>
         </div>
       </section>
     {:else}
@@ -144,6 +144,13 @@
       border-radius: var(--border-radius);
       overflow: hidden;
 
+      > button {
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 1em;
+      }
+
       > * {
         @include flex(row, space-between, center, var(--gap-large));
         min-height: 3em;
@@ -155,7 +162,7 @@
         text-decoration: none;
         transition: 0.3s;
 
-        &[role='button']:hover,
+        &:is(button):hover,
         &[href]:hover {
           background: var(--color-highlight);
           cursor: pointer;
