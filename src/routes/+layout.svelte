@@ -91,16 +91,16 @@
     --color-no-highlight: #ff7f7f2f;
 
     @media (prefers-color-scheme: dark) {
-      --color-accent-highlight: #ffbf7f1f;
+      --color-accent-highlight: #ffbf7f2f;
       --color-background: black;
       --color-on-background-primary: white;
       --color-on-background-secondary: #bfbfbf;
       --color-surface: #1f1f1f;
-      --color-highlight: #7f7f7f2f;
+      --color-highlight: #7f7f7f3f;
       --color-yes: mediumseagreen;
-      --color-yes-highlight: #7fff7f1f;
+      --color-yes-highlight: #7fff7f2f;
       --color-no: indianred;
-      --color-no-highlight: #ff7f7f1f;
+      --color-no-highlight: #ff7f7f2f;
     }
 
     background: var(--color-background);

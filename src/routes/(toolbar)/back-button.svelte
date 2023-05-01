@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Icon from '$lib/components/icon.svelte';
   import ArrowBack from '$lib/components/icons/arrow-back.svelte';
 </script>
