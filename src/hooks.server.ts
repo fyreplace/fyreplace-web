@@ -4,6 +4,7 @@ import { env } from '$env/dynamic/public';
 Sentry.init({
   dsn: env.PUBLIC_SENTRY_DSN,
   environment: env.PUBLIC_SENTRY_ENVIRONMENT,
+  ignoreTransactions: ['/health'],
   tracesSampleRate: 0.1
 });
 

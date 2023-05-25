@@ -9,7 +9,7 @@ Sentry.init({
   dsn: env.PUBLIC_SENTRY_DSN,
   environment: env.PUBLIC_SENTRY_ENVIRONMENT,
   tunnel: sentryTunnelPath,
-  ignoreTransactions: [sentryTunnelPath, '/health'],
+  ignoreTransactions: [sentryTunnelPath],
   denyUrls: [sentryTunnelPath],
   tracesSampleRate: 0.1,
   integrations: [new Sentry.Replay()],
