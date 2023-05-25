@@ -1,3 +1,4 @@
+import { json, type RequestHandler } from '@sveltejs/kit';
 import { env } from '$env/dynamic/public';
 
 const data = {
@@ -25,6 +26,4 @@ const data = {
   }
 };
 
-export function GET(): Response {
-  return new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } });
-}
+export const GET = (() => json(data)) satisfies RequestHandler;

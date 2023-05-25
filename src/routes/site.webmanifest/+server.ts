@@ -1,3 +1,4 @@
+import { json, type RequestHandler } from '@sveltejs/kit';
 import { env } from '$env/dynamic/public';
 
 interface RelatedApplication {
@@ -177,8 +178,4 @@ if (env.PUBLIC_GOOGLE_PLAY_STORE_URL) {
   });
 }
 
-export function GET(): Response {
-  return new Response(JSON.stringify(manifest), {
-    headers: { 'Content-Type': 'application/manifest+json' }
-  });
-}
+export const GET = (() => json(manifest)) satisfies RequestHandler;
