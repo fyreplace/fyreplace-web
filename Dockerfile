@@ -19,9 +19,10 @@ RUN npm ci --omit=dev
 
 FROM node:lts-slim AS run
 
+RUN apt-get update; apt-get install -y git
 WORKDIR /app
 
 COPY --from=build /app /app
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD PUBLIC_SENTRY_RELEASE=$(git describe) npm start
