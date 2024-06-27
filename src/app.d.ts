@@ -1,12 +1,11 @@
 declare global {
-  namespace App {
-    // interface Error {}
-    // interface Locals {}
-    interface PageData {
-      title?: string;
-    }
-    // interface Platform {}
-  }
+	namespace App {
+		// interface Error {}
+		// interface Locals {}
+		// interface PageData {}
+		// interface PageState {}
+		// interface Platform {}
+	}
 }
 
 export {};

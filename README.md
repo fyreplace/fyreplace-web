@@ -1,6 +1,8 @@
-# Fyreplace web app
+# Fyreplace Web app
 
-The web client app for [Fyreplace](https://fyreplace.net).
+[![Shipping](https://github.com/fyreplace/fyreplace-web/actions/workflows/publishing.yml/badge.svg)](https://github.com/fyreplace/fyreplace-web/actions/workflows/publishing.yml)
+
+The Web client app for [Fyreplace](https://fyreplace.net).
 
 ## License
 

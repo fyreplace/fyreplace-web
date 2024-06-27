@@ -2,8 +2,8 @@
 <svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="gradient" x1="0.5" x2="0.5" y1="0" y2="1">
-            <stop offset="0%" stop-color="#FFB243" />
-            <stop offset="100%" stop-color="#FF6243" />
+            <stop offset="0%" stop-color="#FFA253" />
+            <stop offset="100%" stop-color="#FF7243" />
         </linearGradient>
     </defs>
     <rect width="1000" height="1000" fill="white" />

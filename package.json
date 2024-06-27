@@ -1,33 +1,38 @@
 {
-  "name": "fyreplace",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite dev",
-    "build": "svelte-kit sync && vite build",
-    "start": "node ./build",
-    "preview": "vite preview",
-    "test": "playwright test",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check .",
-    "format": "prettier --write ."
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.36.2",
-    "@sveltejs/adapter-auto": "^2.1.0",
-    "@sveltejs/adapter-node": "^1.3.1",
-    "@sveltejs/kit": "^1.22.3",
-    "prettier": "^3.0.0",
-    "prettier-plugin-svelte": "^3.0.3",
-    "sass": "^1.64.1",
-    "svelte": "^4.1.1",
-    "svelte-check": "^3.4.6",
-    "tslib": "^2.6.1",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.7"
-  },
-  "dependencies": {
-    "@sentry/sveltekit": "^7.60.1"
-  }
+	"name": "fyreplace",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"test": "npm run test:integration && npm run test:unit",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test:integration": "playwright test",
+		"test:unit": "vitest"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.45.0",
+		"@sveltejs/adapter-node": "^5.2.0",
+		"@sveltejs/kit": "^2.5.17",
+		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"@types/eslint": "^8.56.10",
+		"eslint": "^9.5.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.41.0",
+		"globals": "^15.6.0",
+		"prettier": "^3.3.2",
+		"prettier-plugin-svelte": "^3.2.5",
+		"sass": "^1.77.6",
+		"svelte": "^4.2.18",
+		"svelte-check": "^3.8.4",
+		"tslib": "^2.6.3",
+		"typescript": "^5.5.2",
+		"typescript-eslint": "^8.0.0-alpha.34",
+		"vite": "^5.3.1",
+		"vitest": "^1.6.0"
+	}
 }

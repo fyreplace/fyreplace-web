@@ -1,0 +1,7 @@
+@import './values';
+
+@mixin regular {
+	@media screen and (min-width: $width-regular) and (min-aspect-ratio: 1/1) {
+		@content;
+	}
+}
