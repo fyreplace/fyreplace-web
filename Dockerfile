@@ -1,5 +1,6 @@
 FROM node:lts AS build
 
+ENV ADAPTER_NODE=true
 ARG SENTRY_ORG
 ENV SENTRY_ORG $SENTRY_ORG
 ARG SENTRY_PROJECT
@@ -8,13 +9,12 @@ ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN $SENTRY_AUTH_TOKEN
 
 WORKDIR /app
-ENV ADAPTER_NODE=true
 
 COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . ./
-RUN env PUBLIC_PACKAGE_VERSION=$(bash .package-version.sh) npm run build
+RUN npm run build
 RUN npm ci --omit=dev
 
 
