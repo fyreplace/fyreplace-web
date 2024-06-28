@@ -99,7 +99,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v6
         with:
-          build-args:
+          build-args: |
             SENTRY_ORG=${{ vars.SENTRY_ORG }}
             SENTRY_PROJECT=${{ vars.SENTRY_PROJECT }}
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
