@@ -6,10 +6,11 @@ import pkg from './package.json';
 export default defineConfig({
 	plugins: [
 		sentrySvelteKit({
+			adapter: process.env.ADAPTER_NODE ? 'node' : 'auto',
 			sourceMapsUploadOptions: {
 				release: {
-					name: `${pkg.name}@${process.env.PUBLIC_PACKAGE_VERSION}`,
-				},
+					name: `${pkg.name}@${process.env.PUBLIC_PACKAGE_VERSION}`
+				}
 			}
 		}),
 		sveltekit()

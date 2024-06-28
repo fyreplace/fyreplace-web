@@ -8,6 +8,7 @@ ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN $SENTRY_AUTH_TOKEN
 
 WORKDIR /app
+ENV ADAPTER_NODE=true
 
 COPY package.json package-lock.json ./
 RUN npm ci
