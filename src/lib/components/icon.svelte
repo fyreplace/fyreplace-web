@@ -9,6 +9,10 @@
 <style lang="scss">
 	.icon {
 		overflow: visible;
+		fill: none;
 		stroke: currentColor;
+		stroke-width: 20;
+		stroke-linecap: round;
+		stroke-linejoin: round;
 	}
 </style>
