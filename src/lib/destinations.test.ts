@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { allDestinations, essentialDestinations } from '$lib/destinations';
+import { allDestinations, essentialDestinations } from './destinations';
 
 describe('Destinations', () => {
 	it('are unique', () => {
