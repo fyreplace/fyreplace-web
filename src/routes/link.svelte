@@ -36,7 +36,8 @@
 		flex-direction: row;
 		gap: 0.5em;
 		padding: 0.5em 1em;
-		border-radius: 0.5em;
+		border: 2px solid transparent;
+		border-radius: 2em;
 
 		@media screen and (min-width: $width-expanded) {
 			padding-left: 1.5em;
@@ -47,15 +48,20 @@
 			padding-bottom: 1em;
 			padding-top: 1em;
 			gap: 1em;
-		}
-
-		&.active {
-			background: var(--color-accent);
-			color: var(--color-on-accent);
+			border-radius: 1em;
 		}
 
 		&:hover:not(.active) {
 			background: var(--color-accent-hover);
+		}
+
+		&:active:not(.active) {
+			background: var(--color-accent);
+		}
+
+		&.active {
+			border-color: var(--color-accent);
+			color: var(--color-accent);
 		}
 	}
 

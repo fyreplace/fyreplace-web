@@ -34,7 +34,7 @@
 		padding: 0 1em;
 		box-sizing: border-box;
 		align-items: center;
-		border-bottom: 1px solid var(--color-separator);
+		border-bottom: 2px solid var(--color-separator);
 		transition: 0.3s;
 
 		@media screen and (min-height: $height-expanded) {

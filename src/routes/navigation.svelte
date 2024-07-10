@@ -22,7 +22,7 @@
 			height: 100%;
 			display: none;
 			padding: 1em;
-			border-inline-end: 1px solid var(--color-separator);
+			border-inline-end: 2px solid var(--color-separator);
 
 			@include regular {
 				display: flex;
@@ -35,7 +35,7 @@
 			width: 100%;
 			height: 60px;
 			display: flex;
-			border-top: 1px solid var(--color-separator);
+			border-top: 2px solid var(--color-separator);
 
 			@include regular {
 				display: none;
