@@ -11,44 +11,51 @@ function makeIcons(suffix: string, purpose: string) {
 }
 
 export const GET = (() =>
-	json({
-		name: 'Fyreplace',
-		short_name: 'Fyreplace',
-		description: 'Fyreplace social media web app',
-		categories: ['social'],
-		related_applications: [
-			{
-				platform: 'itunes',
-				url: env.PUBLIC_APPLE_STORE_URL
-			},
-			{
-				platform: 'play',
-				url: env.PUBLIC_ANDROID_STORE_URL
-			},
-			{
-				platform: 'windows',
-				url: env.PUBLIC_WINDOWS_STORE_URL
+	json(
+		{
+			name: 'Fyreplace',
+			short_name: 'Fyreplace',
+			description: 'Fyreplace social media web app',
+			categories: ['social'],
+			related_applications: [
+				{
+					platform: 'itunes',
+					url: env.PUBLIC_APPLE_STORE_URL
+				},
+				{
+					platform: 'play',
+					url: env.PUBLIC_ANDROID_STORE_URL
+				},
+				{
+					platform: 'windows',
+					url: env.PUBLIC_WINDOWS_STORE_URL
+				}
+			].filter((app) => app.url),
+			prefer_related_applications: true,
+			display: 'standalone',
+			id: '/feed',
+			start_url: '/feed',
+			theme_color: '#FF8243',
+			icons: [
+				{
+					src: '/icon.svg',
+					type: 'image/svg+xml',
+					sizes: 'any',
+					purpose: 'any monochrome'
+				},
+				{
+					src: '/icon-maskable.svg',
+					type: 'image/svg+xml',
+					sizes: 'any',
+					purpose: 'maskable'
+				}
+			]
+				.concat(makeIcons('', 'any monochrome'))
+				.concat(makeIcons('-maskable', 'maskable'))
+		},
+		{
+			headers: {
+				'Content-Type': 'application/manifest+json'
 			}
-		].filter((app) => app.url),
-		prefer_related_applications: true,
-		display: 'standalone',
-		id: '/feed',
-		start_url: '/feed',
-		theme_color: '#FF8243',
-		icons: [
-			{
-				src: '/icon.svg',
-				type: 'image/svg+xml',
-				sizes: 'any',
-				purpose: 'any monochrome'
-			},
-			{
-				src: '/icon-maskable.svg',
-				type: 'image/svg+xml',
-				sizes: 'any',
-				purpose: 'maskable'
-			}
-		]
-			.concat(makeIcons('', 'any monochrome'))
-			.concat(makeIcons('-maskable', 'maskable'))
-	})) satisfies RequestHandler;
+		}
+	)) satisfies RequestHandler;
