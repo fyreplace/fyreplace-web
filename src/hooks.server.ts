@@ -1,4 +1,3 @@
-import { sequence } from '@sveltejs/kit/hooks';
 import { handleErrorWithSentry, sentryHandle } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 import { env } from '$env/dynamic/public';
@@ -11,6 +10,6 @@ Sentry.init({
 	ignoreTransactions: ['/health']
 });
 
-export const handle = sequence(sentryHandle());
+export const handle = sentryHandle();
 
 export const handleError = handleErrorWithSentry();
