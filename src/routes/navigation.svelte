@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { allDestinations, essentialDestinations } from '$lib/destinations';
+	import { topLevelDestinations, essentialDestinations } from '$lib/destinations';
 	import Link from './link.svelte';
 
 	export let vertical = false;
 </script>
 
 <nav class="navigation" class:vertical>
-	{#each vertical ? allDestinations : essentialDestinations as destination}
+	{#each vertical ? topLevelDestinations : essentialDestinations as destination}
 		<Link {destination} {vertical} />
 	{/each}
 </nav>

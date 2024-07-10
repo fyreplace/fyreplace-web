@@ -5,3 +5,21 @@
 		@content;
 	}
 }
+
+@mixin regular-height {
+	@media screen and (min-height: $height-regular) {
+		@content;
+	}
+}
+
+@mixin expanded {
+	@media screen and (min-width: $width-expanded) and (min-aspect-ratio: 1/1) {
+		@content;
+	}
+}
+
+@mixin expanded-height {
+	@media screen and (min-height: $height-expanded) {
+		@content;
+	}
+}

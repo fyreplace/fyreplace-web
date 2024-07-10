@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { type Destination } from '$lib/destinations';
-	import { currentDestination } from '$lib/stores/destinations';
-	import { fakeLink } from '$lib/actions/destinations';
+	import { currentDestination, navigateTo } from '$lib/stores/destinations';
 
 	export let destinations: Destination[];
 </script>
@@ -11,9 +10,10 @@
 	{#each destinations as destination}
 		<!-- svelte-ignore a11y-missing-attribute -->
 		<a
+			href={destination.route}
 			class="segment"
 			class:active={destination === $currentDestination}
-			use:fakeLink={destination}
+			on:click|preventDefault={navigateTo.bind(null, destination)}
 		>
 			{destination.title}
 		</a>
@@ -21,6 +21,8 @@
 </div>
 
 <style lang="scss">
+	@import '$lib/style/mixins';
+
 	.segments {
 		position: relative;
 		display: grid;
@@ -59,6 +61,10 @@
 		&.active {
 			border-color: var(--color-accent);
 			color: var(--color-accent);
+		}
+
+		&:hover:not(.active) {
+			background: var(--color-accent-hover);
 		}
 	}
 </style>

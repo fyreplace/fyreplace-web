@@ -21,20 +21,15 @@ test('Navigation is complete', async ({ page }) => {
 	await expect(page.getByRole('link', { name: 'Published' })).toBeVisible();
 });
 
-test('Navigation show correct page', async ({ page }) => {
+test('Navigation shows correct page', async ({ page }) => {
 	await page.goto('/');
 
-	for (const destination of [
-		'Feed',
-		'Notifications',
-		'Archive',
-		'Drafts',
-		'Published',
-		'Settings'
-	]) {
+	for (const destination of ['Feed', 'Notifications', 'Archive', 'Drafts', 'Published']) {
 		const url = new RegExp(`/${destination.toLowerCase()}$`);
 		await page.getByRole('link', { name: destination }).click();
-		await page.waitForURL(url);
 		expect(page.url()).toMatch(url);
 	}
+
+	await page.getByRole('link', { name: 'Settings' }).click();
+	expect(page.url()).toMatch(/login/);
 });

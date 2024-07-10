@@ -1,20 +1,28 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
-	import { type Destination } from '$lib/destinations';
+	import { topLevelDestinations, type Destination } from '$lib/destinations';
 	import { currentDestination, navigateTo } from '$lib/stores/destinations';
 	import Icon from '$lib/components/icon.svelte';
-	import { fakeLink } from '$lib/actions/destinations';
 
 	export let destination: Destination;
 	export let vertical = false;
 
-	const active = derived(currentDestination, ($currentDestination) =>
-		[$currentDestination, vertical ? null : $currentDestination?.parent].includes(destination)
-	);
+	const active = derived(currentDestination, ($currentDestination) => {
+		const isExactDestination = $currentDestination === destination;
+		const isChildDestination = $currentDestination?.parent === destination;
+		const isTopLevel = topLevelDestinations.includes($currentDestination);
+		return isExactDestination || (isChildDestination && !(isTopLevel && vertical));
+	});
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-<a class="link" class:vertical class:active={$active} use:fakeLink={destination}>
+<a
+	href={destination.route}
+	class="link"
+	class:vertical
+	class:active={$active}
+	on:click|preventDefault={navigateTo.bind(null, destination)}
+>
 	<Icon><svelte:component this={destination.icon} /></Icon>
 	{destination.title}
 </a>

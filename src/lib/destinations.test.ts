@@ -8,7 +8,10 @@ describe('Destinations', () => {
 				if (first !== second) {
 					expect(first.route).not.toBe(second.route);
 					expect(first.title).not.toBe(second.title);
-					expect(first.icon).not.toBe(second.icon);
+
+					if (first.icon) {
+						expect(first.icon).not.toBe(second.icon);
+					}
 				}
 			}
 		}

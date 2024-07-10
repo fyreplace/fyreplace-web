@@ -1,23 +1,32 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
-	import { allDestinations, Destination } from '$lib/destinations';
+	import { allDestinations, Destination, topLevelDestinations } from '$lib/destinations';
 	import { currentDestination } from '$lib/stores/destinations';
 	import Segments from './segments.svelte';
 
-	export let segmented = false;
+	export let vertical = false;
 
 	const choices = derived(currentDestination, ($destination) => {
 		const firstDestination = $destination.parent ?? $destination;
 		return [firstDestination]
 			.concat(allDestinations.filter((d) => d.parent?.route === firstDestination?.route))
 			.filter(Boolean)
-			.map((d) => d as Destination);
+			.map((d) => d as Destination)
+			.filter((d) => d.isVisible());
 	});
 	const multiChoice = derived(choices, ($choices) => $choices.length > 1);
+	const mandatoryMultiChoice = derived(
+		choices,
+		($choices) => $choices.filter((d) => !topLevelDestinations.includes(d)).length > 1
+	);
+	const showSegments = derived(
+		[multiChoice, mandatoryMultiChoice],
+		([$multiChoice, $mandatoryMultiChoice]) => ($multiChoice && !vertical) || $mandatoryMultiChoice
+	);
 </script>
 
-<div class="top-bar" class:segmented class:centered={$multiChoice}>
-	{#if $multiChoice && segmented}
+<div class="top-bar" class:vertical class:centered={$showSegments}>
+	{#if $showSegments}
 		<Segments destinations={$choices} />
 	{:else}
 		<span class="title">{$currentDestination.title}</span>
@@ -26,7 +35,6 @@
 
 <style lang="scss">
 	@import '$lib/style/mixins';
-	@import '$lib/style/values';
 
 	.top-bar {
 		width: 100%;
@@ -37,28 +45,28 @@
 		border-bottom: 2px solid var(--color-separator);
 		transition: 0.3s;
 
-		@media screen and (min-height: $height-expanded) {
+		@include expanded-height {
 			height: 80px;
 		}
 
-		&.segmented {
-			display: flex;
-
-			@include regular {
-				display: none;
-			}
-
-			&.centered {
-				justify-content: center;
-			}
-		}
-
-		&:not(.segmented) {
+		&.vertical {
 			display: none;
 
 			@include regular {
 				display: flex;
 			}
+		}
+
+		&:not(.vertical) {
+			display: flex;
+
+			@include regular {
+				display: none;
+			}
+		}
+
+		&.centered {
+			justify-content: center;
 		}
 	}
 
@@ -66,7 +74,7 @@
 		font-size: 1.25em;
 		font-weight: bold;
 
-		@media screen and (min-height: $height-expanded) {
+		@include expanded-height {
 			font-size: 1.5em;
 		}
 	}

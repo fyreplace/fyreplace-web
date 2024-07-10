@@ -1,3 +1,16 @@
+<script lang="ts">
+	import { browser } from '$app/environment';
+	import { Destination } from '$lib/destinations';
+	import { navigateTo } from '$lib/stores/destinations';
+	import { isAuthenticated } from '$lib/stores/authentication';
+
+	$: {
+		if (!$isAuthenticated && browser) {
+			navigateTo(Destination.Login);
+		}
+	}
+</script>
+
 <div class="destination">Settings</div>
 
 <style lang="scss">

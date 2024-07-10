@@ -4,6 +4,8 @@ import ArchiveDestination from '$lib/components/destinations/archive.svelte';
 import DraftsDestination from '$lib/components/destinations/drafts.svelte';
 import PublishedDestination from '$lib/components/destinations/published.svelte';
 import SettingsDestination from '$lib/components/destinations/settings.svelte';
+import LoginDestination from '$lib/components/destinations/login.svelte';
+import RegisterDestination from '$lib/components/destinations/register.svelte';
 import BellIcon from '$lib/components/icons/bell.svelte';
 import DocumentIcon from '$lib/components/icons/document.svelte';
 import HistoryIcon from '$lib/components/icons/history.svelte';
@@ -15,8 +17,9 @@ export interface Destination {
 	content: any;
 	route: string;
 	title: string;
-	icon: any;
+	icon?: any;
 	parent?: Destination;
+	isVisible: () => Boolean;
 }
 
 export namespace Destination {
@@ -24,14 +27,16 @@ export namespace Destination {
 		content: FeedDestination,
 		route: '/feed',
 		title: 'Feed',
-		icon: HomeIcon
+		icon: HomeIcon,
+		isVisible: () => true
 	};
 
 	export const Notifications: Destination = {
 		content: NotificationsDestination,
 		route: '/notifications',
 		title: 'Notifications',
-		icon: BellIcon
+		icon: BellIcon,
+		isVisible: () => true
 	};
 
 	export const Archive: Destination = {
@@ -39,14 +44,16 @@ export namespace Destination {
 		route: '/archive',
 		title: 'Archive',
 		icon: HistoryIcon,
-		parent: Notifications
+		parent: Notifications,
+		isVisible: () => true
 	};
 
 	export const Drafts: Destination = {
 		content: DraftsDestination,
 		route: '/drafts',
 		title: 'Drafts',
-		icon: DocumentIcon
+		icon: DocumentIcon,
+		isVisible: () => true
 	};
 
 	export const Published: Destination = {
@@ -54,18 +61,38 @@ export namespace Destination {
 		route: '/published',
 		title: 'Published',
 		icon: InventoryIcon,
-		parent: Drafts
+		parent: Drafts,
+		isVisible: () => true
 	};
 
 	export const Settings: Destination = {
 		content: SettingsDestination,
 		route: '/settings',
 		title: 'Settings',
-		icon: PersonIcon
+		icon: PersonIcon,
+		isVisible: () => false
+	};
+
+	export const Login: Destination = {
+		content: LoginDestination,
+		route: '/login',
+		title: 'Login',
+		parent: Settings,
+		isVisible: () => true
+	};
+
+	export const Register: Destination = {
+		content: RegisterDestination,
+		route: '/register',
+		title: 'Sign up',
+		parent: Settings,
+		isVisible: () => true
 	};
 }
 
 export const allDestinations = Object.values(Destination);
+
+export const topLevelDestinations = Object.values(Destination).filter((d) => d.icon);
 
 export const essentialDestinations = allDestinations.filter((destination) => !destination.parent);
 

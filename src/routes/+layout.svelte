@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Navigation from './navigation.svelte';
 	import TopBar from './top-bar.svelte';
 </script>
@@ -6,7 +6,7 @@
 <div class="layout">
 	<Navigation vertical />
 	<div class="content">
-		<TopBar segmented />
+		<TopBar vertical />
 		<TopBar />
 		<main class="page">
 			<slot />
