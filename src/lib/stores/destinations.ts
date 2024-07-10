@@ -1,7 +1,16 @@
-import { derived } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 import { page } from '$app/stores';
-import { allDestinations } from '$lib/destinations';
+import { replaceState } from '$app/navigation';
+import { Destination, findDestinationByRoute } from '$lib/destinations';
 
-export const currentDestination = derived(page, ($page) =>
-	allDestinations.find((i) => i.route === $page.route.id)
+const actualDestination = writable<Destination | null>(null);
+
+export const currentDestination = derived(
+	[page, actualDestination],
+	([$page, actualDestination]) => actualDestination ?? findDestinationByRoute($page.url.pathname)
 );
+
+export function navigateTo(destination: Destination) {
+	replaceState(destination.route, {});
+	actualDestination.set(destination);
+}

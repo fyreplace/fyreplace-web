@@ -20,8 +20,8 @@ describe('Destinations', () => {
 
 	it('do not loop', () => {
 		for (const destination of allDestinations) {
-			expect(destination.replacement).not.toBe(destination);
-			expect(destination.replacement?.replacement).not.toBe(destination);
+			expect(destination.parent).not.toBe(destination);
+			expect(destination.parent?.parent).not.toBe(destination);
 		}
 	});
 });

@@ -1,7 +1,7 @@
-<div class="page">Feed</div>
+<div class="destination">Archive</div>
 
 <style lang="scss">
-	.page {
+	.destination {
 		width: 100%;
 		height: 100%;
 		display: flex;

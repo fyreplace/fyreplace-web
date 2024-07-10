@@ -1,21 +1,18 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
-	import { page } from '$app/stores';
 	import { allDestinations, Destination } from '$lib/destinations';
+	import { currentDestination } from '$lib/stores/destinations';
 	import Segments from './segments.svelte';
 
 	export let segmented = false;
 
-	const destination = derived(page, ($page) =>
-		allDestinations.find((d) => d.route === $page.route.id)
-	);
-	const choices = derived(
-		[page, destination],
-		([$page, $destination]) =>
-			[$destination?.replacement, $destination]
-				.concat(allDestinations.filter((d) => d.replacement?.route === $page.route.id))
-				.filter(Boolean) as Destination[]
-	);
+	const choices = derived(currentDestination, ($destination) => {
+		const firstDestination = $destination.parent ?? $destination;
+		return [firstDestination]
+			.concat(allDestinations.filter((d) => d.parent?.route === firstDestination?.route))
+			.filter(Boolean)
+			.map((d) => d as Destination);
+	});
 	const multiChoice = derived(choices, ($choices) => $choices.length > 1);
 </script>
 
@@ -23,7 +20,7 @@
 	{#if $multiChoice && segmented}
 		<Segments destinations={$choices} />
 	{:else}
-		<span class="title">{$destination?.title}</span>
+		<span class="title">{$currentDestination.title}</span>
 	{/if}
 </div>
 

@@ -1,7 +1,7 @@
-<div class="page">Settings</div>
+<div class="destination">Settings</div>
 
 <style lang="scss">
-	.page {
+	.destination {
 		width: 100%;
 		height: 100%;
 		display: flex;

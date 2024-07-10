@@ -1,13 +1,19 @@
 <script lang="ts">
 	import { type Destination } from '$lib/destinations';
 	import { currentDestination } from '$lib/stores/destinations';
+	import { fakeLink } from '$lib/actions/destinations';
 
 	export let destinations: Destination[];
 </script>
 
 <div class="segments">
 	{#each destinations as destination}
-		<a href={destination.route} class="segment" class:active={destination === $currentDestination}>
+		<!-- svelte-ignore a11y-missing-attribute -->
+		<a
+			class="segment"
+			class:active={destination === $currentDestination}
+			use:fakeLink={destination}
+		>
 			{destination.title}
 		</a>
 	{/each}

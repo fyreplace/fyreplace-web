@@ -1,7 +1,7 @@
-<div class="page">Drafts</div>
+<div class="destination">Drafts</div>
 
 <style lang="scss">
-	.page {
+	.destination {
 		width: 100%;
 		height: 100%;
 		display: flex;

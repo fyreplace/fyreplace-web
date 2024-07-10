@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { derived, type Readable } from 'svelte/store';
+	import { derived } from 'svelte/store';
 	import { type Destination } from '$lib/destinations';
-	import { currentDestination } from '$lib/stores/destinations';
+	import { currentDestination, navigateTo } from '$lib/stores/destinations';
 	import Icon from '$lib/components/icon.svelte';
+	import { fakeLink } from '$lib/actions/destinations';
 
 	export let destination: Destination;
 	export let vertical = false;
 
-	let active: Readable<boolean>;
-
-	$: active = derived(currentDestination, ($currentDestination) =>
-		[$currentDestination, vertical ? null : $currentDestination?.replacement].includes(destination)
+	const active = derived(currentDestination, ($currentDestination) =>
+		[$currentDestination, vertical ? null : $currentDestination?.parent].includes(destination)
 	);
 </script>
 
-<a href={destination.route} class="link" class:vertical class:active={$active}>
+<!-- svelte-ignore a11y-missing-attribute -->
+<a class="link" class:vertical class:active={$active} use:fakeLink={destination}>
 	<Icon><svelte:component this={destination.icon} /></Icon>
 	{destination.title}
 </a>
