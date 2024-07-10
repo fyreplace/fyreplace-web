@@ -29,6 +29,7 @@
 
 	.segment {
 		padding: 0.5em 1em;
+		border: 2px solid transparent;
 		border-radius: 2em;
 		display: flex;
 		justify-content: center;
@@ -37,8 +38,8 @@
 		transition: 0.3s;
 
 		&.active {
-			background: var(--color-accent);
-			color: var(--color-on-accent);
+			border-color: var(--color-accent);
+			color: var(--color-accent);
 		}
 	}
 </style>
