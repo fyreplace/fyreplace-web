@@ -8,7 +8,7 @@
 	export let destination: Destination;
 	export let vertical = false;
 
-	const active = derived(currentDestination, ($currentDestination) => {
+	const selected = derived(currentDestination, ($currentDestination) => {
 		const isExactDestination = $currentDestination === destination;
 		const isChildDestination = $currentDestination?.parent === destination;
 		const isTopLevel = topLevelDestinations.includes($currentDestination);
@@ -16,12 +16,11 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
 <a
 	href={destination.route}
 	class="link"
 	class:vertical
-	class:active={$active}
+	class:selected={$selected}
 	on:click|preventDefault={navigateTo.bind(null, destination)}
 >
 	<Icon><svelte:component this={destination.icon} /></Icon>
@@ -60,15 +59,15 @@
 			border-radius: 1em;
 		}
 
-		&:hover:not(.active) {
+		&:hover:not(.selected) {
 			background: var(--color-accent-hover);
 		}
 
-		&:active:not(.active) {
+		&:active:not(.selected) {
 			background: var(--color-accent);
 		}
 
-		&.active {
+		&.selected {
 			border-color: var(--color-accent);
 			color: var(--color-accent);
 		}
@@ -78,7 +77,7 @@
 		flex: 1;
 		justify-content: center;
 
-		&.active {
+		&.selected {
 			color: var(--color-accent);
 		}
 	}

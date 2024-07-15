@@ -9,11 +9,10 @@
 <div class="segments">
 	<span class="border" />
 	{#each destinations as destination}
-		<!-- svelte-ignore a11y-missing-attribute -->
 		<a
 			href={destination.route}
 			class="segment"
-			class:active={destination === $currentDestination}
+			class:selected={destination === $currentDestination}
 			on:click|preventDefault={navigateTo.bind(null, destination)}
 		>
 			{i18next.t(destination.titleKey)}
@@ -51,20 +50,20 @@
 		text-decoration: none;
 		transition: 0.3s;
 
-		&:hover:not(.active) {
+		&:hover:not(.selected) {
 			background: var(--color-accent-hover);
 		}
 
-		&:active:not(.active) {
+		&:active:not(.selected) {
 			background: var(--color-accent);
 		}
 
-		&.active {
+		&.selected {
 			border-color: var(--color-accent);
 			color: var(--color-accent);
 		}
 
-		&:hover:not(.active) {
+		&:hover:not(.selected) {
 			background: var(--color-accent-hover);
 		}
 	}
