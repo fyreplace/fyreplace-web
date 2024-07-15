@@ -1,0 +1,20 @@
+{
+	"en": {
+		"translation": {
+			"destinations/feed": "Feed",
+			"destinations/notifications": "Notifications",
+			"destinations/archive": "Archive",
+			"destinations/drafts": "Drafts",
+			"destinations/published": "Published",
+			"destinations/settings": "Settings",
+			"destinations/login": "Login",
+			"destinations/register": "Sign up",
+			"login/identifier": "Identifier",
+			"login/identifier-placeholder": "Username or email",
+			"register/username": "Username",
+			"register/username-placeholder": "Only letters, numbers and dashes",
+			"register/email": "Email",
+			"register/email-placeholder": "email@example.org"
+		}
+	}
+}

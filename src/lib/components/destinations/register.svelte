@@ -1,4 +1,5 @@
 <script lang="ts">
+	import i18next from 'i18next';
 	import Logo from '$lib/components/branding/logo.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
@@ -19,14 +20,19 @@
 	<Logo />
 	<div class="fields">
 		<TextField
-			label="Username"
+			label={i18next.t('register/username')}
 			name="username"
-			placeholder="Only letters, numbers and dashes"
+			placeholder={i18next.t('register/username-placeholder')}
 			bind:value={username}
 		/>
-		<TextField label="Email" name="email" placeholder="email@example.org" bind:value={email} />
+		<TextField
+			label={i18next.t('register/email')}
+			name="email"
+			placeholder={i18next.t('register/email-placeholder')}
+			bind:value={email}
+		/>
 	</div>
-	<Button disabled={!canSubmit}>Sign up</Button>
+	<Button disabled={!canSubmit}>{i18next.t('destinations/register')}</Button>
 </form>
 
 <style lang="scss">

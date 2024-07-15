@@ -7,7 +7,7 @@ describe('Destinations', () => {
 			for (const second of allDestinations) {
 				if (first !== second) {
 					expect(first.route).not.toBe(second.route);
-					expect(first.title).not.toBe(second.title);
+					expect(first.titleKey).not.toBe(second.titleKey);
 
 					if (first.icon) {
 						expect(first.icon).not.toBe(second.icon);

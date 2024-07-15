@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
+	import i18next from 'i18next';
 	import { topLevelDestinations, type Destination } from '$lib/destinations';
 	import { currentDestination, navigateTo } from '$lib/stores/destinations';
 	import Icon from '$lib/components/icon.svelte';
@@ -24,7 +25,7 @@
 	on:click|preventDefault={navigateTo.bind(null, destination)}
 >
 	<Icon><svelte:component this={destination.icon} /></Icon>
-	{destination.title}
+	{i18next.t(destination.titleKey)}
 </a>
 
 <style lang="scss">

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { type Destination } from '$lib/destinations';
+	import i18next from 'i18next';
+	import type { Destination } from '$lib/destinations';
 	import { currentDestination, navigateTo } from '$lib/stores/destinations';
 
 	export let destinations: Destination[];
@@ -15,7 +16,7 @@
 			class:active={destination === $currentDestination}
 			on:click|preventDefault={navigateTo.bind(null, destination)}
 		>
-			{destination.title}
+			{i18next.t(destination.titleKey)}
 		</a>
 	{/each}
 </div>

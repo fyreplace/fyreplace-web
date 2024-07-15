@@ -2,6 +2,7 @@
 	import Logo from '$lib/components/branding/logo.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
+	import i18next from 'i18next';
 
 	let identifier = '';
 	let canSubmit = false;
@@ -12,12 +13,12 @@
 <form class="destination">
 	<Logo />
 	<TextField
-		label="Identifier"
+		label={i18next.t('login/identifier')}
 		name="username"
-		placeholder="Username or email"
+		placeholder={i18next.t('login/identifier-placeholder')}
 		bind:value={identifier}
 	/>
-	<Button disabled={!canSubmit}>Login</Button>
+	<Button disabled={!canSubmit}>{i18next.t('destinations/login')}</Button>
 </form>
 
 <style lang="scss">

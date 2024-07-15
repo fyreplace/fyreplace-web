@@ -16,7 +16,7 @@ import PersonIcon from '$lib/components/icons/person.svelte';
 export interface Destination {
 	content: any;
 	route: string;
-	title: string;
+	titleKey: string;
 	icon?: any;
 	parent?: Destination;
 	isVisible: () => Boolean;
@@ -26,7 +26,7 @@ export namespace Destination {
 	export const Feed: Destination = {
 		content: FeedDestination,
 		route: '/feed',
-		title: 'Feed',
+		titleKey: 'destinations/feed',
 		icon: HomeIcon,
 		isVisible: () => true
 	};
@@ -34,7 +34,7 @@ export namespace Destination {
 	export const Notifications: Destination = {
 		content: NotificationsDestination,
 		route: '/notifications',
-		title: 'Notifications',
+		titleKey: 'destinations/notifications',
 		icon: BellIcon,
 		isVisible: () => true
 	};
@@ -42,7 +42,7 @@ export namespace Destination {
 	export const Archive: Destination = {
 		content: ArchiveDestination,
 		route: '/archive',
-		title: 'Archive',
+		titleKey: 'destinations/archive',
 		icon: HistoryIcon,
 		parent: Notifications,
 		isVisible: () => true
@@ -51,7 +51,7 @@ export namespace Destination {
 	export const Drafts: Destination = {
 		content: DraftsDestination,
 		route: '/drafts',
-		title: 'Drafts',
+		titleKey: 'destinations/drafts',
 		icon: DocumentIcon,
 		isVisible: () => true
 	};
@@ -59,7 +59,7 @@ export namespace Destination {
 	export const Published: Destination = {
 		content: PublishedDestination,
 		route: '/published',
-		title: 'Published',
+		titleKey: 'destinations/published',
 		icon: InventoryIcon,
 		parent: Drafts,
 		isVisible: () => true
@@ -68,7 +68,7 @@ export namespace Destination {
 	export const Settings: Destination = {
 		content: SettingsDestination,
 		route: '/settings',
-		title: 'Settings',
+		titleKey: 'destinations/settings',
 		icon: PersonIcon,
 		isVisible: () => false
 	};
@@ -76,7 +76,7 @@ export namespace Destination {
 	export const Login: Destination = {
 		content: LoginDestination,
 		route: '/login',
-		title: 'Login',
+		titleKey: 'destinations/login',
 		parent: Settings,
 		isVisible: () => true
 	};
@@ -84,7 +84,7 @@ export namespace Destination {
 	export const Register: Destination = {
 		content: RegisterDestination,
 		route: '/register',
-		title: 'Sign up',
+		titleKey: 'destinations/register',
 		parent: Settings,
 		isVisible: () => true
 	};

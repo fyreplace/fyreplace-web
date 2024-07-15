@@ -1,4 +1,5 @@
 <script lang="ts">
+	import i18next from 'i18next';
 	import { browser } from '$app/environment';
 	import { Destination } from '$lib/destinations';
 	import { navigateTo } from '$lib/stores/destinations';
@@ -11,7 +12,7 @@
 	}
 </script>
 
-<div class="destination">Settings</div>
+<div class="destination">{i18next.t('destinations/settings')}</div>
 
 <style lang="scss">
 	.destination {

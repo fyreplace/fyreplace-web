@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
+	import i18next from 'i18next';
 	import { allDestinations, Destination, topLevelDestinations } from '$lib/destinations';
 	import { currentDestination } from '$lib/stores/destinations';
 	import Segments from './segments.svelte';
@@ -29,7 +30,7 @@
 	{#if $showSegments}
 		<Segments destinations={$choices} />
 	{:else}
-		<span class="title">{$currentDestination.title}</span>
+		<span class="title">{i18next.t($currentDestination.titleKey)}</span>
 	{/if}
 </div>
 

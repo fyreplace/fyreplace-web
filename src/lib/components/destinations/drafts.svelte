@@ -1,4 +1,8 @@
-<div class="destination">Drafts</div>
+<script lang="ts">
+	import i18next from 'i18next';
+</script>
+
+<div class="destination">{i18next.t('destinations/drafts')}</div>
 
 <style lang="scss">
 	.destination {
