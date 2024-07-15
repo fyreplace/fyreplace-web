@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="destination">{i18next.t('destinations/settings')}</div>
+<div class="destination">{i18next.t('destinations.settings')}</div>
 
 <style lang="scss">
 	.destination {

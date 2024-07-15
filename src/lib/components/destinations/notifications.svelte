@@ -2,7 +2,7 @@
 	import i18next from 'i18next';
 </script>
 
-<div class="destination">{i18next.t('destinations/notifications')}</div>
+<div class="destination">{i18next.t('destinations.notifications')}</div>
 
 <style lang="scss">
 	.destination {

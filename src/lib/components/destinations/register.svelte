@@ -20,19 +20,19 @@
 	<Logo />
 	<div class="fields">
 		<TextField
-			label={i18next.t('register/username')}
+			label={i18next.t('register.username')}
 			name="username"
-			placeholder={i18next.t('register/username-placeholder')}
+			placeholder={i18next.t('register.username-placeholder')}
 			bind:value={username}
 		/>
 		<TextField
-			label={i18next.t('register/email')}
+			label={i18next.t('register.email')}
 			name="email"
-			placeholder={i18next.t('register/email-placeholder')}
+			placeholder={i18next.t('register.email-placeholder')}
 			bind:value={email}
 		/>
 	</div>
-	<Button disabled={!canSubmit}>{i18next.t('destinations/register')}</Button>
+	<Button disabled={!canSubmit}>{i18next.t('destinations.register')}</Button>
 </form>
 
 <style lang="scss">

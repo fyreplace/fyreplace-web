@@ -13,12 +13,12 @@
 <form class="destination">
 	<Logo />
 	<TextField
-		label={i18next.t('login/identifier')}
+		label={i18next.t('login.identifier')}
 		name="username"
-		placeholder={i18next.t('login/identifier-placeholder')}
+		placeholder={i18next.t('login.identifier-placeholder')}
 		bind:value={identifier}
 	/>
-	<Button disabled={!canSubmit}>{i18next.t('destinations/login')}</Button>
+	<Button disabled={!canSubmit}>{i18next.t('destinations.login')}</Button>
 </form>
 
 <style lang="scss">

@@ -1,22 +1,30 @@
 {
 	"en": {
 		"translation": {
-			"app-name": "Fyreplace",
-			"app-description": "Fyreplace social media web app",
-			"destinations/feed": "Feed",
-			"destinations/notifications": "Notifications",
-			"destinations/archive": "Archive",
-			"destinations/drafts": "Drafts",
-			"destinations/published": "Published",
-			"destinations/settings": "Settings",
-			"destinations/login": "Login",
-			"destinations/register": "Sign up",
-			"login/identifier": "Identifier",
-			"login/identifier-placeholder": "Username or email",
-			"register/username": "Username",
-			"register/username-placeholder": "Only letters, numbers and dashes",
-			"register/email": "Email",
-			"register/email-placeholder": "email@example.org"
+			"app": {
+				"name": "Fyreplace",
+				"description": "Fyreplace social media web app"
+			},
+			"destinations": {
+				"feed": "Feed",
+				"notifications": "Notifications",
+				"archive": "Archive",
+				"drafts": "Drafts",
+				"published": "Published",
+				"settings": "Settings",
+				"login": "Login",
+				"register": "Sign up"
+			},
+			"login": {
+				"identifier": "Identifier",
+				"identifier-placeholder": "Username or email"
+			},
+			"register": {
+				"username": "Username",
+				"username-placeholder": "Only letters, numbers and dashes",
+				"email": "Email",
+				"email-placeholder": "email@example.org"
+			}
 		}
 	}
 }

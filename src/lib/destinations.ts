@@ -26,7 +26,7 @@ export namespace Destination {
 	export const Feed: Destination = {
 		content: FeedDestination,
 		route: '/feed',
-		titleKey: 'destinations/feed',
+		titleKey: 'destinations.feed',
 		icon: HomeIcon,
 		isVisible: () => true
 	};
@@ -34,7 +34,7 @@ export namespace Destination {
 	export const Notifications: Destination = {
 		content: NotificationsDestination,
 		route: '/notifications',
-		titleKey: 'destinations/notifications',
+		titleKey: 'destinations.notifications',
 		icon: BellIcon,
 		isVisible: () => true
 	};
@@ -42,7 +42,7 @@ export namespace Destination {
 	export const Archive: Destination = {
 		content: ArchiveDestination,
 		route: '/archive',
-		titleKey: 'destinations/archive',
+		titleKey: 'destinations.archive',
 		icon: HistoryIcon,
 		parent: Notifications,
 		isVisible: () => true
@@ -51,7 +51,7 @@ export namespace Destination {
 	export const Drafts: Destination = {
 		content: DraftsDestination,
 		route: '/drafts',
-		titleKey: 'destinations/drafts',
+		titleKey: 'destinations.drafts',
 		icon: DocumentIcon,
 		isVisible: () => true
 	};
@@ -59,7 +59,7 @@ export namespace Destination {
 	export const Published: Destination = {
 		content: PublishedDestination,
 		route: '/published',
-		titleKey: 'destinations/published',
+		titleKey: 'destinations.published',
 		icon: InventoryIcon,
 		parent: Drafts,
 		isVisible: () => true
@@ -68,7 +68,7 @@ export namespace Destination {
 	export const Settings: Destination = {
 		content: SettingsDestination,
 		route: '/settings',
-		titleKey: 'destinations/settings',
+		titleKey: 'destinations.settings',
 		icon: PersonIcon,
 		isVisible: () => false
 	};
@@ -76,7 +76,7 @@ export namespace Destination {
 	export const Login: Destination = {
 		content: LoginDestination,
 		route: '/login',
-		titleKey: 'destinations/login',
+		titleKey: 'destinations.login',
 		parent: Settings,
 		isVisible: () => true
 	};
@@ -84,7 +84,7 @@ export namespace Destination {
 	export const Register: Destination = {
 		content: RegisterDestination,
 		route: '/register',
-		titleKey: 'destinations/register',
+		titleKey: 'destinations.register',
 		parent: Settings,
 		isVisible: () => true
 	};
