@@ -2,7 +2,9 @@
 	import i18next from 'i18next';
 </script>
 
-<div class="destination">{i18next.t('destinations.feed')}</div>
+<div class="destination" data-testid="destinations.drafts">
+	{i18next.t('destinations.drafts')}
+</div>
 
 <style lang="scss">
 	.destination {

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('Initial page is feed', async ({ page }) => {
 	await page.goto('/');
-	expect(page.url()).toMatch(/\/feed$/);
+	await expect(page.getByTestId('destinations.feed')).toBeVisible();
 });
 
 test('Navigation is complete', async ({ page }) => {
@@ -25,11 +25,11 @@ test('Navigation shows correct page', async ({ page }) => {
 	await page.goto('/');
 
 	for (const destination of ['Feed', 'Notifications', 'Archive', 'Drafts', 'Published']) {
-		const url = new RegExp(`/${destination.toLowerCase()}$`);
+		const name = destination.toLowerCase();
 		await page.getByRole('link', { name: destination }).click();
-		expect(page.url()).toMatch(url);
+		await expect(page.getByTestId('destinations.' + name)).toBeVisible();
 	}
 
 	await page.getByRole('link', { name: 'Settings' }).click();
-	expect(page.url()).toMatch(/login/);
+	await expect(page.getByTestId('destinations.login')).toBeVisible();
 });

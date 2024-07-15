@@ -10,7 +10,7 @@
 	$: canSubmit = identifier.length >= 3 && identifier.length <= 254;
 </script>
 
-<form class="destination">
+<form class="destination" data-testid="destinations.login">
 	<Logo />
 	<TextField
 		label={i18next.t('login.identifier')}

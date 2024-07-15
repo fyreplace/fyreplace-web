@@ -16,7 +16,7 @@
 		email.includes('@');
 </script>
 
-<form class="destination">
+<form class="destination" data-testid="destinations.register">
 	<Logo />
 	<div class="fields">
 		<TextField

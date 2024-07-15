@@ -1,7 +1,13 @@
 <script lang="ts">
+	import i18next from 'i18next';
+	import { currentDestination } from '$lib/stores/destinations';
 	import Navigation from './navigation.svelte';
 	import TopBar from './top-bar.svelte';
 </script>
+
+<svelte:head>
+	<title>{i18next.t($currentDestination.titleKey)} | {i18next.t('app.name')}</title>
+</svelte:head>
 
 <div class="layout">
 	<Navigation vertical />

@@ -1,18 +1,20 @@
 <script lang="ts">
 	import i18next from 'i18next';
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { Destination } from '$lib/destinations';
-	import { navigateTo } from '$lib/stores/destinations';
 	import { isAuthenticated } from '$lib/stores/authentication';
 
-	$: {
-		if (!$isAuthenticated && browser) {
-			navigateTo(Destination.Login);
-		}
+	if (!$isAuthenticated && browser) {
+		goto(Destination.Login.route, { replaceState: true });
 	}
 </script>
 
-<div class="destination">{i18next.t('destinations.settings')}</div>
+{#if $isAuthenticated}
+	<div class="destination" data-testid="destinations.settings">
+		{i18next.t('destinations.settings')}
+	</div>
+{/if}
 
 <style lang="scss">
 	.destination {

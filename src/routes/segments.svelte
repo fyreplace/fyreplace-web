@@ -1,7 +1,7 @@
 <script lang="ts">
 	import i18next from 'i18next';
 	import type { Destination } from '$lib/destinations';
-	import { currentDestination, navigateTo } from '$lib/stores/destinations';
+	import { currentDestination } from '$lib/stores/destinations';
 
 	export let destinations: Destination[];
 </script>
@@ -11,9 +11,9 @@
 	{#each destinations as destination}
 		<a
 			href={destination.route}
+			data-sveltekit-replacestate
 			class="segment"
 			class:selected={destination === $currentDestination}
-			on:click|preventDefault={navigateTo.bind(null, destination)}
 		>
 			{i18next.t(destination.titleKey)}
 		</a>
