@@ -1,6 +1,8 @@
 {
 	"en": {
 		"translation": {
+			"app-name": "Fyreplace",
+			"app-description": "Fyreplace social media web app",
 			"destinations/feed": "Feed",
 			"destinations/notifications": "Notifications",
 			"destinations/archive": "Archive",

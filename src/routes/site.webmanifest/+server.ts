@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { env } from '$env/dynamic/public';
 
@@ -13,9 +14,9 @@ function makeIcons(suffix: string, purpose: string) {
 export const GET = (() =>
 	json(
 		{
-			name: 'Fyreplace',
-			short_name: 'Fyreplace',
-			description: 'Fyreplace social media web app',
+			name: i18next.t('app-name'),
+			short_name: i18next.t('app-name'),
+			description: i18next.t('app-description'),
 			categories: ['social'],
 			related_applications: [
 				{
