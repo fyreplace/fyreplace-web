@@ -18,7 +18,7 @@
 		transition: 0.3s;
 
 		&:disabled {
-			background-color: gray;
+			background-color: var(--color-disabled);
 			cursor: not-allowed;
 		}
 

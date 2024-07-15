@@ -25,7 +25,7 @@
 	input {
 		padding: 0.5em;
 		box-sizing: border-box;
-		border: 2px solid gray;
+		border: 2px solid var(--color-border);
 		border-radius: 0.5em;
 		font-size: 1em;
 		transition: 0.1s;
