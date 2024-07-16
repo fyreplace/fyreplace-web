@@ -6,25 +6,33 @@
 import { build, files, version } from '$service-worker';
 
 const worker = self as unknown as ServiceWorkerGlobalScope;
-const currentCache = `svelte-cache-${version}`;
 const assets = [...build, ...files];
+const cacheKeyPrefix = 'svelte';
+const cacheKeySuffix = version;
 
-async function createCache() {
-	const cache = await caches.open(currentCache);
+async function getCacheKey() {
+	const keys = await caches.keys();
+	const key = keys.find((key) => key.endsWith(cacheKeySuffix));
+	return key || `${cacheKeyPrefix}-${Date.now()}-${cacheKeySuffix}`;
+}
+
+async function onInstall() {
+	worker.skipWaiting();
+	const cache = await caches.open(await getCacheKey());
 	await cache.addAll(assets);
 }
 
-async function deleteOldCaches() {
-	for (const key of await caches.keys()) {
-		if (key !== currentCache) {
-			await caches.delete(key);
-		}
+async function onActivate() {
+	for (const key of (await caches.keys()).sort().reverse().slice(3)) {
+		await caches.delete(key);
 	}
+
+	worker.clients.claim();
 }
 
-async function respond(event: FetchEvent) {
+async function onFetch(event: FetchEvent) {
 	const url = new URL(event.request.url);
-	const cache = await caches.open(currentCache);
+	const cache = await caches.open(await getCacheKey());
 
 	if (assets.includes(url.pathname)) {
 		const response = await cache.match(url.pathname);
@@ -47,12 +55,12 @@ async function respond(event: FetchEvent) {
 	return response;
 }
 
-worker.addEventListener('install', (event) => event.waitUntil(createCache()));
+worker.addEventListener('install', (event) => event.waitUntil(onInstall()));
 
-worker.addEventListener('activate', (event) => event.waitUntil(deleteOldCaches()));
+worker.addEventListener('activate', (event) => event.waitUntil(onActivate()));
 
 worker.addEventListener('fetch', (event) => {
 	if (event.request.method === 'GET') {
-		event.respondWith(respond(event));
+		event.respondWith(onFetch(event));
 	}
 });
