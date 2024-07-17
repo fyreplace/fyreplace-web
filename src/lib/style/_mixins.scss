@@ -1,6 +1,6 @@
 @import './values';
 
-@mixin regular {
+@mixin regular-width {
 	@media screen and (min-width: $width-regular) and (min-aspect-ratio: 1/1) {
 		@content;
 	}
@@ -12,7 +12,13 @@
 	}
 }
 
-@mixin expanded {
+@mixin regular {
+	@media screen and (min-width: $width-regular) and (min-height: $height-regular) and (min-aspect-ratio: 1/1) {
+		@content;
+	}
+}
+
+@mixin expanded-width {
 	@media screen and (min-width: $width-expanded) and (min-aspect-ratio: 1/1) {
 		@content;
 	}
@@ -20,6 +26,12 @@
 
 @mixin expanded-height {
 	@media screen and (min-height: $height-expanded) {
+		@content;
+	}
+}
+
+@mixin expanded {
+	@media screen and (min-width: $width-expanded) and (min-height: $height-expanded) and (min-aspect-ratio: 1/1) {
 		@content;
 	}
 }

@@ -36,14 +36,20 @@
 </form>
 
 <style lang="scss">
+	@import '$lib/style/mixins';
+
 	.destination {
 		width: 100%;
-		height: 100%;
+		padding: 2em 0;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		gap: 2em;
+
+		@include expanded-height {
+			height: 100%;
+		}
 	}
 
 	.fields {

@@ -6,13 +6,13 @@
 	import Icon from '$lib/components/icon.svelte';
 
 	export let destination: Destination;
-	export let vertical = false;
+	export let sideNavigation = false;
 
 	const selected = derived(currentDestination, ($currentDestination) => {
 		const isExactDestination = $currentDestination === destination;
 		const isChildDestination = $currentDestination?.parent === destination;
 		const isTopLevel = topLevelDestinations.includes($currentDestination);
-		return isExactDestination || (isChildDestination && !(isTopLevel && vertical));
+		return isExactDestination || (isChildDestination && !(isTopLevel && sideNavigation));
 	});
 </script>
 
@@ -20,7 +20,7 @@
 	href={destination.route}
 	data-sveltekit-replacestate
 	class="link"
-	class:vertical
+	class:side-navigation={sideNavigation}
 	class:selected={$selected}
 >
 	<Icon><svelte:component this={destination.icon} /></Icon>
@@ -40,7 +40,7 @@
 		transition: 0.3s;
 	}
 
-	.vertical {
+	.side-navigation {
 		flex-direction: row;
 		gap: 0.5em;
 		padding: 0.5em 1em;
@@ -73,7 +73,7 @@
 		}
 	}
 
-	:not(.vertical) {
+	:not(.side-navigation) {
 		flex: 1;
 		justify-content: center;
 

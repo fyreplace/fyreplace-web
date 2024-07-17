@@ -5,7 +5,7 @@
 	import { currentDestination } from '$lib/stores/destinations';
 	import Segments from './segments.svelte';
 
-	export let vertical = false;
+	export let sideNavigation = false;
 
 	const choices = derived(currentDestination, ($destination) => {
 		const firstDestination = $destination.parent ?? $destination;
@@ -22,11 +22,12 @@
 	);
 	const showSegments = derived(
 		[multiChoice, mandatoryMultiChoice],
-		([$multiChoice, $mandatoryMultiChoice]) => ($multiChoice && !vertical) || $mandatoryMultiChoice
+		([$multiChoice, $mandatoryMultiChoice]) =>
+			($multiChoice && !sideNavigation) || $mandatoryMultiChoice
 	);
 </script>
 
-<div class="top-bar" class:vertical class:centered={$showSegments}>
+<div class="top-bar" class:side-navigation={sideNavigation} class:centered={$showSegments}>
 	{#if $showSegments}
 		<Segments destinations={$choices} />
 	{:else}
@@ -40,17 +41,19 @@
 	.top-bar {
 		width: 100%;
 		height: 60px;
+		margin-top: env(safe-area-inset-top);
 		padding: 0 1em;
+		padding-right: max(1em, env(safe-area-inset-right));
 		box-sizing: border-box;
 		align-items: center;
 		border-bottom: 2px solid var(--color-separator);
 		transition: 0.3s;
 
-		@include expanded-height {
+		@include expanded {
 			height: 80px;
 		}
 
-		&.vertical {
+		&.side-navigation {
 			display: none;
 
 			@include regular {
@@ -58,8 +61,9 @@
 			}
 		}
 
-		&:not(.vertical) {
+		&:not(.side-navigation) {
 			display: flex;
+			padding-left: max(1em, env(safe-area-inset-left));
 
 			@include regular {
 				display: none;

@@ -12,7 +12,7 @@
 <div class="layout">
 	<Navigation vertical />
 	<div class="content">
-		<TopBar vertical />
+		<TopBar sideNavigation />
 		<TopBar />
 		<main class="page">
 			<slot />
@@ -30,6 +30,7 @@
 		height: 100%;
 		margin: 0;
 		font-family: sans-serif;
+		overflow: hidden;
 	}
 
 	.layout {
@@ -47,5 +48,20 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
+	}
+
+	.content {
+		overflow: hidden;
+	}
+
+	.page {
+		padding-left: env(safe-area-inset-left);
+		padding-right: env(safe-area-inset-right);
+		overflow: auto;
+
+		@include regular {
+			padding-left: 0;
+			padding-bottom: env(safe-area-inset-bottom);
+		}
 	}
 </style>
