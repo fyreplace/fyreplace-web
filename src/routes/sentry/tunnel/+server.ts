@@ -11,7 +11,7 @@ export const POST = (async (event) => {
 	const envelope = await event.request.clone().text();
 
 	try {
-		const requestHeader = JSON.parse(envelope.split('\n')[0]);
+		const requestHeader = JSON.parse(envelope.split('\n')[0]!);
 
 		if (requestHeader.dsn !== env.PUBLIC_SENTRY_DSN) {
 			return new Response(null, { status: 400 });

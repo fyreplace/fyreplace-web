@@ -3,13 +3,14 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
+		"dev": "npm run openapi && vite dev",
+		"build": "npm run openapi && vite build",
 		"preview": "vite preview",
 		"start": "node ./build",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"openapi": "openapi-typescript ./src/lib/api/openapi.yaml -o ./src/lib/api/openapi.d.ts",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
@@ -26,6 +27,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.42.0",
 		"globals": "^15.8.0",
+		"openapi-typescript": "^7.0.2",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.5",
 		"sass": "^1.77.8",
@@ -39,6 +41,7 @@
 	},
 	"dependencies": {
 		"@sentry/sveltekit": "^8.17.0",
-		"i18next": "^23.12.1"
+		"i18next": "^23.12.1",
+		"openapi-fetch": "^0.10.2"
 	}
 }
