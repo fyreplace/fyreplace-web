@@ -60,7 +60,7 @@ worker.addEventListener('install', (event) => event.waitUntil(onInstall()));
 worker.addEventListener('activate', (event) => event.waitUntil(onActivate()));
 
 worker.addEventListener('fetch', (event) => {
-	if (event.request.method === 'GET') {
+	if (event.request.method === 'GET' && event.request.url.startsWith('http')) {
 		event.respondWith(onFetch(event));
 	}
 });
