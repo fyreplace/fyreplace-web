@@ -2,6 +2,7 @@ import { promisify } from 'util';
 import { exec } from 'child_process';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { sentrySvelteKit } from '@sentry/sveltekit';
+import { svelteTesting } from '@testing-library/svelte/vite';
 import { defineConfig } from 'vitest/config';
 import pkg from './package.json';
 
@@ -19,9 +20,12 @@ export default defineConfig({
 				}
 			}
 		}),
-		sveltekit()
+		sveltekit(),
+		svelteTesting()
 	],
 	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		environment: 'jsdom',
+		setupFiles: ['./vitest.setup.ts']
 	}
 });
