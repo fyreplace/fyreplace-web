@@ -1,5 +1,5 @@
 <script lang="ts">
-	import i18next from 'i18next';
+	import { t } from 'i18next';
 	import Logo from '$lib/components/branding/logo.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
@@ -16,23 +16,23 @@
 		email.includes('@');
 </script>
 
-<form class="destination" data-testid="destinations.register">
+<form class="destination">
 	<Logo />
 	<div class="fields">
 		<TextField
-			label={i18next.t('register.username')}
+			label={t('register.username')}
 			name="username"
-			placeholder={i18next.t('register.username-placeholder')}
+			placeholder={t('register.username-placeholder')}
 			bind:value={username}
 		/>
 		<TextField
-			label={i18next.t('register.email')}
+			label={t('register.email')}
 			name="email"
-			placeholder={i18next.t('register.email-placeholder')}
+			placeholder={t('register.email-placeholder')}
 			bind:value={email}
 		/>
 	</div>
-	<Button type="submit" disabled={!canSubmit}>{i18next.t('destinations.register')}</Button>
+	<Button type="submit" disabled={!canSubmit}>{t('destinations.register')}</Button>
 </form>
 
 <style lang="scss">

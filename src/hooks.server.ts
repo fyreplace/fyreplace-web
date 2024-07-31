@@ -1,8 +1,8 @@
-import i18next from 'i18next';
+import { t } from 'i18next';
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import { handleErrorWithSentry, sentryHandle } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
+import { handleErrorWithSentry, sentryHandle } from '@sentry/sveltekit';
 import { env } from '$env/dynamic/public';
 import { getLanguages, getOptimalLanguage } from '$lib/i18n';
 
@@ -19,8 +19,8 @@ const languageHandler = (({ event, resolve }) =>
 		transformPageChunk(input) {
 			return input.html
 				.replace(/%app.language%/g, getOptimalLanguage(getLanguages(event.request)))
-				.replace(/%app.name%/g, i18next.t('app.name'))
-				.replace(/%app.description%/g, i18next.t('app.description'));
+				.replace(/%app.name%/g, t('app.name'))
+				.replace(/%app.description%/g, t('app.description'));
 		}
 	})) satisfies Handle;
 

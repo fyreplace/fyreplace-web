@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
-	import i18next from 'i18next';
+	import { t } from 'i18next';
 	import { topLevelDestinations, type Destination } from '$lib/destinations';
 	import { currentDestination } from '$lib/stores/destinations';
 	import Icon from '$lib/components/icon.svelte';
@@ -24,7 +24,7 @@
 	class:selected={$selected}
 >
 	<Icon><svelte:component this={destination.icon} /></Icon>
-	{i18next.t(destination.titleKey)}
+	{t(destination.titleKey)}
 </a>
 
 <style lang="scss">

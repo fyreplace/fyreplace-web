@@ -1,5 +1,5 @@
 <script lang="ts">
-	import i18next from 'i18next';
+	import { t } from 'i18next';
 	import type { Destination } from '$lib/destinations';
 	import { currentDestination } from '$lib/stores/destinations';
 
@@ -15,7 +15,7 @@
 			class="segment"
 			class:selected={destination === $currentDestination}
 		>
-			{i18next.t(destination.titleKey)}
+			{t(destination.titleKey)}
 		</a>
 	{/each}
 </div>

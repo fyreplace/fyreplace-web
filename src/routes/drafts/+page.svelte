@@ -1,9 +1,9 @@
 <script lang="ts">
-	import i18next from 'i18next';
+	import { t } from 'i18next';
 </script>
 
-<div class="destination" data-testid="destinations.drafts">
-	{i18next.t('destinations.drafts')}
+<div class="destination">
+	{t('destinations.drafts')}
 </div>
 
 <style lang="scss">
