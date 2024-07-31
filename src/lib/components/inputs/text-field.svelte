@@ -1,13 +1,22 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let label: string;
 	export let name: string;
 	export let placeholder: string;
 	export let value = '';
+	export let autofocus = false;
+
+	let input: HTMLInputElement;
+
+	if (autofocus && !value) {
+		onMount(() => input.focus());
+	}
 </script>
 
 <label class="text-field">
 	<span class="label">{label}</span>
-	<input type="text" {name} {placeholder} bind:value />
+	<input type="text" {name} {placeholder} bind:this={input} bind:value />
 </label>
 
 <style lang="scss">

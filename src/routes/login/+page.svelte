@@ -16,6 +16,7 @@
 		label={t('login.identifier')}
 		name="username"
 		placeholder={t('login.identifier-placeholder')}
+		autofocus
 		bind:value={identifier}
 	/>
 	<Button type="submit" disabled={!canSubmit}>{t('destinations.login')}</Button>

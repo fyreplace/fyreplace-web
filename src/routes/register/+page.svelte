@@ -23,6 +23,7 @@
 			label={t('register.username')}
 			name="username"
 			placeholder={t('register.username-placeholder')}
+			autofocus
 			bind:value={username}
 		/>
 		<TextField
