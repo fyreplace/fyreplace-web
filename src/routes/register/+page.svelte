@@ -32,7 +32,7 @@
 			bind:value={email}
 		/>
 	</div>
-	<Button disabled={!canSubmit}>{i18next.t('destinations.register')}</Button>
+	<Button type="submit" disabled={!canSubmit}>{i18next.t('destinations.register')}</Button>
 </form>
 
 <style lang="scss">

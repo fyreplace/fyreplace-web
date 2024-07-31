@@ -18,7 +18,7 @@
 		placeholder={i18next.t('login.identifier-placeholder')}
 		bind:value={identifier}
 	/>
-	<Button disabled={!canSubmit}>{i18next.t('destinations.login')}</Button>
+	<Button type="submit" disabled={!canSubmit}>{i18next.t('destinations.login')}</Button>
 </form>
 
 <style lang="scss">

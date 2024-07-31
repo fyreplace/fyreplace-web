@@ -1,8 +1,9 @@
 <script lang="ts">
+	export let type: HTMLButtonElement['type'];
 	export let disabled = false;
 </script>
 
-<button {disabled} on:click|preventDefault>
+<button {type} {disabled} on:click|preventDefault>
 	<slot />
 </button>
 
