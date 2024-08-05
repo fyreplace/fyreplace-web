@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
 	import { t } from 'i18next';
-	import { allDestinations, Destination, topLevelDestinations } from '$lib/destinations';
-	import { currentDestination } from '$lib/stores/destinations';
+	import {
+		allDestinations,
+		currentDestination,
+		Destination,
+		topLevelDestinations
+	} from '$lib/destinations';
 	import Segments from './segments.svelte';
 
 	export let sideNavigation = false;

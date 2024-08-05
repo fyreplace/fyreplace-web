@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { t } from 'i18next';
-	import type { Destination } from '$lib/destinations';
-	import { currentDestination } from '$lib/stores/destinations';
+	import { currentDestination, Destination } from '$lib/destinations';
 
 	export let destinations: Destination[];
 </script>

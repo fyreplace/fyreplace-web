@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from 'i18next';
-	import { currentDestination } from '$lib/stores/destinations';
+	import { currentDestination } from '$lib/destinations';
 	import Navigation from './navigation.svelte';
 	import TopBar from './top-bar.svelte';
 </script>

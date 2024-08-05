@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { derived } from 'svelte/store';
 	import { t } from 'i18next';
-	import { topLevelDestinations, type Destination } from '$lib/destinations';
-	import { currentDestination } from '$lib/stores/destinations';
+	import { currentDestination, topLevelDestinations, Destination } from '$lib/destinations';
 	import Icon from '$lib/components/icon.svelte';
 
 	export let destination: Destination;

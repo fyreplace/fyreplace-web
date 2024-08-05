@@ -1,3 +1,5 @@
+import { derived } from 'svelte/store';
+import { page } from '$app/stores';
 import BellIcon from '$lib/components/icons/bell.svelte';
 import DocumentIcon from '$lib/components/icons/document.svelte';
 import HistoryIcon from '$lib/components/icons/history.svelte';
@@ -78,6 +80,10 @@ export const allDestinations = Object.values(Destination);
 export const topLevelDestinations = Object.values(Destination).filter((d) => d.icon);
 
 export const essentialDestinations = allDestinations.filter((destination) => !destination.parent);
+
+export const currentDestination = derived(page, ($page) =>
+	findDestinationByRoute($page.url.pathname)
+);
 
 export function findDestinationByRoute(route: string | null) {
 	return allDestinations.find((d) => d.route === route) ?? Destination.Feed;
