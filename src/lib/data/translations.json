@@ -1,9 +1,20 @@
 {
 	"en": {
 		"translation": {
+			"ok": "OK",
 			"app": {
 				"name": "Fyreplace",
 				"description": "Fyreplace social media web app"
+			},
+			"errors": {
+				"connection": {
+					"title": "Connection error",
+					"message": "The server seems to be unreachable."
+				},
+				"unknown": {
+					"title": "An error just occurred",
+					"message": "Unknown error. This should never happen…"
+				}
 			},
 			"destinations": {
 				"feed": "Feed",
@@ -17,7 +28,13 @@
 			},
 			"login": {
 				"identifier": "Identifier",
-				"identifier-placeholder": "Username or email"
+				"identifier-placeholder": "Username or email",
+				"errors": {
+					"404": {
+						"title": "User not found",
+						"message": "No user account was found with this username or email."
+					}
+				}
 			},
 			"register": {
 				"username": "Username",

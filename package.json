@@ -3,20 +3,21 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "npm run openapi && vite dev",
+		"dev": "vite dev",
 		"build": "npm run openapi && vite build",
 		"preview": "vite preview",
 		"start": "node ./build",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"openapi": "openapi-typescript ./src/lib/api/openapi.yaml -o ./src/lib/api/openapi.d.ts",
+		"openapi": "openapi-generator-cli generate",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest"
 	},
 	"devDependencies": {
+		"@openapitools/openapi-generator-cli": "^2.13.4",
 		"@playwright/test": "^1.46.0",
 		"@sveltejs/adapter-auto": "^3.2.3",
 		"@sveltejs/adapter-node": "^5.2.1",
@@ -30,7 +31,6 @@
 		"eslint-plugin-svelte": "^2.43.0",
 		"globals": "^15.9.0",
 		"jsdom": "^24.1.1",
-		"openapi-typescript": "^7.3.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
 		"sass": "^1.77.8",
@@ -44,7 +44,6 @@
 	},
 	"dependencies": {
 		"@sentry/sveltekit": "^8.25.0",
-		"i18next": "^23.12.2",
-		"openapi-fetch": "^0.11.0"
+		"i18next": "^23.12.2"
 	}
 }

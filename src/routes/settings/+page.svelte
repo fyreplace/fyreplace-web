@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { Destination } from '$lib/destinations';
-	import { isAuthenticated } from '$lib/stores/authentication';
+	import { isAuthenticated } from '$lib/authentication';
 
 	if (!$isAuthenticated && browser) {
 		goto(Destination.Login.route, { replaceState: true });

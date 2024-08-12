@@ -1,13 +1,36 @@
 <script lang="ts">
 	import { t } from 'i18next';
+	import { DisplayableError, eventBus } from '$lib/events';
+	import { call, getTokensClient } from '$lib/openapi';
 	import Logo from '$lib/components/branding/logo.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
 
 	let identifier = '';
 	let canSubmit = false;
+	let loading = false;
 
 	$: canSubmit = identifier.length >= 3 && identifier.length <= 254;
+
+	async function submit() {
+		call(
+			async () => {
+				try {
+					loading = true;
+					const client = await getTokensClient();
+					await client.createNewToken({ identifier });
+				} finally {
+					loading = false;
+				}
+			},
+			(error) => {
+				switch (error.response.status) {
+					case 404:
+						return new DisplayableError('login.errors.404');
+				}
+			}
+		);
+	}
 </script>
 
 <form class="destination">
@@ -19,7 +42,9 @@
 		autofocus
 		bind:value={identifier}
 	/>
-	<Button type="submit" disabled={!canSubmit}>{t('destinations.login')}</Button>
+	<Button type="submit" disabled={!canSubmit} {loading} on:click={submit}>
+		{t('destinations.login')}
+	</Button>
 </form>
 
 <style lang="scss">

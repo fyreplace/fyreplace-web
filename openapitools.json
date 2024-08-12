@@ -1,0 +1,19 @@
+{
+	"$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+	"generator-cli": {
+		"version": "7.7.0",
+		"generators": {
+			"mqin": {
+				"generatorName": "typescript-fetch",
+				"output": "./src/lib/openapi/generated",
+				"glob": "./src/lib/openapi/openapi.yaml",
+				"additionalProperties": {
+					"fileNaming": "kebab-case",
+					"useSingleRequestParameter": false,
+					"supportsES6": true,
+					"withInterfaces": true
+				}
+			}
+		}
+	}
+}

@@ -1,9 +1,30 @@
 <script lang="ts">
 	import { t } from 'i18next';
 	import { currentDestination } from '$lib/destinations';
+	import { DisplayableError } from '$lib/events';
+	import EventListener from '$lib/components/event-listener.svelte';
 	import Navigation from './navigation.svelte';
 	import TopBar from './top-bar.svelte';
+	import Dialog from './dialog.svelte';
+
+	let errors: DisplayableError[] = [];
+	let currentError: DisplayableError | undefined;
+
+	function addError(error: DisplayableError) {
+		errors = [...errors, error];
+		currentError = errors[0];
+	}
+
+	function removeError() {
+		errors = errors.slice(1);
+
+		if (errors.length > 0) {
+			currentError = errors[0];
+		}
+	}
 </script>
+
+<EventListener type={DisplayableError} listener={(event) => addError(event.detail)} />
 
 <svelte:head>
 	<title>{t($currentDestination.titleKey)} | {t('app.name')}</title>
@@ -19,6 +40,12 @@
 		</main>
 	</div>
 	<Navigation />
+	<Dialog
+		visible={errors.length > 0}
+		title={currentError?.title || ''}
+		message={currentError?.message || ''}
+		on:ok={removeError}
+	/>
 </div>
 
 <style lang="scss">
@@ -35,6 +62,7 @@
 
 	.layout {
 		height: 100%;
+		position: relative;
 		display: flex;
 		flex-direction: column;
 

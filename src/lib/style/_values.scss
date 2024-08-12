@@ -10,4 +10,14 @@ $height-expanded: 720px;
 	--color-on-accent: black;
 	--color-accent-hover: #ff82433f;
 	--color-disabled: gray;
+
+	@media screen and (prefers-color-scheme: light) {
+		--color-surface: white;
+		--color-surface-shadow: #0000007f;
+	}
+
+	@media screen and (prefers-color-scheme: dark) {
+		--color-surface: #1f1f1f;
+		--color-surface-shadow: transparent;
+	}
 }
