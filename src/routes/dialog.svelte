@@ -12,13 +12,13 @@
 
 <div class="dialog" class:visible hidden={!visible}>
 	<div class="background" />
-	<div class="alert">
+	<dialog class="alert">
 		<h2>{title}</h2>
 		<p>{message}</p>
 		<div class="buttons">
 			<Button type="button" on:click={() => dispatch('ok')}>{t('ok')}</Button>
 		</div>
-	</div>
+	</dialog>
 </div>
 
 <style lang="scss">
@@ -53,6 +53,7 @@
 		flex-direction: column;
 		min-width: 240px;
 		padding: 1em 2em;
+		border: none;
 		border-radius: 1em;
 		opacity: 0;
 		background: var(--color-surface);
