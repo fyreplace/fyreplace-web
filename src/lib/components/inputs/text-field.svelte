@@ -6,17 +6,24 @@
 	export let placeholder: string;
 	export let value = '';
 	export let autofocus = false;
+	export let disabled = false;
 
 	let input: HTMLInputElement;
 
-	if (autofocus && !value) {
-		onMount(() => input.focus());
+	if (autofocus) {
+		onMount(() =>
+			setTimeout(() => {
+				if (!value) {
+					input.focus();
+				}
+			})
+		);
 	}
 </script>
 
 <label class="text-field">
 	<span class="label">{label}</span>
-	<input type="text" {name} {placeholder} bind:this={input} bind:value />
+	<input type="text" {name} {placeholder} {disabled} bind:this={input} bind:value />
 </label>
 
 <style lang="scss">
@@ -39,9 +46,16 @@
 		font-size: 1em;
 		transition: 0.1s;
 
-		&:hover,
+		&:disabled {
+			cursor: not-allowed;
+		}
+
+		&:hover:not(:disabled) {
+			border-color: currentColor;
+		}
+
 		&:focus {
-			border-color: var(--color-accent);
+			outline-color: var(--color-accent);
 		}
 	}
 </style>

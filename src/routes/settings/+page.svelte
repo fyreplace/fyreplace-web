@@ -1,18 +1,32 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
-	import { Destination } from '$lib/destinations';
-	import { isAuthenticated } from '$lib/authentication';
+	import { Destination, navigate } from '$lib/destinations';
+	import SavedValue from '$lib/components/saved-value.svelte';
+	import Button from '$lib/components/inputs/button.svelte';
 
-	if (!$isAuthenticated && browser) {
-		goto(Destination.Login.route, { replaceState: true });
+	const token = writable<string | null>(null);
+
+	onMount(() =>
+		token.subscribe(async ($token) => {
+			if (!$token) {
+				await navigate(Destination.Login);
+			}
+		})
+	);
+
+	async function logout() {
+		$token = null;
+		await navigate(Destination.Login);
 	}
 </script>
 
-{#if $isAuthenticated}
+<SavedValue name="connection.token" store={token} />
+
+{#if $token}
 	<div class="destination">
-		{t('destinations.settings')}
+		<Button type="button" primary on:click={logout}>{t('settings.logout')}</Button>
 	</div>
 {/if}
 

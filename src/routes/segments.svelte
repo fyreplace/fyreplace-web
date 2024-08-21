@@ -1,9 +1,15 @@
 <script lang="ts">
+	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { currentDestination, Destination } from '$lib/destinations';
+	import SavedValue from '$lib/components/saved-value.svelte';
 
 	export let destinations: Destination[];
+
+	const isWaitingForRandomCode = writable(false);
 </script>
+
+<SavedValue name="account.isWaitingForRandomCode" store={isWaitingForRandomCode} />
 
 <div class="segments">
 	<span class="border" />
@@ -13,6 +19,7 @@
 			data-sveltekit-replacestate
 			class="segment"
 			class:selected={destination === $currentDestination}
+			aria-disabled={$isWaitingForRandomCode}
 		>
 			{t(destination.titleKey)}
 		</a>
@@ -62,8 +69,9 @@
 			color: var(--color-accent);
 		}
 
-		&:hover:not(.selected) {
-			background: var(--color-accent-hover);
+		&[aria-disabled='true'] {
+			opacity: 40%;
+			pointer-events: none;
 		}
 	}
 </style>

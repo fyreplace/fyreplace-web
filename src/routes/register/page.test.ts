@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import { expect, test } from 'vitest';
+import { beforeEach, expect, test } from 'vitest';
 import Page from './+page.svelte';
+
+beforeEach(() => window.localStorage.clear());
 
 test('Username must have correct length', { timeout: 60000 }, async () => {
 	const user = userEvent.setup();

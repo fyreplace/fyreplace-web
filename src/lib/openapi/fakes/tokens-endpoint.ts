@@ -10,12 +10,12 @@ import {
 import { fail } from './utils';
 
 export default class FakeTokensEndpointApi implements TokensEndpointApiInterface {
-	static readonly goodIdentifier = 'good-identifier';
 	static readonly badIdentifier = 'bad-identifier';
-	static readonly goodSecret = 'good-secret';
-	static readonly badSecret = 'bad-secret';
-	static readonly goodToken = 'good-token';
+	static readonly goodIdentifier = 'good-identifier';
+	static readonly badSecret = '000000';
+	static readonly goodSecret = '123456';
 	static readonly badToken = 'bad-token';
+	static readonly goodToken = 'good-token';
 
 	createNewTokenRaw(
 		requestParameters: CreateNewTokenRequest,

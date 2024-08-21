@@ -52,6 +52,14 @@ export class DisplayableError extends Error {
 	}
 }
 
+export class StorageChange {
+	readonly key: string;
+
+	constructor(key: string) {
+		this.key = key;
+	}
+}
+
 declare global {
 	interface WindowEventMap {
 		[key: string]: CustomEvent<any>;

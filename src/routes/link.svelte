@@ -1,19 +1,24 @@
 <script lang="ts">
-	import { derived } from 'svelte/store';
+	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { currentDestination, topLevelDestinations, Destination } from '$lib/destinations';
+	import SavedValue from '$lib/components/saved-value.svelte';
 	import Icon from '$lib/components/icon.svelte';
 
 	export let destination: Destination;
 	export let sideNavigation = false;
 
+	const token = writable<string | null>(null);
 	const selected = derived(currentDestination, ($currentDestination) => {
 		const isExactDestination = $currentDestination === destination;
 		const isChildDestination = $currentDestination?.parent === destination;
 		const isTopLevel = topLevelDestinations.includes($currentDestination);
 		return isExactDestination || (isChildDestination && !(isTopLevel && sideNavigation));
 	});
+	const disabled = derived(token, ($token) => destination.requiresAuthentication && !$token);
 </script>
+
+<SavedValue name="connection.token" store={token} />
 
 <a
 	href={destination.route}
@@ -21,6 +26,7 @@
 	class="link"
 	class:side-navigation={sideNavigation}
 	class:selected={$selected}
+	aria-disabled={$disabled}
 >
 	<Icon><svelte:component this={destination.icon} /></Icon>
 	{t(destination.titleKey)}
@@ -37,6 +43,11 @@
 		color: unset;
 		text-decoration: none;
 		transition: 0.3s;
+
+		&[aria-disabled='true'] {
+			opacity: 40%;
+			pointer-events: none;
+		}
 	}
 
 	.side-navigation {

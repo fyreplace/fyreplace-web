@@ -2,6 +2,7 @@
 	"en": {
 		"translation": {
 			"ok": "OK",
+			"cancel": "Cancel",
 			"app": {
 				"name": "Fyreplace",
 				"description": "Fyreplace social media web app"
@@ -14,6 +15,10 @@
 				"unknown": {
 					"title": "An error just occurred",
 					"message": "Unknown error. This should never happen…"
+				},
+				"400": {
+					"title": "Bad request",
+					"message": "An incorrect request was sent to the server."
 				}
 			},
 			"destinations": {
@@ -26,13 +31,27 @@
 				"login": "Login",
 				"register": "Sign up"
 			},
+			"settings": {
+				"logout": "Logout"
+			},
 			"login": {
 				"identifier": "Identifier",
 				"identifier-placeholder": "Username or email",
+				"randomCode": "One-time code",
+				"randomCode-placeholder": "123456",
+				"help": {
+					"randomCode": "A one-time use code has been sent to your email address."
+				},
 				"errors": {
 					"404": {
 						"title": "User not found",
 						"message": "No user account was found with this username or email."
+					},
+					"createToken": {
+						"400": {
+							"title": "Invalid code",
+							"message": "Check if the code you provided is correct."
+						}
 					}
 				}
 			},

@@ -1,20 +1,26 @@
 <script lang="ts">
+	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
+	import SavedValue from '$lib/components/saved-value.svelte';
 	import Logo from '$lib/components/branding/logo.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
 
-	let username = '';
-	let email = '';
-	let canSubmit = false;
-
-	$: canSubmit =
-		username.length >= 3 &&
-		username.length <= 50 &&
-		email.length >= 3 &&
-		email.length <= 254 &&
-		email.includes('@');
+	const username = writable('');
+	const email = writable('');
+	const canSubmit = derived(
+		[username, email],
+		([$username, $email]) =>
+			$username.length >= 3 &&
+			$username.length <= 50 &&
+			$email.length >= 3 &&
+			$email.length <= 254 &&
+			$email.includes('@')
+	);
 </script>
+
+<SavedValue name="account.username" store={username} />
+<SavedValue name="account.email" store={email} />
 
 <form class="destination">
 	<Logo />
@@ -24,16 +30,16 @@
 			name="username"
 			placeholder={t('register.username-placeholder')}
 			autofocus
-			bind:value={username}
+			bind:value={$username}
 		/>
 		<TextField
 			label={t('register.email')}
 			name="email"
 			placeholder={t('register.email-placeholder')}
-			bind:value={email}
+			bind:value={$email}
 		/>
 	</div>
-	<Button type="submit" disabled={!canSubmit}>{t('destinations.register')}</Button>
+	<Button type="submit" primary disabled={!$canSubmit}>{t('destinations.register')}</Button>
 </form>
 
 <style lang="scss">

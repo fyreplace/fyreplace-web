@@ -9,7 +9,8 @@ $height-expanded: 720px;
 	--color-accent: #ff8243;
 	--color-on-accent: black;
 	--color-accent-hover: #ff82433f;
-	--color-disabled: gray;
+	--color-disabled: #7f7f7f7f;
+	--color-on-disabled: currentcolor;
 
 	@media screen and (prefers-color-scheme: light) {
 		--color-surface: white;

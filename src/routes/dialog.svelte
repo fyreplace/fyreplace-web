@@ -16,7 +16,7 @@
 		<h2>{title}</h2>
 		<p>{message}</p>
 		<div class="buttons">
-			<Button type="button" on:click={() => dispatch('ok')}>{t('ok')}</Button>
+			<Button type="button" primary on:click={() => dispatch('ok')}>{t('ok')}</Button>
 		</div>
 	</dialog>
 </div>

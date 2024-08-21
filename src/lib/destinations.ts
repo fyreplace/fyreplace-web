@@ -1,5 +1,6 @@
 import { derived } from 'svelte/store';
 import { page } from '$app/stores';
+import { goto } from '$app/navigation';
 import BellIcon from '$lib/components/icons/bell.svelte';
 import DocumentIcon from '$lib/components/icons/document.svelte';
 import HistoryIcon from '$lib/components/icons/history.svelte';
@@ -7,12 +8,18 @@ import HomeIcon from '$lib/components/icons/home.svelte';
 import InventoryIcon from '$lib/components/icons/inventory.svelte';
 import PersonIcon from '$lib/components/icons/person.svelte';
 
+let fakeNavigation = false;
+
+export function useFakeNavigation() {
+	fakeNavigation = true;
+}
+
 export interface Destination {
 	route: string;
 	titleKey: string;
 	icon?: any;
 	parent?: Destination;
-	isVisible: () => Boolean;
+	requiresAuthentication: boolean;
 }
 
 export namespace Destination {
@@ -20,14 +27,14 @@ export namespace Destination {
 		route: '/feed',
 		titleKey: 'destinations.feed',
 		icon: HomeIcon,
-		isVisible: () => true
+		requiresAuthentication: false
 	};
 
 	export const Notifications: Destination = {
 		route: '/notifications',
 		titleKey: 'destinations.notifications',
 		icon: BellIcon,
-		isVisible: () => true
+		requiresAuthentication: true
 	};
 
 	export const Archive: Destination = {
@@ -35,14 +42,14 @@ export namespace Destination {
 		titleKey: 'destinations.archive',
 		icon: HistoryIcon,
 		parent: Notifications,
-		isVisible: () => true
+		requiresAuthentication: true
 	};
 
 	export const Drafts: Destination = {
 		route: '/drafts',
 		titleKey: 'destinations.drafts',
 		icon: DocumentIcon,
-		isVisible: () => true
+		requiresAuthentication: true
 	};
 
 	export const Published: Destination = {
@@ -50,28 +57,28 @@ export namespace Destination {
 		titleKey: 'destinations.published',
 		icon: InventoryIcon,
 		parent: Drafts,
-		isVisible: () => true
+		requiresAuthentication: true
 	};
 
 	export const Settings: Destination = {
 		route: '/settings',
 		titleKey: 'destinations.settings',
 		icon: PersonIcon,
-		isVisible: () => false
+		requiresAuthentication: false
 	};
 
 	export const Login: Destination = {
 		route: '/login',
 		titleKey: 'destinations.login',
 		parent: Settings,
-		isVisible: () => true
+		requiresAuthentication: false
 	};
 
 	export const Register: Destination = {
 		route: '/register',
 		titleKey: 'destinations.register',
 		parent: Settings,
-		isVisible: () => true
+		requiresAuthentication: false
 	};
 }
 
@@ -87,4 +94,10 @@ export const currentDestination = derived(page, ($page) =>
 
 export function findDestinationByRoute(route: string | null) {
 	return allDestinations.find((d) => d.route === route) ?? Destination.Feed;
+}
+
+export async function navigate(destination: Destination) {
+	if (!fakeNavigation) {
+		await goto(destination.route, { replaceState: true });
+	}
 }
