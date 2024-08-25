@@ -1,5 +1,6 @@
 import { dev } from '$app/environment';
 import urls from '$lib/data/urls.json';
+import { getStoredItem, setStoredItem } from '$lib/storage';
 import { DisplayableError, eventBus } from '$lib/events';
 import {
 	Configuration,
@@ -21,7 +22,10 @@ export async function getTokensClient(): Promise<TokensEndpointApiInterface> {
 }
 
 async function makeConfiguration() {
-	return new Configuration({ basePath: await getBaseUrl() });
+	return new Configuration({
+		basePath: await getBaseUrl(),
+		accessToken: getStoredItem('connection.token') ?? undefined
+	});
 }
 
 async function getBaseUrl() {
@@ -44,10 +48,15 @@ export async function call(
 		await action();
 	} catch (error: any) {
 		if (error instanceof ResponseError) {
-			const failure = onError(error);
+			if (error.response.status === 401) {
+				setStoredItem('connection.token', null);
+				eventBus.publish(new DisplayableError('errors.401'));
+			} else {
+				const displayableError = onError(error);
 
-			if (failure) {
-				eventBus.publish(failure);
+				if (displayableError) {
+					eventBus.publish(displayableError);
+				}
 			}
 		} else if (error instanceof FetchError) {
 			eventBus.publish(new DisplayableError('errors.connection'));

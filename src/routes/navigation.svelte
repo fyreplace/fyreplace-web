@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { topLevelDestinations, essentialDestinations } from '$lib/destinations';
+	import { essentialDestinations, topLevelDestinations } from '$lib/destinations';
 	import Link from './link.svelte';
 
 	export let vertical = false;

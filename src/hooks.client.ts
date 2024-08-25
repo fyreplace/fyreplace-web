@@ -1,6 +1,7 @@
 import { handleErrorWithSentry, replayIntegration } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 import { env } from '$env/dynamic/public';
+import { scheduleTokenRefresh } from '$lib/background';
 
 const sentryTunnelPath = '/sentry/tunnel';
 
@@ -15,5 +16,7 @@ Sentry.init({
 	integrations: [replayIntegration()],
 	replaysOnErrorSampleRate: 1.0
 });
+
+scheduleTokenRefresh();
 
 export const handleError = handleErrorWithSentry();

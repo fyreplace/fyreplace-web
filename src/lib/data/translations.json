@@ -19,6 +19,10 @@
 				"400": {
 					"title": "Bad request",
 					"message": "An incorrect request was sent to the server."
+				},
+				"401": {
+					"title": "You have been disconnected",
+					"message": "It looks like your session has expired."
 				}
 			},
 			"destinations": {

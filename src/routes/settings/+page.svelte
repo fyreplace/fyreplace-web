@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { Destination, navigate } from '$lib/destinations';
+	import { navigate, Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 

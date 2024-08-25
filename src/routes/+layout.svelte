@@ -1,14 +1,26 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { currentDestination } from '$lib/destinations';
+	import { currentDestination, navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
+	import SavedValue from '$lib/components/saved-value.svelte';
 	import EventListener from '$lib/components/event-listener.svelte';
 	import Navigation from './navigation.svelte';
 	import TopBar from './top-bar.svelte';
 	import Dialog from './dialog.svelte';
 
+	const token = writable<string | null>(null);
 	let errors: DisplayableError[] = [];
 	let currentError: DisplayableError | undefined;
+
+	onMount(() =>
+		token.subscribe(async ($token) => {
+			if (!$token && $currentDestination.requiresAuthentication) {
+				await navigate(Destination.Settings);
+			}
+		})
+	);
 
 	function addError(error: DisplayableError) {
 		errors = [...errors, error];
@@ -24,6 +36,7 @@
 	}
 </script>
 
+<SavedValue name="connection.token" store={token} />
 <EventListener type={DisplayableError} listener={(event) => addError(event.detail)} />
 
 <svelte:head>

@@ -4,8 +4,8 @@
 	import {
 		allDestinations,
 		currentDestination,
-		Destination,
-		topLevelDestinations
+		topLevelDestinations,
+		Destination
 	} from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Segments from './segments.svelte';

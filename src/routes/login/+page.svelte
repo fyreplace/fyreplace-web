@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { Destination, navigate } from '$lib/destinations';
+	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
 	import { call, getTokensClient } from '$lib/openapi';
 	import SavedValue from '$lib/components/saved-value.svelte';
