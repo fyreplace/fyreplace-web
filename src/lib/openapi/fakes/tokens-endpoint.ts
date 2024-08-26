@@ -12,8 +12,8 @@ import { fail } from './utils';
 export default class FakeTokensEndpointApi implements TokensEndpointApiInterface {
 	static readonly badIdentifier = 'bad-identifier';
 	static readonly goodIdentifier = 'good-identifier';
-	static readonly badSecret = '000000';
-	static readonly goodSecret = '123456';
+	static readonly badSecret = 'nopenope';
+	static readonly goodSecret = 'abcd1234';
 	static readonly badToken = 'bad-token';
 	static readonly goodToken = 'good-token';
 

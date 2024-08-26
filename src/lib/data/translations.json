@@ -38,7 +38,7 @@
 				"identifier": "Identifier",
 				"identifier-placeholder": "Username or email",
 				"randomCode": "One-time code",
-				"randomCode-placeholder": "123456",
+				"randomCode-placeholder": "abcd1234",
 				"help": {
 					"randomCode": "A one-time use code has been sent to your email address."
 				},

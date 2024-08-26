@@ -20,7 +20,7 @@
 		[identifier, randomCode, isWaitingForRandomCode],
 		([$identifier, $randomCode, $isWaitingForRandomCode]) =>
 			$isWaitingForRandomCode
-				? $randomCode.length === 6
+				? $randomCode.length >= 8
 				: $identifier.length >= 3 && $identifier.length <= 254
 	);
 

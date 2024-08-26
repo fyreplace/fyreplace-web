@@ -69,16 +69,13 @@ test('Random code must have correct length', async () => {
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
-	await user.type(randomCode, '12345');
+	await user.type(randomCode, 'abcd123');
 	expect(submit).to.have.property('disabled', true);
 	await user.clear(randomCode);
 
-	await user.type(randomCode, '123456');
+	await user.type(randomCode, 'abcd1234');
 	expect(submit).to.have.property('disabled', false);
 	await user.clear(randomCode);
-
-	await user.type(randomCode, '1234567');
-	expect(submit).to.have.property('disabled', true);
 });
 
 test('Invalid random code produces an error', async () => {
