@@ -46,7 +46,7 @@ export function useNewStoringEventBus() {
 export class DisplayableError extends Error {
 	readonly title: string;
 
-	constructor(key: string) {
+	constructor(key = 'errors.unknown') {
 		super(t(key + '.message'));
 		this.title = t(key + '.title');
 	}

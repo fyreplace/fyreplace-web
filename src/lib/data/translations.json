@@ -38,19 +38,13 @@
 			"settings": {
 				"logout": "Logout"
 			},
-			"login": {
-				"identifier": "Identifier",
-				"identifier-placeholder": "Username or email",
+			"account": {
 				"randomCode": "One-time code",
 				"randomCode-placeholder": "abcd1234",
 				"help": {
 					"randomCode": "A one-time use code has been sent to your email address."
 				},
 				"errors": {
-					"404": {
-						"title": "User not found",
-						"message": "No user account was found with this username or email."
-					},
 					"createToken": {
 						"400": {
 							"title": "Invalid code",
@@ -59,11 +53,55 @@
 					}
 				}
 			},
+			"login": {
+				"identifier": "Identifier",
+				"identifier-placeholder": "Username or email",
+				"errors": {
+					"404": {
+						"title": "User not found",
+						"message": "No user account was found with this username or email."
+					}
+				}
+			},
 			"register": {
 				"username": "Username",
 				"username-placeholder": "Only letters, numbers and dashes",
 				"email": "Email",
-				"email-placeholder": "email@example.org"
+				"email-placeholder": "email@example.org",
+				"errors": {
+					"createUser": {
+						"400": {
+							"username": {
+								"title": "Invalid username",
+								"message": "This username is not valid."
+							},
+							"email": {
+								"title": "Invalid email",
+								"message": "This email address is not valid."
+							}
+						},
+						"403": {
+							"title": "Username forbidden",
+							"message": "This username is not allowed."
+						},
+						"409": {
+							"username": {
+								"title": "Username unavailable",
+								"message": "This username is already used by someone else."
+							},
+							"email": {
+								"title": "Email unavailable",
+								"message": "This email is already used by someone else."
+							}
+						}
+					},
+					"createToken": {
+						"404": {
+							"title": "User not found",
+							"message": "No user account was found with this email. It might have been deleted if you didn't activate it within one hour."
+						}
+					}
+				}
 			}
 		}
 	}

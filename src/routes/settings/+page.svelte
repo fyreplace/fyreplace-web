@@ -6,22 +6,24 @@
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 
+	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
 
 	onMount(() =>
 		token.subscribe(async ($token) => {
 			if (!$token) {
-				await navigate(Destination.Login);
+				await navigate($isRegistering ? Destination.Register : Destination.Login);
 			}
 		})
 	);
 
 	async function logout() {
-		$token = null;
+		$token = '';
 		await navigate(Destination.Login);
 	}
 </script>
 
+<SavedValue name="account.isRegistering" store={isRegistering} />
 <SavedValue name="connection.token" store={token} />
 
 {#if $token}

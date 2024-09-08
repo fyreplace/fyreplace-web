@@ -16,12 +16,15 @@
 	const token = writable<string | null>(null);
 	let isLoading = false;
 
+	const isIdentifierValid = derived(
+		identifier,
+		($identifier) => $identifier.length >= 3 && $identifier.length <= 254
+	);
+	const isRandomCodeValid = derived(randomCode, ($randomCode) => $randomCode.length >= 8);
 	const canSubmit = derived(
-		[identifier, randomCode, isWaitingForRandomCode],
-		([$identifier, $randomCode, $isWaitingForRandomCode]) =>
-			$isWaitingForRandomCode
-				? $randomCode.length >= 8
-				: $identifier.length >= 3 && $identifier.length <= 254
+		[isIdentifierValid, isRandomCodeValid, isWaitingForRandomCode],
+		([$isIdentifierValid, $isRandomCodeValid, $isWaitingForRandomCode]) =>
+			$isWaitingForRandomCode ? $isRandomCodeValid : $isIdentifierValid
 	);
 
 	onMount(() =>
@@ -57,14 +60,14 @@
 					isLoading = false;
 				}
 			},
-			(error) => {
+			async (error) => {
 				switch (error.response.status) {
 					case 400:
 						return new DisplayableError('errors.400');
 					case 404:
 						return new DisplayableError('login.errors.404');
 					default:
-						return new DisplayableError('errors.unknown');
+						return new DisplayableError();
 				}
 			}
 		);
@@ -82,14 +85,14 @@
 					isLoading = false;
 				}
 			},
-			(error) => {
+			async (error) => {
 				switch (error.response.status) {
 					case 400:
-						return new DisplayableError('login.errors.createToken.400');
+						return new DisplayableError('account.errors.createToken.400');
 					case 404:
 						return new DisplayableError('login.errors.404');
 					default:
-						return new DisplayableError('errors.unknown');
+						return new DisplayableError();
 				}
 			}
 		);
@@ -113,14 +116,14 @@
 		/>
 		{#if $isWaitingForRandomCode}
 			<TextField
-				label={t('login.randomCode')}
+				label={t('account.randomCode')}
 				name="one-time-code"
-				placeholder={t('login.randomCode-placeholder')}
+				placeholder={t('account.randomCode-placeholder')}
 				autofocus
 				disabled={!$isWaitingForRandomCode}
 				bind:value={$randomCode}
 			/>
-			<div class="help">{t('login.help.randomCode')}</div>
+			<div class="help">{t('account.help.randomCode')}</div>
 		{/if}
 	</div>
 	<div class="buttons">

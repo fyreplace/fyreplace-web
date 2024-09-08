@@ -13,6 +13,7 @@ declare global {
 		'account.username': string;
 		'account.email': string;
 		'account.isWaitingForRandomCode': boolean;
+		'account.isRegistering': boolean;
 	}
 }
 

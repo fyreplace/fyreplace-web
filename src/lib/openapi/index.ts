@@ -8,13 +8,16 @@ import {
 	FetchError,
 	ResponseError,
 	TokensEndpointApi,
+	UsersEndpointApi,
 	type ErrorContext,
 	type FetchParams,
 	type Middleware,
 	type RequestContext,
-	type TokensEndpointApiInterface
+	type TokensEndpointApiInterface,
+	type UsersEndpointApiInterface
 } from './generated';
 import FakeTokensEndpointApi from './fakes/tokens-endpoint';
+import FakeUsersEndpointApi from './fakes/users-endpoint';
 
 let useFakes = false;
 
@@ -24,6 +27,10 @@ export function useFakeEndpoints() {
 
 export async function getTokensClient(): Promise<TokensEndpointApiInterface> {
 	return useFakes ? new FakeTokensEndpointApi() : new TokensEndpointApi(await makeConfiguration());
+}
+
+export async function getUsersClient(): Promise<UsersEndpointApiInterface> {
+	return useFakes ? new FakeUsersEndpointApi() : new UsersEndpointApi(await makeConfiguration());
 }
 
 async function makeConfiguration() {
@@ -48,7 +55,7 @@ async function getBaseUrl() {
 
 export async function call(
 	action: () => Promise<void>,
-	onError: (error: ResponseError) => DisplayableError | void
+	onError: (error: ResponseError) => Promise<DisplayableError | void>
 ) {
 	try {
 		await action();
@@ -58,7 +65,7 @@ export async function call(
 				setStoredItem('connection.token', null);
 				eventBus.publish(new DisplayableError('errors.401'));
 			} else {
-				const displayableError = onError(error);
+				const displayableError = await onError(error);
 
 				if (displayableError) {
 					eventBus.publish(displayableError);
