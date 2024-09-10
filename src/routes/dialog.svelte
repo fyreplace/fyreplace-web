@@ -52,6 +52,7 @@
 		display: flex;
 		flex-direction: column;
 		min-width: 240px;
+		margin: 2em;
 		padding: 1em 2em;
 		border: none;
 		border-radius: 1em;
