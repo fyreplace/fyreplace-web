@@ -12,7 +12,7 @@
 
 	export let sideNavigation = false;
 
-	const token = writable<string | null>(null);
+	const token = writable<string>('');
 	const choices = derived([currentDestination, token], ([$destination, $token]) => {
 		const firstDestination = $destination.parent ?? $destination;
 		return [firstDestination]
@@ -20,7 +20,7 @@
 			.filter(Boolean)
 			.map((d) => d as Destination)
 			.filter((d) =>
-				$token === ''
+				!$token
 					? d !== Destination.Settings
 					: [Destination.Login, Destination.Register].indexOf(d) === -1
 			);
