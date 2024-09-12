@@ -98,6 +98,8 @@ export function findDestinationByRoute(route: string | null) {
 
 export async function navigate(destination: Destination) {
 	if (!fakeNavigation) {
-		await goto(destination.route, { replaceState: true });
+		const url = new URL(location.href);
+		url.pathname = destination.route;
+		await goto(url, { replaceState: true });
 	}
 }

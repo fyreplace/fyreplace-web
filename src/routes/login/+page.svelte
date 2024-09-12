@@ -27,13 +27,21 @@
 			$isWaitingForRandomCode ? $isRandomCodeValid : $isIdentifierValid
 	);
 
-	onMount(() =>
-		token.subscribe(async ($token) => {
+	onMount(() => {
+		const unsubscribe = token.subscribe(async ($token) => {
 			if ($token) {
 				await navigate(Destination.Settings);
 			}
-		})
-	);
+		});
+
+		if (window.location.hash && $isWaitingForRandomCode) {
+			$randomCode = window.location.hash.replace('#', '');
+			window.location.hash = '';
+			createToken();
+		}
+
+		return unsubscribe;
+	});
 
 	function cancel() {
 		$isWaitingForRandomCode = false;
@@ -41,7 +49,9 @@
 	}
 
 	async function submit() {
-		if ($isWaitingForRandomCode) {
+		if (!$canSubmit) {
+			return;
+		} else if ($isWaitingForRandomCode) {
 			await createToken();
 		} else {
 			await sendEmail();
