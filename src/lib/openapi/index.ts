@@ -78,7 +78,7 @@ export async function call(
 		if (displayableError) {
 			eventBus.publish(displayableError);
 
-			if (displayableError.title === new DisplayableError().title && !useFakes) {
+			if (displayableError.title.startsWith(DisplayableError.unknownKey) && !useFakes) {
 				const Sentry = await import('@sentry/sveltekit');
 				Sentry.captureException(error);
 			}
