@@ -60,21 +60,28 @@ export async function call(
 	try {
 		await action();
 	} catch (error: any) {
+		let displayableError: DisplayableError | null = null;
+
 		if (error instanceof ResponseError) {
 			if (error.response.status === 401) {
 				setStoredItem('connection.token', null);
-				eventBus.publish(new DisplayableError('errors.401'));
+				displayableError = new DisplayableError('errors.401');
 			} else {
-				const displayableError = await onError(error);
-
-				if (displayableError) {
-					eventBus.publish(displayableError);
-				}
+				displayableError = (await onError(error)) ?? null;
 			}
 		} else if (error instanceof FetchError) {
-			eventBus.publish(new DisplayableError('errors.connection'));
+			displayableError = new DisplayableError('errors.connection');
 		} else {
-			eventBus.publish(new DisplayableError('errors.unknown'));
+			displayableError = new DisplayableError();
+		}
+
+		if (displayableError) {
+			eventBus.publish(displayableError);
+
+			if (displayableError.title === new DisplayableError().title && !useFakes) {
+				const Sentry = await import('@sentry/sveltekit');
+				Sentry.captureException(error);
+			}
 		}
 	}
 }
