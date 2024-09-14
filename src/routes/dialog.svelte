@@ -51,6 +51,7 @@
 		z-index: 1;
 		display: flex;
 		flex-direction: column;
+		justify-self: center;
 		min-width: 240px;
 		margin: 2em;
 		padding: 1em 2em;

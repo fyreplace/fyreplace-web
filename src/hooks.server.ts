@@ -3,6 +3,7 @@ import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import * as Sentry from '@sentry/sveltekit';
 import { handleErrorWithSentry, sentryHandle } from '@sentry/sveltekit';
+import { dev } from '$app/environment';
 import { env } from '$env/dynamic/public';
 import { getLanguages, getOptimalLanguage } from '$lib/i18n';
 
@@ -10,8 +11,10 @@ Sentry.init({
 	enabled: !!env.PUBLIC_SENTRY_DSN,
 	dsn: env.PUBLIC_SENTRY_DSN,
 	environment: env.PUBLIC_SENTRY_ENVIRONMENT,
-	tracesSampleRate: 0.0,
-	ignoreTransactions: ['/health']
+	tracesSampleRate: dev ? 1 : undefined,
+	profilesSampleRate: dev ? 1 : undefined,
+	ignoreTransactions: ['/health'],
+	spotlight: dev
 });
 
 const languageHandler = (({ event, resolve }) =>
