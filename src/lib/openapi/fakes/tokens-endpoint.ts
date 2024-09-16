@@ -20,6 +20,7 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 
 	async createNewToken(
 		newTokenCreation: NewTokenCreation,
+		customDeepLinks?: boolean,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<void> {
 		if (newTokenCreation.identifier !== FakeTokensEndpointApi.goodIdentifier) {

@@ -34,6 +34,7 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 
 	async createUser(
 		userCreation: UserCreation,
+		customDeepLinks?: boolean,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<User> {
 		if (userCreation.username === FakeUsersEndpointApi.badUsername) {
@@ -56,7 +57,7 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 				bio: '',
 				banned: false,
 				blocked: false,
-				tint: '#7F7F7F'
+				tint: { r: 0x7f, g: 0x7f, b: 0x7f }
 			};
 		}
 	}
