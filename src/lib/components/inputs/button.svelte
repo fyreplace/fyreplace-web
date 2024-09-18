@@ -42,10 +42,6 @@
 		}
 
 		&:not(:disabled) {
-			&:hover {
-				filter: brightness(150%);
-			}
-
 			&:active {
 				transform: scale(85%);
 				transition: 0.1s;
@@ -54,12 +50,19 @@
 			&.primary {
 				background: var(--color-accent);
 				color: var(--color-on-accent);
+
+				&:hover {
+					filter: brightness(150%);
+				}
 			}
 
 			&:not(.primary) {
-				background: transparent;
 				color: var(--color-accent);
 				border-color: var(--color-accent);
+
+				&:hover {
+					background: var(--color-accent-hover);
+				}
 			}
 		}
 

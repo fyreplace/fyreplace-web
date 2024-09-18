@@ -3,6 +3,7 @@
 		"translation": {
 			"ok": "OK",
 			"cancel": "Cancel",
+			"loading": "…",
 			"app": {
 				"name": "Fyreplace",
 				"description": "Fyreplace social media web app"
@@ -36,6 +37,7 @@
 				"register": "Sign up"
 			},
 			"settings": {
+				"dateJoined": "Joined:",
 				"logout": "Logout"
 			},
 			"account": {

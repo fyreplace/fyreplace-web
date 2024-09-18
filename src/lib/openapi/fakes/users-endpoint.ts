@@ -48,17 +48,7 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		} else if (userCreation.email === FakeUsersEndpointApi.usedEmail) {
 			fail(409, { reason: 'email_taken' });
 		} else {
-			return {
-				id: Math.random().toString(36).substring(2),
-				dateCreated: new Date(),
-				username: userCreation.username,
-				rank: Rank.Citizen,
-				avatar: '',
-				bio: '',
-				banned: false,
-				blocked: false,
-				tint: { r: 0x7f, g: 0x7f, b: 0x7f }
-			};
+			return this.makeUser(userCreation.username);
 		}
 	}
 
@@ -71,7 +61,7 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 	}
 
 	async getCurrentUser(initOverrides?: RequestInit | InitOverrideFunction): Promise<User> {
-		throw new Error('Method not implemented.');
+		return this.makeUser('random_user');
 	}
 
 	async getUser(id: string, initOverrides?: RequestInit | InitOverrideFunction): Promise<User> {
@@ -120,6 +110,20 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<void> {
 		throw new Error('Method not implemented.');
+	}
+
+	private makeUser(username: string) {
+		return {
+			id: Math.random().toString(36).substring(2),
+			dateCreated: new Date(),
+			username: username,
+			rank: Rank.Citizen,
+			avatar: '',
+			bio: 'Hello there',
+			banned: false,
+			blocked: false,
+			tint: { r: 0x7f, g: 0x7f, b: 0x7f }
+		};
 	}
 
 	// Unimplemented side
