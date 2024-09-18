@@ -64,7 +64,7 @@ export async function call(
 
 		if (error instanceof ResponseError) {
 			if (error.response.status === 401) {
-				setStoredItem('connection.token', null);
+				setStoredItem('connection.token', '');
 				displayableError = new DisplayableError('errors.401');
 			} else {
 				displayableError = (await onError(error)) ?? null;

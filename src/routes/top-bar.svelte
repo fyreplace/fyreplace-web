@@ -12,7 +12,7 @@
 
 	export let sideNavigation = false;
 
-	const token = writable<string>('');
+	const token = writable<string | null>(null);
 	const choices = derived([currentDestination, token], ([$destination, $token]) => {
 		const firstDestination = $destination.parent ?? $destination;
 		return [firstDestination]
@@ -43,7 +43,7 @@
 	{#if $showSegments}
 		<Segments destinations={$choices} />
 	{:else}
-		<span class="title">{t($currentDestination.titleKey)}</span>
+		<h1 class="title">{t($currentDestination.titleKey)}</h1>
 	{/if}
 </div>
 
