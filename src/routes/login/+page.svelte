@@ -74,6 +74,9 @@
 				switch (error.response.status) {
 					case 400:
 						return new DisplayableError('errors.400');
+					case 403:
+						$isWaitingForRandomCode = true;
+						return new DisplayableError('login.errors.403');
 					case 404:
 						return new DisplayableError('login.errors.404');
 					default:

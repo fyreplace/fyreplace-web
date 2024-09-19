@@ -22,7 +22,7 @@
 			.filter((d) =>
 				!$token
 					? d !== Destination.Settings
-					: [Destination.Login, Destination.Register].indexOf(d) === -1
+					: ![Destination.Login, Destination.Register].includes(d)
 			);
 	});
 	const multiChoice = derived(choices, ($choices) => $choices.length > 1);

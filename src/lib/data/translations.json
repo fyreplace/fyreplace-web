@@ -59,6 +59,10 @@
 				"identifier": "Identifier",
 				"identifier-placeholder": "Username or email",
 				"errors": {
+					"403": {
+						"title": "Use a password",
+						"message": "This account does not use an email for logging in. Please use your password instead."
+					},
 					"404": {
 						"title": "User not found",
 						"message": "No user account was found with this username or email."

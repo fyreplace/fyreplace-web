@@ -23,6 +23,7 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 	static readonly badUsername = 'used-username';
 	static readonly reservedUsername = 'reserved-username';
 	static readonly usedUsername = 'used-username';
+	static readonly passwordUsername = 'password-username';
 	static readonly goodUsername = 'good-username';
 	static readonly badEmail = 'bad@email';
 	static readonly usedEmail = 'used@email';
@@ -41,7 +42,11 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 			fail(400, { violations: [{ field: 'createUser.input.username' }] });
 		} else if (userCreation.username === FakeUsersEndpointApi.reservedUsername) {
 			fail(403);
-		} else if (userCreation.username === FakeUsersEndpointApi.usedUsername) {
+		} else if (
+			[FakeUsersEndpointApi.usedUsername, FakeUsersEndpointApi.passwordUsername].includes(
+				userCreation.username
+			)
+		) {
 			fail(409, { reason: 'username_taken' });
 		} else if (userCreation.email === FakeUsersEndpointApi.badEmail) {
 			fail(400, { violations: [{ field: 'createUser.input.email' }] });

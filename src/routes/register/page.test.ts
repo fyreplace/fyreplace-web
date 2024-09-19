@@ -96,6 +96,8 @@ test('Invalid username produces an error', async () => {
 		submit.click();
 		await sleep(100);
 		expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(i + 1);
+		const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
+		expect(randomCode).not.to.exist;
 	}
 });
 
@@ -115,6 +117,8 @@ test('Invalid email produces an error', async () => {
 		submit.click();
 		await sleep(100);
 		expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(i + 1);
+		const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
+		expect(randomCode).not.to.exist;
 	}
 });
 
@@ -131,6 +135,8 @@ test('Valid username and email produce no error', async () => {
 	submit.click();
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
+	const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
+	expect(randomCode).to.exist;
 });
 
 test('Random code must have correct length', async () => {

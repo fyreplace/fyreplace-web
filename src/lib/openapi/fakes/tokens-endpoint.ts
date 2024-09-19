@@ -11,8 +11,10 @@ import FakeUsersEndpointApi from './users-endpoint';
 import { fail } from './utils';
 
 export default class FakeTokensEndpointApi implements TokensEndpointApiInterface {
-	static readonly badIdentifier = FakeUsersEndpointApi.badEmail;
-	static readonly goodIdentifier = FakeUsersEndpointApi.goodEmail;
+	static readonly goodIdentifiers = [
+		FakeUsersEndpointApi.goodUsername,
+		FakeUsersEndpointApi.goodEmail
+	];
 	static readonly badSecret = 'nopenope';
 	static readonly goodSecret = 'abcd1234';
 	static readonly badToken = 'bad-token';
@@ -23,7 +25,9 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 		customDeepLinks?: boolean,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<void> {
-		if (newTokenCreation.identifier !== FakeTokensEndpointApi.goodIdentifier) {
+		if (newTokenCreation.identifier === FakeUsersEndpointApi.passwordUsername) {
+			fail(403);
+		} else if (!FakeTokensEndpointApi.goodIdentifiers.includes(newTokenCreation.identifier)) {
 			fail(404);
 		}
 	}
@@ -33,7 +37,7 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<string> {
 		if (
-			tokenCreation.identifier !== FakeTokensEndpointApi.goodIdentifier ||
+			!FakeTokensEndpointApi.goodIdentifiers.includes(tokenCreation.identifier) ||
 			tokenCreation.secret !== FakeTokensEndpointApi.goodSecret
 		) {
 			fail(404);
