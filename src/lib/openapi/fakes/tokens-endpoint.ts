@@ -17,8 +17,7 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 	];
 	static readonly badSecret = 'nopenope';
 	static readonly goodSecret = 'abcd1234';
-	static readonly badToken = 'bad-token';
-	static readonly goodToken = 'good-token';
+	static readonly token = 'token';
 
 	async createNewToken(
 		newTokenCreation: NewTokenCreation,
@@ -43,11 +42,11 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 			fail(404);
 		}
 
-		return FakeTokensEndpointApi.goodToken;
+		return FakeTokensEndpointApi.token;
 	}
 
 	async getNewToken(initOverrides?: RequestInit | InitOverrideFunction): Promise<string> {
-		return FakeTokensEndpointApi.goodToken;
+		return FakeTokensEndpointApi.token;
 	}
 
 	// Unimplemented side

@@ -67,8 +67,8 @@
 		}
 	}
 
-	async function sendEmail() {
-		call(
+	function sendEmail() {
+		return call(
 			async () => {
 				try {
 					isLoading = true;
@@ -113,8 +113,8 @@
 		);
 	}
 
-	async function createToken() {
-		call(
+	function createToken() {
+		return call(
 			async () => {
 				try {
 					isLoading = true;
