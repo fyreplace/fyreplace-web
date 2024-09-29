@@ -3,11 +3,12 @@
 	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { navigate, Destination } from '$lib/destinations';
-	import { getUsersClient } from '$lib/openapi';
+	import { DisplayableError } from '$lib/events';
+	import { call, getUsersClient } from '$lib/openapi';
 	import type { User } from '$lib/openapi/generated';
 	import SavedValue from '$lib/components/saved-value.svelte';
-	import Avatar from '$lib/components/avatar.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
+	import EditableAvatar from './editable-avatar.svelte';
 
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
@@ -16,13 +17,41 @@
 	onMount(() =>
 		token.subscribe(async ($token) => {
 			if ($token) {
-				const client = await getUsersClient();
-				currentUser = await client.getCurrentUser();
+				await call(
+					async () => {
+						const client = await getUsersClient();
+						currentUser = await client.getCurrentUser();
+					},
+					async () => {}
+				);
 			} else {
 				await navigate($isRegistering ? Destination.Register : Destination.Login);
 			}
 		})
 	);
+
+	function updateAvatar(event: CustomEvent<File>) {
+		return call(
+			async () => {
+				const client = await getUsersClient();
+				const avatar = await client.setCurrentUserAvatar(event.detail);
+
+				if (currentUser) {
+					currentUser = { ...currentUser, avatar };
+				}
+			},
+			async (error) => {
+				switch (error.response.status) {
+					case 413:
+						return new DisplayableError('settings.errors.413');
+					case 415:
+						return new DisplayableError('settings.errors.415');
+					default:
+						return new DisplayableError();
+				}
+			}
+		);
+	}
 
 	async function logout() {
 		$token = '';
@@ -35,8 +64,10 @@
 
 {#if $token}
 	<div class="destination">
-		<Avatar user={currentUser} size={100} tinted />
-		<span class="username">{currentUser?.username ?? t('loading')}</span>
+		<EditableAvatar user={currentUser} on:file={updateAvatar} />
+		<span title={t('settings.username')} class="username"
+			>{currentUser?.username ?? t('loading')}</span
+		>
 		<span>
 			{t('settings.dateJoined')}
 			<time>{currentUser?.dateCreated.toLocaleString() ?? t('loading')}</time>

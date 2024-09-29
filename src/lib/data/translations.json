@@ -37,8 +37,19 @@
 				"register": "Sign up"
 			},
 			"settings": {
+				"username": "Username",
 				"dateJoined": "Joined:",
-				"logout": "Logout"
+				"logout": "Logout",
+				"errors": {
+					"413": {
+						"title": "File too large",
+						"message": "This file is too heavy; please select a file under 1M."
+					},
+					"415": {
+						"title": "Unsupported file format",
+						"message": "This file you have selected is not supported."
+					}
+				}
 			},
 			"account": {
 				"randomCode": "One-time code",
@@ -108,6 +119,10 @@
 						}
 					}
 				}
+			},
+			"components": {
+				"avatar": "Avatar",
+				"image-picker": "Image picker"
 			}
 		}
 	}

@@ -25,9 +25,14 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 	static readonly usedUsername = 'used-username';
 	static readonly passwordUsername = 'password-username';
 	static readonly goodUsername = 'good-username';
+
 	static readonly badEmail = 'bad@email';
 	static readonly usedEmail = 'used@email';
 	static readonly goodEmail = 'good@email';
+
+	static readonly notImageFile = new File(['Not'], 'not.txt', { type: 'image/png' });
+	static readonly largeImageFile = new File(['Large'], 'large.png', { type: 'image/png' });
+	static readonly normalImageFile = new File(['Normal'], 'normal.png', { type: 'image/png' });
 
 	async countBlockedUsers(initOverrides?: RequestInit | InitOverrideFunction): Promise<number> {
 		throw new Error('Method not implemented.');
@@ -84,7 +89,14 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		body: Blob,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<string> {
-		throw new Error('Method not implemented.');
+		switch (await body.text()) {
+			case await FakeUsersEndpointApi.normalImageFile.text():
+				return FakeUsersEndpointApi.normalImageFile.name;
+			case await FakeUsersEndpointApi.largeImageFile.text():
+				fail(413);
+			default:
+				fail(415);
+		}
 	}
 
 	async setCurrentUserBio(

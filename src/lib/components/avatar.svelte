@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from 'i18next';
 	import type { User } from '$lib/openapi/generated';
 
 	export let user: User | null = null;
@@ -11,7 +12,14 @@
 </script>
 
 {#if user?.avatar}
-	<img src={user.avatar} alt={user.username} width={size} height={size} class="avatar" />
+	<img
+		src={user.avatar}
+		alt={user.username}
+		width={size}
+		height={size}
+		title={t('components.avatar')}
+		class="avatar"
+	/>
 {:else}
 	<svg width={size} height={size} viewBox="0 0 16 16" class="plagman">
 		<circle cx="8" cy="8" r="8" fill={tint} />
