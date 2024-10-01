@@ -12,9 +12,31 @@
 			dispatch('file', file);
 		}
 	}
+
+	function onDragOver(event: DragEvent) {
+		event.preventDefault();
+
+		if (event.dataTransfer) {
+			event.dataTransfer.dropEffect = 'copy';
+		}
+	}
+
+	function onDrop(event: DragEvent) {
+		event.preventDefault();
+		const file = event.dataTransfer?.files.item(0);
+
+		if (file) {
+			dispatch('file', file);
+		}
+	}
 </script>
 
-<label title={t('components.image-picker')} class="image-picker">
+<label
+	title={t('components.image-picker')}
+	class="image-picker"
+	on:dragover={onDragOver}
+	on:drop={onDrop}
+>
 	<input
 		type="file"
 		accept="image/jpeg,image/png,image/wepb"
