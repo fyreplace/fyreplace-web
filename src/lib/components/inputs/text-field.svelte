@@ -45,17 +45,18 @@
 		border-radius: 0.5em;
 		font-size: 1em;
 		transition: 0.1s;
+		outline: none;
 
 		&:disabled {
 			cursor: not-allowed;
 		}
 
-		&:hover:not(:disabled) {
+		&:hover:not(:focus):not(:disabled) {
 			border-color: currentColor;
 		}
 
 		&:focus {
-			outline-color: var(--color-accent);
+			border-color: var(--color-accent);
 		}
 	}
 </style>

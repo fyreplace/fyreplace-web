@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import urls from '$lib/data/urls.json';
+import { api } from '$lib/data/urls.json';
 import { getStoredItem, setStoredItem } from '$lib/storage';
 import { DisplayableError, eventBus } from '$lib/events';
 import { sleep } from '$lib/utils';
@@ -45,11 +45,11 @@ async function getBaseUrl() {
 	const { env } = await import('$env/dynamic/public');
 
 	if (dev) {
-		return urls.local;
+		return api.local;
 	} else if (env.PUBLIC_SENTRY_ENVIRONMENT === 'main') {
-		return urls.main;
+		return api.main;
 	} else {
-		return urls.dev;
+		return api.dev;
 	}
 }
 

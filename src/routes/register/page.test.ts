@@ -17,8 +17,10 @@ test('Username must have correct length', { timeout: 60000 }, async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
+	await user.click(acceptTerms);
 
 	await user.type(username, 'aa');
 	expect(submit).to.have.property('disabled', true);
@@ -41,8 +43,10 @@ test('Email must have correct length', { timeout: 60000 }, async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
+	await user.click(acceptTerms);
 
 	await user.type(email, '@@');
 	expect(submit).to.have.property('disabled', true);
@@ -65,8 +69,10 @@ test('Email must have @', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
+	await user.click(acceptTerms);
 
 	await user.type(email, 'email');
 	expect(submit).to.have.property('disabled', true);
@@ -82,8 +88,10 @@ test('Invalid username produces an error', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
+	await user.click(acceptTerms);
 	const invalidValues = [
 		FakeUsersEndpointApi.badUsername,
 		FakeUsersEndpointApi.reservedUsername,
@@ -93,7 +101,7 @@ test('Invalid username produces an error', async () => {
 	for (let i = 0; i < invalidValues.length; i++) {
 		await user.clear(username);
 		await user.type(username, invalidValues[i]!);
-		submit.click();
+		await user.click(submit);
 		await sleep(100);
 		expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(i + 1);
 		const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
@@ -107,14 +115,16 @@ test('Invalid email produces an error', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
+	await user.click(acceptTerms);
 	const invalidValues = [FakeUsersEndpointApi.badEmail, FakeUsersEndpointApi.usedEmail];
 
 	for (let i = 0; i < invalidValues.length; i++) {
 		await user.clear(email);
 		await user.type(email, invalidValues[i]!);
-		submit.click();
+		await user.click(submit);
 		await sleep(100);
 		expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(i + 1);
 		const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
@@ -128,11 +138,13 @@ test('Valid username and email produce no error', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
+	await user.click(acceptTerms);
 
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 	const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
@@ -144,10 +156,12 @@ test('Random code must have correct length', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
-	submit.click();
+	await user.click(acceptTerms);
+	await user.click(submit);
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
@@ -166,15 +180,17 @@ test('Invalid random code produces an error', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
-	submit.click();
+	await user.click(acceptTerms);
+	await user.click(submit);
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
 	await user.type(randomCode, FakeTokensEndpointApi.badSecret);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 });
@@ -185,15 +201,17 @@ test('Valid random code produces no error', async () => {
 	render(Page);
 	const username = screen.getByRole('textbox', { name: 'Username' });
 	const email = screen.getByRole('textbox', { name: 'Email' });
+	const acceptTerms = screen.getByRole('checkbox');
 	const submit = screen.getByRole('button', { name: 'Sign up' });
 	await user.type(username, FakeUsersEndpointApi.goodUsername);
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
-	submit.click();
+	await user.click(acceptTerms);
+	await user.click(submit);
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
 	await user.type(randomCode, FakeTokensEndpointApi.goodSecret);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 });

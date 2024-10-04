@@ -133,7 +133,6 @@
 				name="one-time-code"
 				placeholder={t('account.randomCode-placeholder')}
 				autofocus
-				disabled={!$isWaitingForRandomCode}
 				bind:value={$randomCode}
 			/>
 			<div class="help">{t('account.help.randomCode')}</div>

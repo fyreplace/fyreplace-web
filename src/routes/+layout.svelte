@@ -69,8 +69,16 @@
 		width: 100%;
 		height: 100%;
 		margin: 0;
-		font-family: sans-serif;
 		overflow: hidden;
+	}
+
+	:global(:root) {
+		font-family: sans-serif;
+		accent-color: var(--color-accent);
+	}
+
+	:global(a) {
+		color: var(--color-accent);
 	}
 
 	.layout {

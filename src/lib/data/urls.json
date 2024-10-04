@@ -1,5 +1,12 @@
 {
-	"main": "https://rest.api.fyreplace.app",
-	"dev": "https://dev.rest.api.fyreplace.app",
-	"local": "http://localhost:8080"
+	"api": {
+		"main": "https://rest.api.fyreplace.app",
+		"dev": "https://dev.rest.api.fyreplace.app",
+		"local": "http://localhost:8080"
+	},
+	"info": {
+		"website": "https://fyreplace.net",
+		"termsOfService": "https://fyreplace.net/terms-of-service",
+		"privacyPolicy": "https://fyreplace.net/privacy-policy"
+	}
 }

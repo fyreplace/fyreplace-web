@@ -42,7 +42,7 @@ test('Invalid identifier produces an error', async () => {
 	const submit = screen.getByRole('button', { name: 'Login' });
 
 	await user.type(identifier, FakeUsersEndpointApi.badUsername);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 	const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
@@ -57,7 +57,7 @@ test('Valid identifier produces no error', async () => {
 	const submit = screen.getByRole('button', { name: 'Login' });
 
 	await user.type(identifier, FakeUsersEndpointApi.goodUsername);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 	const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
@@ -72,7 +72,7 @@ test('Password identifier produces an error', async () => {
 	const submit = screen.getByRole('button', { name: 'Login' });
 
 	await user.type(identifier, FakeUsersEndpointApi.passwordUsername);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 	const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
@@ -85,7 +85,7 @@ test('Random code must have correct length', async () => {
 	const identifier = screen.getByRole('textbox', { name: 'Identifier' });
 	const submit = screen.getByRole('button', { name: 'Login' });
 	await user.type(identifier, FakeUsersEndpointApi.goodUsername);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
@@ -105,12 +105,12 @@ test('Invalid random code produces an error', async () => {
 	const identifier = screen.getByRole('textbox', { name: 'Identifier' });
 	const submit = screen.getByRole('button', { name: 'Login' });
 	await user.type(identifier, FakeUsersEndpointApi.goodUsername);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
 	await user.type(randomCode, FakeTokensEndpointApi.badSecret);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 });
@@ -122,12 +122,12 @@ test('Valid random code produces no error', async () => {
 	const identifier = screen.getByRole('textbox', { name: 'Identifier' });
 	const submit = screen.getByRole('button', { name: 'Login' });
 	await user.type(identifier, FakeUsersEndpointApi.goodUsername);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	const randomCode = screen.getByRole('textbox', { name: 'One-time code' });
 
 	await user.type(randomCode, FakeTokensEndpointApi.goodSecret);
-	submit.click();
+	await user.click(submit);
 	await sleep(100);
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 });

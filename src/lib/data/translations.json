@@ -85,6 +85,9 @@
 				"username-placeholder": "Only letters, numbers and dashes",
 				"email": "Email",
 				"email-placeholder": "email@example.org",
+				"terms-acceptance": "I accept the {{-terms}} and the {{-privacy}}",
+				"terms-of-service": "Terms of service",
+				"privacy-policy": "Privacy policy",
 				"errors": {
 					"createUser": {
 						"400": {

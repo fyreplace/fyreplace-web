@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
+	import { info } from '$lib/data/urls.json';
 	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
 	import { call, getTokensClient, getUsersClient } from '$lib/openapi';
@@ -15,6 +16,7 @@
 	const email = writable('');
 	const randomCode = writable('');
 	const isWaitingForRandomCode = writable(false);
+	const hasAcceptedTerms = writable(false);
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
 	let isLoading = false;
@@ -30,9 +32,14 @@
 	);
 	const isRandomCodeValid = derived(randomCode, ($randomCode) => $randomCode.length >= 8);
 	const canSubmit = derived(
-		[areUsernameAndEmailValid, isRandomCodeValid, isWaitingForRandomCode],
-		([$areUsernameAndEmailValid, $isRandomCodeValid, $isWaitingForRandomCode]) =>
-			$isWaitingForRandomCode ? $isRandomCodeValid : $areUsernameAndEmailValid
+		[areUsernameAndEmailValid, isRandomCodeValid, isWaitingForRandomCode, hasAcceptedTerms],
+		([
+			$areUsernameAndEmailValid,
+			$isRandomCodeValid,
+			$isWaitingForRandomCode,
+			$hasAcceptedTerms
+		]) =>
+			$isWaitingForRandomCode ? $isRandomCodeValid : $areUsernameAndEmailValid && $hasAcceptedTerms
 	);
 
 	onMount(() => {
@@ -50,6 +57,10 @@
 
 		return unsubscribe;
 	});
+
+	function makeAnchor(textKey: string, link: string) {
+		return `<a href="${link}" target="_blank">${t(textKey)}</a>`;
+	}
 
 	function cancel() {
 		$isWaitingForRandomCode = false;
@@ -170,11 +181,20 @@
 				name="one-time-code"
 				placeholder={t('account.randomCode-placeholder')}
 				autofocus
-				disabled={!$isWaitingForRandomCode}
 				bind:value={$randomCode}
 			/>
 			<div class="help">{t('account.help.randomCode')}</div>
 		{/if}
+		<label class="terms">
+			<input type="checkbox" disabled={$isWaitingForRandomCode} bind:checked={$hasAcceptedTerms} />
+			<span>
+				{@html t('register.terms-acceptance', {
+					interpolation: { escapeValue: false },
+					terms: makeAnchor('register.terms-of-service', info.termsOfService),
+					privacy: makeAnchor('register.privacy-policy', info.privacyPolicy)
+				})}
+			</span>
+		</label>
 	</div>
 	<div class="buttons">
 		<Button type="button" disabled={!$isWaitingForRandomCode || isLoading} on:click={cancel}>
@@ -212,6 +232,12 @@
 
 	.help {
 		text-align: center;
+	}
+
+	.terms {
+		display: flex;
+		flex-direction: row;
+		gap: 0.5em;
 	}
 
 	.buttons {
