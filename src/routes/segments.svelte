@@ -56,8 +56,10 @@
 		text-decoration: none;
 		transition: 0.3s;
 
-		&:hover:not(.selected) {
-			background: var(--color-accent-hover);
+		@media (hover: hover) {
+			&:hover:not(.selected) {
+				background: var(--color-accent-hover);
+			}
 		}
 
 		&:active:not(.selected) {

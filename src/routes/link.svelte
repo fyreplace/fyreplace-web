@@ -69,8 +69,10 @@
 			border-radius: 1em;
 		}
 
-		&:hover:not(.selected) {
-			background: var(--color-accent-hover);
+		@media (hover: hover) {
+			&:hover:not(.selected) {
+				background: var(--color-accent-hover);
+			}
 		}
 
 		&:active:not(.selected) {

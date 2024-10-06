@@ -51,8 +51,10 @@
 			cursor: not-allowed;
 		}
 
-		&:hover:not(:focus):not(:disabled) {
-			border-color: currentColor;
+		@media (hover: hover) {
+			&:hover:not(:focus):not(:disabled) {
+				border-color: currentColor;
+			}
 		}
 
 		&:focus {
