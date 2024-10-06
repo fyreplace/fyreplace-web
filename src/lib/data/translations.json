@@ -37,8 +37,12 @@
 				"register": "Sign up"
 			},
 			"settings": {
+				"avatar": {
+					"change": "Change avatar",
+					"remove": "Remove avatar"
+				},
 				"username": "Username",
-				"dateJoined": "Joined:",
+				"dateJoined": "Date joined",
 				"logout": "Logout",
 				"errors": {
 					"413": {

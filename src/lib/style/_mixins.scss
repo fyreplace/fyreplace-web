@@ -1,7 +1,7 @@
 @import './values';
 
 @mixin regular-width {
-	@media screen and (min-width: $width-regular) and (min-aspect-ratio: 1/1) {
+	@media screen and (min-width: $width-regular) {
 		@content;
 	}
 }
@@ -19,7 +19,7 @@
 }
 
 @mixin expanded-width {
-	@media screen and (min-width: $width-expanded) and (min-aspect-ratio: 1/1) {
+	@media screen and (min-width: $width-expanded) {
 		@content;
 	}
 }

@@ -7,12 +7,14 @@
 	import { call, getUsersClient } from '$lib/openapi';
 	import type { User } from '$lib/openapi/generated';
 	import SavedValue from '$lib/components/saved-value.svelte';
+	import List from '$lib/components/list.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import EditableAvatar from './editable-avatar.svelte';
 
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
 	let currentUser: User | null = null;
+	let isAvatarLoading = false;
 
 	onMount(() =>
 		token.subscribe(async ($token) => {
@@ -33,11 +35,16 @@
 	function updateAvatar(event: CustomEvent<File>) {
 		return call(
 			async () => {
-				const client = await getUsersClient();
-				const avatar = await client.setCurrentUserAvatar(event.detail);
+				try {
+					isAvatarLoading = true;
+					const client = await getUsersClient();
+					const avatar = await client.setCurrentUserAvatar(event.detail);
 
-				if (currentUser) {
-					currentUser = { ...currentUser, avatar };
+					if (currentUser) {
+						currentUser = { ...currentUser, avatar };
+					}
+				} finally {
+					isAvatarLoading = false;
 				}
 			},
 			async (error) => {
@@ -53,6 +60,25 @@
 		);
 	}
 
+	function removeAvatar() {
+		return call(
+			async () => {
+				try {
+					isAvatarLoading = true;
+					const client = await getUsersClient();
+					await client.deleteCurrentUserAvatar();
+
+					if (currentUser) {
+						currentUser = { ...currentUser, avatar: '' };
+					}
+				} finally {
+					isAvatarLoading = false;
+				}
+			},
+			async () => new DisplayableError()
+		);
+	}
+
 	async function logout() {
 		$token = '';
 		await navigate(Destination.Login);
@@ -64,15 +90,42 @@
 
 {#if $token}
 	<div class="destination">
-		<EditableAvatar user={currentUser} on:file={updateAvatar} />
-		<span title={t('settings.username')} class="username"
-			>{currentUser?.username ?? t('loading')}</span
-		>
-		<span>
-			{t('settings.dateJoined')}
-			<time>{currentUser?.dateCreated.toLocaleString() ?? t('loading')}</time>
-		</span>
-		<Button type="button" on:click={logout}>{t('settings.logout')}</Button>
+		<List borderless>
+			<tr>
+				<td>
+					<div class="avatar-wrapper">
+						<EditableAvatar user={currentUser} on:file={updateAvatar} />
+					</div>
+				</td>
+				<td>
+					<Button
+						type="button"
+						disabled={!currentUser?.avatar}
+						loading={isAvatarLoading}
+						on:click={removeAvatar}
+					>
+						{t('settings.avatar.remove')}
+					</Button>
+				</td>
+			</tr>
+			<tr>
+				<td>{t('settings.username')}</td>
+				<td title={t('settings.username')} class="username">
+					{currentUser?.username ?? t('loading')}
+				</td>
+			</tr>
+			<tr>
+				<td>{t('settings.dateJoined')}</td>
+				<td title={t('settings.dateJoined')}>
+					{currentUser?.dateCreated.toLocaleString() ?? t('loading')}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<Button type="button" on:click={logout}>{t('settings.logout')}</Button>
+				</td>
+			</tr>
+		</List>
 	</div>
 {/if}
 
@@ -81,21 +134,25 @@
 
 	.destination {
 		width: 100%;
-		padding: 2em;
 		box-sizing: border-box;
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 1em;
 
-		@include expanded-height {
+		@include expanded-width {
+			padding: 2em;
+		}
+
+		@include expanded {
 			height: 100%;
 		}
 	}
 
+	.avatar-wrapper {
+		display: inline-block;
+	}
+
 	.username {
-		font-size: 1.5em;
 		font-weight: bold;
 	}
 </style>

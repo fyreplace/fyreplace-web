@@ -66,9 +66,9 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
-	async deleteCurrentUserAvatar(initOverrides?: RequestInit | InitOverrideFunction): Promise<void> {
-		throw new Error('Method not implemented.');
-	}
+	async deleteCurrentUserAvatar(
+		initOverrides?: RequestInit | InitOverrideFunction
+	): Promise<void> {}
 
 	async getCurrentUser(initOverrides?: RequestInit | InitOverrideFunction): Promise<User> {
 		return this.makeUser('random_user');

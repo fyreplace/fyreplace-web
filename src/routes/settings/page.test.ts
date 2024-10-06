@@ -22,7 +22,7 @@ test('Screen retrieves current user', async () => {
 	expect(username.textContent).to.equal('random_user');
 });
 
-test('Too large avatar produces a failure', async () => {
+test('Updating avatar with too large image produces a failure', async () => {
 	const user = userEvent.setup();
 	const bus = eventBus as StoringEventBus;
 	render(Page);
@@ -34,7 +34,7 @@ test('Too large avatar produces a failure', async () => {
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 });
 
-test('Not image avatar produces a failure', async () => {
+test('Updating avatar with invalid image produces a failure', async () => {
 	const user = userEvent.setup();
 	const bus = eventBus as StoringEventBus;
 	render(Page);
@@ -46,7 +46,7 @@ test('Not image avatar produces a failure', async () => {
 	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 });
 
-test('Valid avatar produces no failures', async () => {
+test('Updating avatar with valid image produces no failures', async () => {
 	const user = userEvent.setup();
 	render(Page);
 	const imagePicker = screen.getByTitle('Image picker');
@@ -54,4 +54,16 @@ test('Valid avatar produces no failures', async () => {
 	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
 	const avatar = screen.getByTitle<HTMLImageElement>('Avatar');
 	expect(avatar.src).to.contain(FakeUsersEndpointApi.normalImageFile.name);
+});
+
+test('Removing avatar produces no failures', async () => {
+	const user = userEvent.setup();
+	render(Page);
+	const imagePicker = screen.getByTitle('Image picker');
+	const remove = screen.getByRole('button', { name: 'Remove avatar' });
+	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
+
+	await user.click(remove);
+	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
+	expect(avatar).not.to.exist;
 });

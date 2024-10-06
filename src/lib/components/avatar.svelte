@@ -4,11 +4,9 @@
 
 	export let user: User | null = null;
 	export let size: number;
-	export let tinted = false;
 	let tint: string;
 
-	$: tint =
-		tinted && user != null ? `rgb(${user.tint.r}, ${user.tint.g}, ${user.tint.b})` : '#7f7f7f3f';
+	$: tint = user != null ? `rgb(${user.tint.r}, ${user.tint.g}, ${user.tint.b})` : '#7f7f7f3f';
 </script>
 
 {#if user?.avatar}

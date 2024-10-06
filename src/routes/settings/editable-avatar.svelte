@@ -9,7 +9,7 @@
 </script>
 
 <ImagePicker on:file>
-	<Avatar {user} size={100} tinted />
+	<Avatar {user} size={100} />
 	<span class="edit-icon">
 		<Icon size="32px"><EditIcon /></Icon>
 	</span>
