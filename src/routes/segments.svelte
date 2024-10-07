@@ -40,7 +40,7 @@
 		z-index: -1;
 		width: 100%;
 		height: 100%;
-		border: 2px solid var(--color-separator);
+		border: 2px solid var(--color-border);
 		border-radius: 2em;
 		box-sizing: border-box;
 	}

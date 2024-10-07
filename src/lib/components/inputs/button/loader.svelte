@@ -27,6 +27,7 @@
 	}
 
 	.dot {
+		fill: currentColor;
 		animation: bounce 0.5s ease-in-out infinite;
 	}
 </style>

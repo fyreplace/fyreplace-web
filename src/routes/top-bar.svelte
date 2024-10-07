@@ -58,7 +58,7 @@
 		padding-right: max(1em, env(safe-area-inset-right));
 		box-sizing: border-box;
 		align-items: center;
-		border-bottom: 2px solid var(--color-separator);
+		border-bottom: 2px solid var(--color-border);
 		transition: 0.3s;
 
 		@include expanded {

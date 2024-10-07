@@ -14,15 +14,12 @@
 	}
 
 	function onDragOver(event: DragEvent) {
-		event.preventDefault();
-
 		if (event.dataTransfer) {
 			event.dataTransfer.dropEffect = 'copy';
 		}
 	}
 
 	function onDrop(event: DragEvent) {
-		event.preventDefault();
 		const file = event.dataTransfer?.files.item(0);
 
 		if (file) {
@@ -34,8 +31,8 @@
 <label
 	title={t('components.image-picker')}
 	class="image-picker"
-	on:dragover={onDragOver}
-	on:drop={onDrop}
+	on:dragover|preventDefault={onDragOver}
+	on:drop|preventDefault={onDrop}
 >
 	<input
 		type="file"
