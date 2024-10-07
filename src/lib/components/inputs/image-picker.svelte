@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { t } from 'i18next';
+
+	export let title: string;
 
 	const dispatch = createEventDispatcher();
 	let input: HTMLInputElement;
@@ -29,7 +30,7 @@
 </script>
 
 <label
-	title={t('components.image-picker')}
+	{title}
 	class="image-picker"
 	on:dragover|preventDefault={onDragOver}
 	on:drop|preventDefault={onDrop}

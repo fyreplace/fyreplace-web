@@ -37,13 +37,23 @@
 				"register": "Sign up"
 			},
 			"settings": {
-				"avatar": {
-					"change": "Change avatar",
-					"remove": "Remove avatar"
+				"profile": {
+					"header": "Profile",
+					"avatar": {
+						"change": "Change avatar",
+						"remove": "Remove avatar"
+					},
+					"username": "Username",
+					"dateJoined": "Date joined",
+					"logout": "Logout"
 				},
-				"username": "Username",
-				"dateJoined": "Date joined",
-				"logout": "Logout",
+				"about": {
+					"header": "About",
+					"website": "Website",
+					"termsOfService": "Terms of service",
+					"privacyPolicy": "Privacy policy",
+					"sourceCode": "Source code"
+				},
 				"errors": {
 					"413": {
 						"title": "File too large",
@@ -128,8 +138,7 @@
 				}
 			},
 			"components": {
-				"avatar": "Avatar",
-				"image-picker": "Image picker"
+				"avatar": "Avatar"
 			}
 		}
 	}

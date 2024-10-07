@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from 'i18next';
 	import type { User } from '$lib/openapi/generated';
 	import Avatar from '$lib/components/avatar.svelte';
 	import ImagePicker from '$lib/components/inputs/image-picker.svelte';
@@ -8,7 +9,7 @@
 	export let user: User | null = null;
 </script>
 
-<ImagePicker on:file>
+<ImagePicker title={t('settings.profile.avatar.change')} on:file>
 	<Avatar {user} size={100} />
 	<span class="edit-icon">
 		<Icon size="32px"><EditIcon /></Icon>

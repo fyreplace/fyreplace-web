@@ -26,7 +26,7 @@ test('Updating avatar with too large image produces a failure', async () => {
 	const user = userEvent.setup();
 	const bus = eventBus as StoringEventBus;
 	render(Page);
-	const imagePicker = screen.getByTitle('Image picker');
+	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.largeImageFile);
 	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
@@ -38,7 +38,7 @@ test('Updating avatar with invalid image produces a failure', async () => {
 	const user = userEvent.setup();
 	const bus = eventBus as StoringEventBus;
 	render(Page);
-	const imagePicker = screen.getByTitle('Image picker');
+	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.notImageFile);
 	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
@@ -49,7 +49,7 @@ test('Updating avatar with invalid image produces a failure', async () => {
 test('Updating avatar with valid image produces no failures', async () => {
 	const user = userEvent.setup();
 	render(Page);
-	const imagePicker = screen.getByTitle('Image picker');
+	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
 	const avatar = screen.getByTitle<HTMLImageElement>('Avatar');
@@ -59,7 +59,7 @@ test('Updating avatar with valid image produces no failures', async () => {
 test('Removing avatar produces no failures', async () => {
 	const user = userEvent.setup();
 	render(Page);
-	const imagePicker = screen.getByTitle('Image picker');
+	const imagePicker = screen.getByTitle('Change avatar');
 	const remove = screen.getByRole('button', { name: 'Remove avatar' });
 	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
 

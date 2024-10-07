@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
+	import { info } from '$lib/data/urls.json';
 	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
 	import { call, getUsersClient } from '$lib/openapi';
@@ -91,40 +92,77 @@
 {#if $token}
 	<div class="destination">
 		<List borderless>
-			<tr>
-				<td>
-					<div class="avatar-wrapper">
-						<EditableAvatar user={currentUser} on:file={updateAvatar} />
-					</div>
-				</td>
-				<td>
-					<Button
-						type="button"
-						disabled={!currentUser?.avatar}
-						loading={isAvatarLoading}
-						on:click={removeAvatar}
-					>
-						{t('settings.avatar.remove')}
-					</Button>
-				</td>
-			</tr>
-			<tr>
-				<td>{t('settings.username')}</td>
-				<td title={t('settings.username')} class="username">
-					{currentUser?.username ?? t('loading')}
-				</td>
-			</tr>
-			<tr>
-				<td>{t('settings.dateJoined')}</td>
-				<td title={t('settings.dateJoined')}>
-					{currentUser?.dateCreated.toLocaleString() ?? t('loading')}
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<Button type="button" on:click={logout}>{t('settings.logout')}</Button>
-				</td>
-			</tr>
+			<svelte:fragment slot="header">
+				<tr>
+					<td colspan="2">{t('settings.profile.header')}</td>
+				</tr>
+			</svelte:fragment>
+			<svelte:fragment slot="body">
+				<tr>
+					<td>
+						<div class="avatar-wrapper">
+							<EditableAvatar user={currentUser} on:file={updateAvatar} />
+						</div>
+					</td>
+					<td>
+						<Button
+							type="button"
+							disabled={!currentUser?.avatar}
+							loading={isAvatarLoading}
+							on:click={removeAvatar}
+						>
+							{t('settings.profile.avatar.remove')}
+						</Button>
+					</td>
+				</tr>
+				<tr>
+					<td>{t('settings.profile.username')}</td>
+					<td title={t('settings.profile.username')} class="username">
+						{currentUser?.username ?? t('loading')}
+					</td>
+				</tr>
+				<tr>
+					<td>{t('settings.profile.dateJoined')}</td>
+					<td title={t('settings.profile.dateJoined')}>
+						{currentUser?.dateCreated.toLocaleString() ?? t('loading')}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="logout">
+						<Button type="button" on:click={logout}>{t('settings.profile.logout')}</Button>
+					</td>
+				</tr>
+			</svelte:fragment>
+		</List>
+
+		<List borderless>
+			<svelte:fragment slot="header">
+				<tr>
+					<td colspan="2">{t('settings.about.header')}</td>
+				</tr>
+			</svelte:fragment>
+			<svelte:fragment slot="body">
+				<tr>
+					<td>
+						<a href={info.website} target="_blank">{t('settings.about.website')}</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href={info.termsOfService} target="_blank">{t('settings.about.termsOfService')}</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href={info.privacyPolicy} target="_blank">{t('settings.about.privacyPolicy')}</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href={info.sourceCode} target="_blank">{t('settings.about.sourceCode')}</a>
+					</td>
+				</tr>
+			</svelte:fragment>
 		</List>
 	</div>
 {/if}
@@ -136,8 +174,10 @@
 		width: 100%;
 		box-sizing: border-box;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: 2em;
 
 		@include expanded-width {
 			padding: 2em;
@@ -154,5 +194,9 @@
 
 	.username {
 		font-weight: bold;
+	}
+
+	.logout {
+		text-align: center;
 	}
 </style>
