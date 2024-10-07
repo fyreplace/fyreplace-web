@@ -30,10 +30,12 @@
 		cursor: pointer;
 		transition: 0.1s;
 
-		@media (hover: hover) {
-			&:not(:hover) {
-				opacity: 0;
-			}
+		@media (hover: none) {
+			display: none;
+		}
+
+		&:not(:hover) {
+			opacity: 0;
 		}
 	}
 </style>
