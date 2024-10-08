@@ -139,7 +139,7 @@
 		<List borderless>
 			<svelte:fragment slot="header">
 				<tr>
-					<td colspan="2">{t('settings.about.header')}</td>
+					<td>{t('settings.about.header')}</td>
 				</tr>
 			</svelte:fragment>
 			<svelte:fragment slot="body">
