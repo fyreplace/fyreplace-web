@@ -51,10 +51,10 @@
 		z-index: 1;
 		display: flex;
 		flex-direction: column;
-		justify-self: center;
 		min-width: 240px;
-		margin: 2em;
+		max-width: calc(100% - 4em);
 		padding: 1em 2em;
+		box-sizing: border-box;
 		border: none;
 		border-radius: 1em;
 		opacity: 0;
