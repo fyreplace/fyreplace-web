@@ -57,11 +57,11 @@
 				"errors": {
 					"413": {
 						"title": "File too large",
-						"message": "This file is too heavy; please select a file under 1M."
+						"message": "Uploaded files can only go up to 10M."
 					},
 					"415": {
 						"title": "Unsupported file format",
-						"message": "This file you have selected is not supported."
+						"message": "The type of file you have selected is not supported."
 					}
 				}
 			},

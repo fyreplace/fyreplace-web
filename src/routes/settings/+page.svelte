@@ -11,11 +11,12 @@
 	import List from '$lib/components/list.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import EditableAvatar from './editable-avatar.svelte';
+	import Loader from '$lib/components/inputs/button/loader.svelte';
 
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
 	let currentUser: User | null = null;
-	let isAvatarLoading = false;
+	let isLoadingAvatar = false;
 
 	onMount(() =>
 		token.subscribe(async ($token) => {
@@ -37,7 +38,7 @@
 		return call(
 			async () => {
 				try {
-					isAvatarLoading = true;
+					isLoadingAvatar = true;
 					const client = await getUsersClient();
 					const avatar = await client.setCurrentUserAvatar(event.detail);
 
@@ -45,7 +46,7 @@
 						currentUser = { ...currentUser, avatar };
 					}
 				} finally {
-					isAvatarLoading = false;
+					isLoadingAvatar = false;
 				}
 			},
 			async (error) => {
@@ -65,7 +66,7 @@
 		return call(
 			async () => {
 				try {
-					isAvatarLoading = true;
+					isLoadingAvatar = true;
 					const client = await getUsersClient();
 					await client.deleteCurrentUserAvatar();
 
@@ -73,7 +74,7 @@
 						currentUser = { ...currentUser, avatar: '' };
 					}
 				} finally {
-					isAvatarLoading = false;
+					isLoadingAvatar = false;
 				}
 			},
 			async () => new DisplayableError()
@@ -101,14 +102,14 @@
 				<tr>
 					<td>
 						<div class="avatar-wrapper">
-							<EditableAvatar user={currentUser} on:file={updateAvatar} />
+							<EditableAvatar user={currentUser} loading={isLoadingAvatar} on:file={updateAvatar} />
 						</div>
 					</td>
 					<td>
 						<Button
 							type="button"
 							disabled={!currentUser?.avatar}
-							loading={isAvatarLoading}
+							loading={isLoadingAvatar}
 							on:click={removeAvatar}
 						>
 							{t('settings.profile.avatar.remove')}
