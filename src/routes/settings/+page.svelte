@@ -65,16 +65,11 @@
 	function removeAvatar() {
 		return call(
 			async () => {
-				try {
-					isLoadingAvatar = true;
-					const client = await getUsersClient();
-					await client.deleteCurrentUserAvatar();
+				const client = await getUsersClient();
+				await client.deleteCurrentUserAvatar();
 
-					if (currentUser) {
-						currentUser = { ...currentUser, avatar: '' };
-					}
-				} finally {
-					isLoadingAvatar = false;
+				if (currentUser) {
+					currentUser = { ...currentUser, avatar: '' };
 				}
 			},
 			async () => new DisplayableError()
@@ -108,8 +103,7 @@
 					<td>
 						<Button
 							type="button"
-							disabled={!currentUser?.avatar}
-							loading={isLoadingAvatar}
+							disabled={!currentUser?.avatar || isLoadingAvatar}
 							on:click={removeAvatar}
 						>
 							{t('settings.profile.avatar.remove')}
