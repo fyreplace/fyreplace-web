@@ -103,7 +103,7 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		body: string,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<string> {
-		throw new Error('Method not implemented.');
+		return body;
 	}
 
 	async setUserBanned(

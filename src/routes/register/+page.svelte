@@ -161,25 +161,25 @@
 	<Logo />
 	<div class="fields">
 		<TextField
-			label={t('register.username')}
+			label={t('register.username.label')}
 			name="username"
-			placeholder={t('register.username-placeholder')}
+			placeholder={t('register.username.placeholder')}
 			autofocus
 			disabled={$isWaitingForRandomCode}
 			bind:value={$username}
 		/>
 		<TextField
-			label={t('register.email')}
+			label={t('register.email.label')}
 			name="email"
-			placeholder={t('register.email-placeholder')}
+			placeholder={t('register.email.placeholder')}
 			disabled={$isWaitingForRandomCode}
 			bind:value={$email}
 		/>
 		{#if $isWaitingForRandomCode}
 			<TextField
-				label={t('account.randomCode')}
+				label={t('account.randomCode.label')}
 				name="one-time-code"
-				placeholder={t('account.randomCode-placeholder')}
+				placeholder={t('account.randomCode.placeholder')}
 				autofocus
 				bind:value={$randomCode}
 			/>

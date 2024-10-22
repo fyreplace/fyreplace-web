@@ -120,18 +120,18 @@
 	<Logo />
 	<div class="fields">
 		<TextField
-			label={t('login.identifier')}
+			label={t('login.identifier.label')}
 			name="username"
-			placeholder={t('login.identifier-placeholder')}
+			placeholder={t('login.identifier.placeholder')}
 			autofocus
 			disabled={$isWaitingForRandomCode}
 			bind:value={$identifier}
 		/>
 		{#if $isWaitingForRandomCode}
 			<TextField
-				label={t('account.randomCode')}
+				label={t('account.randomCode.label')}
 				name="one-time-code"
-				placeholder={t('account.randomCode-placeholder')}
+				placeholder={t('account.randomCode.placeholder')}
 				autofocus
 				bind:value={$randomCode}
 			/>

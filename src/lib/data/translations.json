@@ -45,6 +45,11 @@
 					},
 					"username": "Username",
 					"dateJoined": "Date joined",
+					"bio": {
+						"label": "Bio",
+						"placeholder": "Tell the community about yourself",
+						"save": "Save"
+					},
 					"logout": "Logout"
 				},
 				"about": {
@@ -66,8 +71,10 @@
 				}
 			},
 			"account": {
-				"randomCode": "One-time code",
-				"randomCode-placeholder": "abcd1234",
+				"randomCode": {
+					"label": "One-time code",
+					"placeholder": "abcd1234"
+				},
 				"help": {
 					"randomCode": "A one-time use code has been sent to your email address."
 				},
@@ -81,8 +88,10 @@
 				}
 			},
 			"login": {
-				"identifier": "Identifier",
-				"identifier-placeholder": "Username or email",
+				"identifier": {
+					"label": "Identifier",
+					"placeholder": "Username or email"
+				},
 				"errors": {
 					"403": {
 						"title": "Use a password",
@@ -95,10 +104,14 @@
 				}
 			},
 			"register": {
-				"username": "Username",
-				"username-placeholder": "Only letters, numbers and dashes",
-				"email": "Email",
-				"email-placeholder": "email@example.org",
+				"username": {
+					"label": "Username",
+					"placeholder": "Only letters, numbers and dashes"
+				},
+				"email": {
+					"label": "Email",
+					"placeholder": "email@example.org"
+				},
 				"terms-acceptance": "I accept the {{-terms}} and the {{-privacy}}",
 				"terms-of-service": "Terms of service",
 				"privacy-policy": "Privacy policy",

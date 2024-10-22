@@ -48,16 +48,19 @@ test('Updating avatar with invalid image produces a failure', async () => {
 
 test('Updating avatar with valid image produces no failures', async () => {
 	const user = userEvent.setup();
+	const bus = eventBus as StoringEventBus;
 	render(Page);
 	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
 	const avatar = screen.getByTitle<HTMLImageElement>('Avatar');
 	expect(avatar.src).to.contain(FakeUsersEndpointApi.normalImageFile.name);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 });
 
 test('Removing avatar produces no failures', async () => {
 	const user = userEvent.setup();
+	const bus = eventBus as StoringEventBus;
 	render(Page);
 	const imagePicker = screen.getByTitle('Change avatar');
 	const remove = screen.getByRole('button', { name: 'Remove avatar' });
@@ -66,4 +69,29 @@ test('Removing avatar produces no failures', async () => {
 	await user.click(remove);
 	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
 	expect(avatar).not.to.exist;
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
+});
+
+test('Bio must be different', async () => {
+	const user = userEvent.setup();
+	render(Page);
+	const bio = screen.getByRole('textbox', { name: 'Bio' });
+	const save = screen.getByRole('button', { name: 'Save' });
+
+	await user.type(bio, 'Hello');
+	expect(save).to.have.property('disabled', false);
+	await user.click(save);
+	expect(save).to.have.property('disabled', true);
+});
+
+test('Updating bio produces no failures', async () => {
+	const user = userEvent.setup();
+	const bus = eventBus as StoringEventBus;
+	render(Page);
+	const bio = screen.getByRole('textbox', { name: 'Bio' });
+	const save = screen.getByRole('button', { name: 'Save' });
+
+	await user.type(bio, 'Hello');
+	await user.click(save);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 });

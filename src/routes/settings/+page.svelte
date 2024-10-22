@@ -11,11 +11,12 @@
 	import List from '$lib/components/list.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
 	import EditableAvatar from './editable-avatar.svelte';
-	import Loader from '$lib/components/inputs/button/loader.svelte';
+	import TextArea from '$lib/components/inputs/text-area.svelte';
 
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
 	let currentUser: User | null = null;
+	let bio = '';
 	let isLoadingAvatar = false;
 
 	onMount(() =>
@@ -25,6 +26,7 @@
 					async () => {
 						const client = await getUsersClient();
 						currentUser = await client.getCurrentUser();
+						bio = currentUser.bio ?? '';
 					},
 					async () => {}
 				);
@@ -76,6 +78,20 @@
 		);
 	}
 
+	function updateBio() {
+		return call(
+			async () => {
+				const client = await getUsersClient();
+				bio = await client.setCurrentUserBio(bio);
+
+				if (currentUser) {
+					currentUser = { ...currentUser, bio };
+				}
+			},
+			async () => new DisplayableError()
+		);
+	}
+
 	async function logout() {
 		$token = '';
 		await navigate(Destination.Login);
@@ -88,11 +104,9 @@
 {#if $token}
 	<div class="destination">
 		<List borderless>
-			<svelte:fragment slot="header">
-				<tr>
-					<td colspan="2">{t('settings.profile.header')}</td>
-				</tr>
-			</svelte:fragment>
+			<tr slot="header">
+				<td colspan="2">{t('settings.profile.header')}</td>
+			</tr>
 			<svelte:fragment slot="body">
 				<tr>
 					<td>
@@ -123,6 +137,22 @@
 					</td>
 				</tr>
 				<tr>
+					<td colspan="2">
+						<TextArea
+							label={t('settings.profile.bio.label')}
+							name="bio"
+							placeholder={t('settings.profile.bio.placeholder')}
+							maxLength={3000}
+							bind:value={bio}
+						/>
+						<div class="bio-save">
+							<Button type="button" disabled={bio == (currentUser?.bio ?? '')} on:click={updateBio}>
+								{t('settings.profile.bio.save')}
+							</Button>
+						</div>
+					</td>
+				</tr>
+				<tr>
 					<td colspan="2" class="logout">
 						<Button type="button" on:click={logout}>{t('settings.profile.logout')}</Button>
 					</td>
@@ -131,11 +161,9 @@
 		</List>
 
 		<List borderless>
-			<svelte:fragment slot="header">
-				<tr>
-					<td>{t('settings.about.header')}</td>
-				</tr>
-			</svelte:fragment>
+			<tr slot="header">
+				<td>{t('settings.about.header')}</td>
+			</tr>
 			<svelte:fragment slot="body">
 				<tr>
 					<td>
@@ -177,10 +205,6 @@
 		@include expanded-width {
 			padding: 2em;
 		}
-
-		@include expanded {
-			height: 100%;
-		}
 	}
 
 	.avatar-wrapper {
@@ -191,7 +215,13 @@
 		font-weight: bold;
 	}
 
+	.bio-save {
+		margin-top: 0.5em;
+		text-align: center;
+	}
+
 	.logout {
+		--color-accent: var(--color-danger);
 		text-align: center;
 	}
 </style>
