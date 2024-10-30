@@ -1,37 +1,37 @@
-@import './values';
+@use './values';
 
 @mixin regular-width {
-	@media screen and (min-width: $width-regular) {
+	@media screen and (min-width: values.$width-regular) {
 		@content;
 	}
 }
 
 @mixin regular-height {
-	@media screen and (min-height: $height-regular) {
+	@media screen and (min-height: values.$height-regular) {
 		@content;
 	}
 }
 
 @mixin regular {
-	@media screen and (min-width: $width-regular) and (min-height: $height-regular) and (min-aspect-ratio: 1/1) {
+	@media screen and (min-width: values.$width-regular) and (min-height: values.$height-regular) and (min-aspect-ratio: 1/1) {
 		@content;
 	}
 }
 
 @mixin expanded-width {
-	@media screen and (min-width: $width-expanded) {
+	@media screen and (min-width: values.$width-expanded) {
 		@content;
 	}
 }
 
 @mixin expanded-height {
-	@media screen and (min-height: $height-expanded) {
+	@media screen and (min-height: values.$height-expanded) {
 		@content;
 	}
 }
 
 @mixin expanded {
-	@media screen and (min-width: $width-expanded) and (min-height: $height-expanded) and (min-aspect-ratio: 1/1) {
+	@media screen and (min-width: values.$width-expanded) and (min-height: values.$height-expanded) and (min-aspect-ratio: 1/1) {
 		@content;
 	}
 }

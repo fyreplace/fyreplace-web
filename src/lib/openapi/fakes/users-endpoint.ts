@@ -89,10 +89,10 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		body: Blob,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<string> {
-		switch (await body.text()) {
-			case await FakeUsersEndpointApi.normalImageFile.text():
+		switch (body) {
+			case FakeUsersEndpointApi.normalImageFile:
 				return FakeUsersEndpointApi.normalImageFile.name;
-			case await FakeUsersEndpointApi.largeImageFile.text():
+			case FakeUsersEndpointApi.largeImageFile:
 				fail(413);
 			default:
 				fail(415);

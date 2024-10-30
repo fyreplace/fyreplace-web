@@ -5,8 +5,12 @@
 	import { StorageChange } from '$lib/events';
 	import EventListener from './event-listener.svelte';
 
-	export let name: N;
-	export let store: Writable<T | null>;
+	interface Props {
+		name: N;
+		store: Writable<T | null>;
+	}
+
+	let { name, store }: Props = $props();
 
 	onMount(() => {
 		$store = getStoredItem<T>(name) ?? $store;
@@ -30,5 +34,5 @@
 	}
 </script>
 
-<svelte:window on:storage={onExternalStorageEvent} />
+<svelte:window onstorage={onExternalStorageEvent} />
 <EventListener type={StorageChange} listener={(e) => onInternalStorageChange(e.detail)} />

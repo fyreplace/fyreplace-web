@@ -4,7 +4,11 @@
 	import { currentDestination, Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
 
-	export let destinations: Destination[];
+	interface Props {
+		destinations: Destination[];
+	}
+
+	let { destinations }: Props = $props();
 
 	const isWaitingForRandomCode = writable(false);
 </script>
@@ -12,7 +16,7 @@
 <SavedValue name="account.isWaitingForRandomCode" store={isWaitingForRandomCode} />
 
 <div class="segments">
-	<span class="border" />
+	<span class="border"></span>
 	{#each destinations as destination}
 		<a
 			href={destination.route}
@@ -27,7 +31,7 @@
 </div>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
 
 	.segments {
 		position: relative;

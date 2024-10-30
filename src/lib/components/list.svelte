@@ -1,18 +1,26 @@
 <script lang="ts">
-	export let borderless = false;
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		borderless?: boolean;
+		header?: Snippet;
+		body?: Snippet;
+	}
+
+	let { borderless = false, header, body }: Props = $props();
 </script>
 
 <table class="list" class:borderless>
 	<thead>
-		<slot name="header" />
+		{@render header?.()}
 	</thead>
 	<tbody>
-		<slot name="body" />
+		{@render body?.()}
 	</tbody>
 </table>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
 
 	@mixin borders {
 		:global(tr:first-child td) {
@@ -37,7 +45,7 @@
 		border-radius: 1em;
 		border-spacing: 0;
 
-		@include expanded-width {
+		@include mixins.expanded-width {
 			width: unset;
 			min-width: 600px;
 		}
@@ -53,7 +61,7 @@
 		&.borderless thead :global(td) {
 			border-bottom: 1px solid var(--color-border);
 
-			@include expanded-width {
+			@include mixins.expanded-width {
 				border-bottom: unset;
 			}
 		}
@@ -63,7 +71,7 @@
 		}
 
 		tbody {
-			@include expanded-width {
+			@include mixins.expanded-width {
 				@include borders;
 			}
 

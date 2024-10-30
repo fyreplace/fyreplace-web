@@ -2,11 +2,15 @@
 	import { t } from 'i18next';
 	import type { User } from '$lib/openapi/generated';
 
-	export let user: User | null = null;
-	export let size: number;
-	let tint: string;
+	interface Props {
+		user?: User | null;
+		size: number;
+	}
 
-	$: tint = user != null ? `rgb(${user.tint.r}, ${user.tint.g}, ${user.tint.b})` : '#7f7f7f3f';
+	let { user = null, size }: Props = $props();
+	let tint: string = $derived(
+		user != null ? `rgb(${user.tint.r}, ${user.tint.g}, ${user.tint.b})` : '#7f7f7f3f'
+	);
 </script>
 
 {#if user?.avatar}

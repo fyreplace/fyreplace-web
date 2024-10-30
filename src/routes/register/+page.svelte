@@ -19,7 +19,7 @@
 	const hasAcceptedTerms = writable(false);
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
-	let isLoading = false;
+	let isLoading = $state(false);
 
 	const areUsernameAndEmailValid = derived(
 		[username, email],
@@ -197,17 +197,17 @@
 		</label>
 	</div>
 	<div class="buttons">
-		<Button type="button" disabled={!$isWaitingForRandomCode || isLoading} on:click={cancel}>
+		<Button type="button" disabled={!$isWaitingForRandomCode || isLoading} onClick={cancel}>
 			{t('cancel')}
 		</Button>
-		<Button type="submit" primary disabled={!$canSubmit} loading={isLoading} on:click={submit}>
+		<Button type="submit" primary disabled={!$canSubmit} loading={isLoading} onClick={submit}>
 			{t('destinations.register')}
 		</Button>
 	</div>
 </form>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
 
 	.destination {
 		width: 100%;
@@ -218,7 +218,7 @@
 		justify-content: center;
 		gap: 2em;
 
-		@include expanded-height {
+		@include mixins.expanded-height {
 			height: 100%;
 		}
 	}

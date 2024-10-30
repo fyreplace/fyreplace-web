@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { currentDestination, navigate, Destination } from '$lib/destinations';
@@ -10,9 +10,15 @@
 	import TopBar from './top-bar.svelte';
 	import Dialog from './dialog.svelte';
 
+	interface Props {
+		children: Snippet;
+	}
+
+	let { children }: Props = $props();
+
 	const token = writable<string | null>(null);
-	let errors: DisplayableError[] = [];
-	let currentError: DisplayableError | undefined;
+	let errors: DisplayableError[] = $state([]);
+	let currentError: DisplayableError | undefined = $state();
 
 	onMount(() =>
 		token.subscribe(async ($token) => {
@@ -49,7 +55,7 @@
 		<TopBar sideNavigation />
 		<TopBar />
 		<main class="page">
-			<slot />
+			{@render children()}
 		</main>
 	</div>
 	<Navigation />
@@ -57,12 +63,13 @@
 		visible={errors.length > 0}
 		title={currentError?.title || ''}
 		message={currentError?.message || ''}
-		on:ok={removeError}
+		onClickOk={removeError}
 	/>
 </div>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
+	@use '$lib/style/values';
 
 	:global(:root),
 	:global(body) {
@@ -87,7 +94,7 @@
 		display: flex;
 		flex-direction: column;
 
-		@include regular {
+		@include mixins.regular {
 			flex-direction: row;
 		}
 	}
@@ -108,7 +115,7 @@
 		padding-right: env(safe-area-inset-right);
 		overflow: auto;
 
-		@include regular {
+		@include mixins.regular {
 			padding-left: 0;
 			padding-bottom: env(safe-area-inset-bottom);
 		}

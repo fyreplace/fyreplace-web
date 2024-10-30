@@ -2,7 +2,11 @@
 	import { essentialDestinations, topLevelDestinations } from '$lib/destinations';
 	import Link from './link.svelte';
 
-	export let vertical = false;
+	interface Props {
+		vertical?: boolean;
+	}
+
+	let { vertical = false }: Props = $props();
 </script>
 
 <nav class="navigation" class:vertical>
@@ -12,8 +16,7 @@
 </nav>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
-	@import '$lib/style/values';
+	@use '$lib/style/mixins';
 
 	.navigation {
 		box-sizing: border-box;
@@ -27,7 +30,7 @@
 			padding-bottom: max(1em, env(safe-area-inset-bottom));
 			border-inline-end: 2px solid var(--color-border);
 
-			@include regular {
+			@include mixins.regular {
 				display: flex;
 				flex-direction: column;
 				gap: 1em;
@@ -43,11 +46,11 @@
 			padding-right: env(safe-area-inset-right);
 			border-top: 2px solid var(--color-border);
 
-			@include regular {
+			@include mixins.regular {
 				display: none;
 			}
 
-			@include expanded {
+			@include mixins.expanded {
 				height: 80px;
 			}
 		}

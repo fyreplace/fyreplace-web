@@ -1,48 +1,51 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import type { Snippet } from 'svelte';
 
-	export let title: string;
+	interface Props {
+		title: string;
+		children: Snippet;
+		onFile: (file: File) => void;
+	}
 
-	const dispatch = createEventDispatcher();
-	let input: HTMLInputElement;
+	let { title, children, onFile }: Props = $props();
+
+	let input: HTMLInputElement | undefined = $state();
 
 	function onInput() {
-		const file = input.files?.item(0);
+		const file = input?.files?.item(0);
 
 		if (file) {
-			dispatch('file', file);
+			onFile(file);
 		}
 	}
 
 	function onDragOver(event: DragEvent) {
+		event.preventDefault();
+
 		if (event.dataTransfer) {
 			event.dataTransfer.dropEffect = 'copy';
 		}
 	}
 
 	function onDrop(event: DragEvent) {
+		event.preventDefault();
 		const file = event.dataTransfer?.files.item(0);
 
 		if (file) {
-			dispatch('file', file);
+			onFile(file);
 		}
 	}
 </script>
 
-<label
-	{title}
-	class="image-picker"
-	on:dragover|preventDefault={onDragOver}
-	on:drop|preventDefault={onDrop}
->
+<label {title} class="image-picker" ondragover={onDragOver} ondrop={onDrop}>
 	<input
 		type="file"
 		accept="image/jpeg,image/png,image/wepb"
 		class="input"
-		on:input={onInput}
+		oninput={onInput}
 		bind:this={input}
 	/>
-	<slot />
+	{@render children()}
 </label>
 
 <style lang="scss">

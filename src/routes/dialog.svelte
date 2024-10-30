@@ -1,28 +1,30 @@
 <script lang="ts">
 	import { t } from 'i18next';
 	import Button from '$lib/components/inputs/button.svelte';
-	import { createEventDispatcher } from 'svelte';
 
-	export let visible: boolean;
-	export let title: string;
-	export let message: string;
+	interface Props {
+		visible: boolean;
+		title: string;
+		message: string;
+		onClickOk: () => void;
+	}
 
-	const dispatch = createEventDispatcher();
+	let { visible, title, message, onClickOk }: Props = $props();
 </script>
 
 <div class="dialog" class:visible hidden={!visible}>
-	<div class="background" />
+	<div class="background"></div>
 	<dialog class="alert">
 		<h2>{title}</h2>
 		<p>{message}</p>
 		<div class="buttons">
-			<Button type="button" primary on:click={() => dispatch('ok')}>{t('ok')}</Button>
+			<Button type="button" primary onClick={onClickOk}>{t('ok')}</Button>
 		</div>
 	</dialog>
 </div>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
 
 	.dialog,
 	.background {
@@ -63,7 +65,7 @@
 		transform: scale(85%);
 		transition: 0.3s;
 
-		@include regular {
+		@include mixins.regular {
 			min-width: 300px;
 		}
 

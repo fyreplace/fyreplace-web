@@ -1,14 +1,33 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import Loader from './button/loader.svelte';
 
-	export let type: HTMLButtonElement['type'];
-	export let primary = false;
-	export let disabled = false;
-	export let loading = false;
+	interface Props {
+		type: HTMLButtonElement['type'];
+		primary?: boolean;
+		disabled?: boolean;
+		loading?: boolean;
+		children?: Snippet;
+		onClick: (event: MouseEvent) => void;
+	}
+
+	let {
+		type,
+		primary = false,
+		disabled = false,
+		loading = false,
+		children,
+		onClick
+	}: Props = $props();
+
+	function onClickPreventingDefault(event: MouseEvent) {
+		event.preventDefault();
+		onClick(event);
+	}
 </script>
 
-<button {type} disabled={disabled || loading} class:primary on:click|preventDefault>
-	<span class:invisible={loading}><slot /></span>
+<button {type} disabled={disabled || loading} class:primary onclick={onClickPreventingDefault}>
+	<span class:invisible={loading}>{@render children?.()}</span>
 	{#if loading}
 		<span class="loader"><Loader /></span>
 	{/if}

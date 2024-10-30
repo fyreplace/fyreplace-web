@@ -10,7 +10,11 @@
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Segments from './segments.svelte';
 
-	export let sideNavigation = false;
+	interface Props {
+		sideNavigation?: boolean;
+	}
+
+	let { sideNavigation = false }: Props = $props();
 
 	const token = writable<string | null>(null);
 	const choices = derived([currentDestination, token], ([$destination, $token]) => {
@@ -48,7 +52,7 @@
 </div>
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
 
 	.top-bar {
 		width: 100%;
@@ -61,14 +65,14 @@
 		border-bottom: 2px solid var(--color-border);
 		transition: 0.3s;
 
-		@include expanded {
+		@include mixins.expanded {
 			height: 80px;
 		}
 
 		&.side-navigation {
 			display: none;
 
-			@include regular {
+			@include mixins.regular {
 				display: flex;
 			}
 		}
@@ -77,7 +81,7 @@
 			display: flex;
 			padding-left: max(1em, env(safe-area-inset-left));
 
-			@include regular {
+			@include mixins.regular {
 				display: none;
 			}
 		}
@@ -91,7 +95,7 @@
 		font-size: 1.25em;
 		font-weight: bold;
 
-		@include expanded-height {
+		@include mixins.expanded-height {
 			font-size: 1.5em;
 		}
 	}

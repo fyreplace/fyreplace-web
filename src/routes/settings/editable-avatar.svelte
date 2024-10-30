@@ -7,11 +7,16 @@
 	import EditIcon from '$lib/components/icons/edit.svelte';
 	import Loader from '$lib/components/inputs/button/loader.svelte';
 
-	export let user: User | null = null;
-	export let loading = false;
+	interface Props {
+		user?: User | null;
+		loading?: boolean;
+		onFile: (file: File) => void;
+	}
+
+	let { user = null, loading = false, onFile }: Props = $props();
 </script>
 
-<ImagePicker title={t('settings.profile.avatar.change')} on:file>
+<ImagePicker title={t('settings.profile.avatar.change')} {onFile}>
 	<Avatar {user} size={100} />
 	<span class="overlay" class:loading>
 		{#if loading}

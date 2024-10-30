@@ -1,15 +1,27 @@
 <script lang="ts">
-	export let label: string;
-	export let name: string;
-	export let placeholder: string;
-	export let maxLength: number;
-	export let value = '';
-	export let disabled = false;
+	interface Props {
+		label: string;
+		name: string;
+		placeholder: string;
+		maxLength: number;
+		value?: string;
+		disabled?: boolean;
+	}
+
+	let {
+		label,
+		name,
+		placeholder,
+		maxLength,
+		value = $bindable(''),
+		disabled = false
+	}: Props = $props();
 </script>
 
 <label class="text-area">
 	<span>{label}</span>
-	<textarea contenteditable {name} {placeholder} {disabled} maxlength={maxLength} bind:value />
+	<textarea contenteditable {name} {placeholder} {disabled} maxlength={maxLength} bind:value
+	></textarea>
 </label>
 
 <style lang="scss">

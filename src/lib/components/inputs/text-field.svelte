@@ -1,20 +1,31 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export let label: string;
-	export let name: string;
-	export let placeholder: string;
-	export let value = '';
-	export let autofocus = false;
-	export let disabled = false;
+	interface Props {
+		label: string;
+		name: string;
+		placeholder: string;
+		value?: string;
+		autofocus?: boolean;
+		disabled?: boolean;
+	}
 
-	let input: HTMLInputElement;
+	let {
+		label,
+		name,
+		placeholder,
+		value = $bindable(''),
+		autofocus = false,
+		disabled = false
+	}: Props = $props();
+
+	let input: HTMLInputElement | undefined = $state();
 
 	if (autofocus) {
 		onMount(() =>
 			setTimeout(() => {
 				if (!value) {
-					input.focus();
+					input?.focus();
 				}
 			})
 		);

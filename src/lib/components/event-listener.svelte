@@ -3,8 +3,12 @@
 	import { browser } from '$app/environment';
 	import { eventBus, type Listener, type Class } from '$lib/events';
 
-	export let type: Class<T>;
-	export let listener: Listener<T>;
+	interface Props {
+		type: Class<T>;
+		listener: Listener<T>;
+	}
+
+	let { type, listener }: Props = $props();
 
 	if (browser) {
 		onMount(() => eventBus.addListener(type, listener));

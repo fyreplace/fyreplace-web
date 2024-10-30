@@ -5,8 +5,12 @@
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Icon from '$lib/components/icon.svelte';
 
-	export let destination: Destination;
-	export let sideNavigation = false;
+	interface Props {
+		destination: Destination;
+		sideNavigation?: boolean;
+	}
+
+	let { destination, sideNavigation = false }: Props = $props();
 
 	const token = writable<string | null>(null);
 	const selected = derived(currentDestination, ($currentDestination) => {
@@ -28,12 +32,12 @@
 	class:selected={$selected}
 	aria-disabled={$disabled}
 >
-	<Icon><svelte:component this={destination.icon} /></Icon>
+	<Icon><destination.icon /></Icon>
 	{t(destination.titleKey)}
 </a>
 
 <style lang="scss">
-	@import '$lib/style/values';
+	@use '$lib/style/mixins';
 
 	.link {
 		display: flex;
@@ -57,12 +61,12 @@
 		border: 2px solid transparent;
 		border-radius: 2em;
 
-		@media screen and (min-width: $width-expanded) {
+		@include mixins.expanded-width {
 			padding-left: 1.5em;
 			padding-right: 1.5em;
 		}
 
-		@media screen and (min-height: $height-expanded) {
+		@include mixins.expanded-height {
 			padding-bottom: 1em;
 			padding-top: 1em;
 			gap: 1em;

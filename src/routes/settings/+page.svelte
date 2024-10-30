@@ -15,9 +15,9 @@
 
 	const isRegistering = writable(false);
 	const token = writable<string | null>(null);
-	let currentUser: User | null = null;
-	let bio = '';
-	let isLoadingAvatar = false;
+	let currentUser: User | null = $state(null);
+	let bio = $state('');
+	let isLoadingAvatar = $state(false);
 
 	onMount(() =>
 		token.subscribe(async ($token) => {
@@ -36,13 +36,13 @@
 		})
 	);
 
-	function updateAvatar(event: CustomEvent<File>) {
+	function updateAvatar(file: File) {
 		return call(
 			async () => {
 				try {
 					isLoadingAvatar = true;
 					const client = await getUsersClient();
-					const avatar = await client.setCurrentUserAvatar(event.detail);
+					const avatar = await client.setCurrentUserAvatar(file);
 
 					if (currentUser) {
 						currentUser = { ...currentUser, avatar };
@@ -104,21 +104,23 @@
 {#if $token}
 	<div class="destination">
 		<List borderless>
-			<tr slot="header">
-				<td colspan="2">{t('settings.profile.header')}</td>
-			</tr>
-			<svelte:fragment slot="body">
+			{#snippet header()}
+				<tr>
+					<td colspan="2">{t('settings.profile.header')}</td>
+				</tr>
+			{/snippet}
+			{#snippet body()}
 				<tr>
 					<td>
 						<div class="avatar-wrapper">
-							<EditableAvatar user={currentUser} loading={isLoadingAvatar} on:file={updateAvatar} />
+							<EditableAvatar user={currentUser} loading={isLoadingAvatar} onFile={updateAvatar} />
 						</div>
 					</td>
 					<td>
 						<Button
 							type="button"
 							disabled={!currentUser?.avatar || isLoadingAvatar}
-							on:click={removeAvatar}
+							onClick={removeAvatar}
 						>
 							{t('settings.profile.avatar.remove')}
 						</Button>
@@ -146,7 +148,7 @@
 							bind:value={bio}
 						/>
 						<div class="bio-save">
-							<Button type="button" disabled={bio == (currentUser?.bio ?? '')} on:click={updateBio}>
+							<Button type="button" disabled={bio == (currentUser?.bio ?? '')} onClick={updateBio}>
 								{t('settings.profile.bio.save')}
 							</Button>
 						</div>
@@ -154,17 +156,19 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="logout">
-						<Button type="button" on:click={logout}>{t('settings.profile.logout')}</Button>
+						<Button type="button" onClick={logout}>{t('settings.profile.logout')}</Button>
 					</td>
 				</tr>
-			</svelte:fragment>
+			{/snippet}
 		</List>
 
 		<List borderless>
-			<tr slot="header">
-				<td>{t('settings.about.header')}</td>
-			</tr>
-			<svelte:fragment slot="body">
+			{#snippet header()}
+				<tr>
+					<td>{t('settings.about.header')}</td>
+				</tr>
+			{/snippet}
+			{#snippet body()}
 				<tr>
 					<td>
 						<a href={info.website} target="_blank">{t('settings.about.website')}</a>
@@ -185,13 +189,13 @@
 						<a href={info.sourceCode} target="_blank">{t('settings.about.sourceCode')}</a>
 					</td>
 				</tr>
-			</svelte:fragment>
+			{/snippet}
 		</List>
 	</div>
 {/if}
 
 <style lang="scss">
-	@import '$lib/style/mixins';
+	@use '$lib/style/mixins';
 
 	.destination {
 		width: 100%;
@@ -202,7 +206,7 @@
 		justify-content: center;
 		gap: 2em;
 
-		@include expanded-width {
+		@include mixins.expanded-width {
 			padding: 2em;
 		}
 	}
