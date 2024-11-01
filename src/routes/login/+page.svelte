@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
@@ -10,48 +9,39 @@
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
 
-	const identifier = writable('');
-	const randomCode = writable('');
-	const isWaitingForRandomCode = writable(false);
-	const token = writable<string | null>(null);
+	let identifier = $state('');
+	let randomCode = $state('');
+	let isWaitingForRandomCode = $state(false);
+	let token = $state<string>();
 	let isLoading = $state(false);
 
-	const isIdentifierValid = derived(
-		identifier,
-		($identifier) => $identifier.length >= 3 && $identifier.length <= 254
-	);
-	const isRandomCodeValid = derived(randomCode, ($randomCode) => $randomCode.length >= 8);
-	const canSubmit = derived(
-		[isIdentifierValid, isRandomCodeValid, isWaitingForRandomCode],
-		([$isIdentifierValid, $isRandomCodeValid, $isWaitingForRandomCode]) =>
-			$isWaitingForRandomCode ? $isRandomCodeValid : $isIdentifierValid
-	);
+	const isIdentifierValid = $derived(identifier.length >= 3 && identifier.length <= 254);
+	const isRandomCodeValid = $derived(randomCode.length >= 8);
+	const canSubmit = $derived(isWaitingForRandomCode ? isRandomCodeValid : isIdentifierValid);
+
+	$effect(() => {
+		if (token) {
+			navigate(Destination.Settings);
+		}
+	});
 
 	onMount(() => {
-		const unsubscribe = token.subscribe(async ($token) => {
-			if ($token) {
-				await navigate(Destination.Settings);
-			}
-		});
-
-		if (window.location.hash && $isWaitingForRandomCode) {
-			$randomCode = window.location.hash.replace('#', '');
+		if (window.location.hash && isWaitingForRandomCode) {
+			randomCode = window.location.hash.replace('#', '');
 			window.location.hash = '';
 			createToken();
 		}
-
-		return unsubscribe;
 	});
 
 	function cancel() {
-		$isWaitingForRandomCode = false;
-		$randomCode = '';
+		isWaitingForRandomCode = false;
+		randomCode = '';
 	}
 
 	async function submit() {
-		if (!$canSubmit) {
+		if (!canSubmit) {
 			return;
-		} else if ($isWaitingForRandomCode) {
+		} else if (isWaitingForRandomCode) {
 			await createToken();
 		} else {
 			await sendEmail();
@@ -64,8 +54,8 @@
 				try {
 					isLoading = true;
 					const client = await getTokensClient();
-					await client.createNewToken({ identifier: $identifier });
-					$isWaitingForRandomCode = true;
+					await client.createNewToken({ identifier });
+					isWaitingForRandomCode = true;
 				} finally {
 					isLoading = false;
 				}
@@ -75,7 +65,7 @@
 					case 400:
 						return new DisplayableError('errors.400');
 					case 403:
-						$isWaitingForRandomCode = true;
+						isWaitingForRandomCode = true;
 						return new DisplayableError('login.errors.403');
 					case 404:
 						return new DisplayableError('login.errors.404');
@@ -92,8 +82,8 @@
 				try {
 					isLoading = true;
 					const client = await getTokensClient();
-					$token = await client.createToken({ identifier: $identifier, secret: $randomCode });
-					$isWaitingForRandomCode = false;
+					token = await client.createToken({ identifier, secret: randomCode });
+					isWaitingForRandomCode = false;
 				} finally {
 					isLoading = false;
 				}
@@ -112,9 +102,9 @@
 	}
 </script>
 
-<SavedValue name="account.identifier" store={identifier} />
-<SavedValue name="account.isWaitingForRandomCode" store={isWaitingForRandomCode} />
-<SavedValue name="connection.token" store={token} />
+<SavedValue name="account.identifier" bind:value={identifier} />
+<SavedValue name="account.isWaitingForRandomCode" bind:value={isWaitingForRandomCode} />
+<SavedValue name="connection.token" bind:value={token} />
 
 <form class="destination">
 	<Logo />
@@ -124,25 +114,25 @@
 			name="username"
 			placeholder={t('login.identifier.placeholder')}
 			autofocus
-			disabled={$isWaitingForRandomCode}
-			bind:value={$identifier}
+			disabled={isWaitingForRandomCode}
+			bind:value={identifier}
 		/>
-		{#if $isWaitingForRandomCode}
+		{#if isWaitingForRandomCode}
 			<TextField
 				label={t('account.randomCode.label')}
 				name="one-time-code"
 				placeholder={t('account.randomCode.placeholder')}
 				autofocus
-				bind:value={$randomCode}
+				bind:value={randomCode}
 			/>
 			<div class="help">{t('account.help.randomCode')}</div>
 		{/if}
 	</div>
 	<div class="buttons">
-		<Button type="button" disabled={!$isWaitingForRandomCode || isLoading} onClick={cancel}>
+		<Button type="button" disabled={!isWaitingForRandomCode || isLoading} onClick={cancel}>
 			{t('cancel')}
 		</Button>
-		<Button type="submit" primary disabled={!$canSubmit} loading={isLoading} onClick={submit}>
+		<Button type="submit" primary disabled={!canSubmit} loading={isLoading} onClick={submit}>
 			{t('destinations.login')}
 		</Button>
 	</div>

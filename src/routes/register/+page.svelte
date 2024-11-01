@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { info } from '$lib/data/urls.json';
 	import { navigate, Destination } from '$lib/destinations';
@@ -12,50 +11,39 @@
 	import Button from '$lib/components/inputs/button.svelte';
 	import TextField from '$lib/components/inputs/text-field.svelte';
 
-	const username = writable('');
-	const email = writable('');
-	const randomCode = writable('');
-	const isWaitingForRandomCode = writable(false);
-	const hasAcceptedTerms = writable(false);
-	const isRegistering = writable(false);
-	const token = writable<string | null>(null);
+	let username = $state('');
+	let email = $state('');
+	let randomCode = $state('');
+	let isWaitingForRandomCode = $state(false);
+	let hasAcceptedTerms = $state(false);
+	let isRegistering = $state(false);
+	let token = $state<string>();
 	let isLoading = $state(false);
 
-	const areUsernameAndEmailValid = derived(
-		[username, email],
-		([$username, $email]) =>
-			$username.length >= 3 &&
-			$username.length <= 50 &&
-			$email.length >= 3 &&
-			$email.length <= 254 &&
-			$email.includes('@')
+	const areUsernameAndEmailValid = $derived(
+		username.length >= 3 &&
+			username.length <= 50 &&
+			email.length >= 3 &&
+			email.length <= 254 &&
+			email.includes('@')
 	);
-	const isRandomCodeValid = derived(randomCode, ($randomCode) => $randomCode.length >= 8);
-	const canSubmit = derived(
-		[areUsernameAndEmailValid, isRandomCodeValid, isWaitingForRandomCode, hasAcceptedTerms],
-		([
-			$areUsernameAndEmailValid,
-			$isRandomCodeValid,
-			$isWaitingForRandomCode,
-			$hasAcceptedTerms
-		]) =>
-			$isWaitingForRandomCode ? $isRandomCodeValid : $areUsernameAndEmailValid && $hasAcceptedTerms
+	const isRandomCodeValid = $derived(randomCode.length >= 8);
+	const canSubmit = $derived(
+		isWaitingForRandomCode ? isRandomCodeValid : areUsernameAndEmailValid && hasAcceptedTerms
 	);
+
+	$effect(() => {
+		if (token) {
+			navigate(Destination.Settings);
+		}
+	});
 
 	onMount(() => {
-		const unsubscribe = token.subscribe(async ($token) => {
-			if ($token) {
-				await navigate(Destination.Settings);
-			}
-		});
-
-		if (window.location.hash && $isWaitingForRandomCode) {
-			$randomCode = window.location.hash.replace('#', '');
+		if (window.location.hash && isWaitingForRandomCode) {
+			randomCode = window.location.hash.replace('#', '');
 			window.location.hash = '';
 			createToken();
 		}
-
-		return unsubscribe;
 	});
 
 	function makeAnchor(textKey: string, link: string) {
@@ -63,15 +51,15 @@
 	}
 
 	function cancel() {
-		$isWaitingForRandomCode = false;
-		$isRegistering = false;
-		$randomCode = '';
+		isWaitingForRandomCode = false;
+		isRegistering = false;
+		randomCode = '';
 	}
 
 	async function submit() {
-		if (!$canSubmit) {
+		if (!canSubmit) {
 			return;
-		} else if ($isWaitingForRandomCode) {
+		} else if (isWaitingForRandomCode) {
 			await createToken();
 		} else {
 			await sendEmail();
@@ -84,9 +72,9 @@
 				try {
 					isLoading = true;
 					const client = await getUsersClient();
-					await client.createUser({ username: $username, email: $email });
-					$isWaitingForRandomCode = true;
-					$isRegistering = true;
+					await client.createUser({ username, email });
+					isWaitingForRandomCode = true;
+					isRegistering = true;
 				} finally {
 					isLoading = false;
 				}
@@ -130,9 +118,9 @@
 				try {
 					isLoading = true;
 					const client = await getTokensClient();
-					$token = await client.createToken({ identifier: $email, secret: $randomCode });
-					$isWaitingForRandomCode = false;
-					$isRegistering = false;
+					token = await client.createToken({ identifier: email, secret: randomCode });
+					isWaitingForRandomCode = false;
+					isRegistering = false;
 				} finally {
 					isLoading = false;
 				}
@@ -151,11 +139,11 @@
 	}
 </script>
 
-<SavedValue name="account.username" store={username} />
-<SavedValue name="account.email" store={email} />
-<SavedValue name="account.isWaitingForRandomCode" store={isWaitingForRandomCode} />
-<SavedValue name="account.isRegistering" store={isRegistering} />
-<SavedValue name="connection.token" store={token} />
+<SavedValue name="account.username" bind:value={username} />
+<SavedValue name="account.email" bind:value={email} />
+<SavedValue name="account.isWaitingForRandomCode" bind:value={isWaitingForRandomCode} />
+<SavedValue name="account.isRegistering" bind:value={isRegistering} />
+<SavedValue name="connection.token" bind:value={token} />
 
 <form class="destination">
 	<Logo />
@@ -165,28 +153,28 @@
 			name="username"
 			placeholder={t('register.username.placeholder')}
 			autofocus
-			disabled={$isWaitingForRandomCode}
-			bind:value={$username}
+			disabled={isWaitingForRandomCode}
+			bind:value={username}
 		/>
 		<TextField
 			label={t('register.email.label')}
 			name="email"
 			placeholder={t('register.email.placeholder')}
-			disabled={$isWaitingForRandomCode}
-			bind:value={$email}
+			disabled={isWaitingForRandomCode}
+			bind:value={email}
 		/>
-		{#if $isWaitingForRandomCode}
+		{#if isWaitingForRandomCode}
 			<TextField
 				label={t('account.randomCode.label')}
 				name="one-time-code"
 				placeholder={t('account.randomCode.placeholder')}
 				autofocus
-				bind:value={$randomCode}
+				bind:value={randomCode}
 			/>
 			<div class="help">{t('account.help.randomCode')}</div>
 		{/if}
 		<label class="terms">
-			<input type="checkbox" disabled={$isWaitingForRandomCode} bind:checked={$hasAcceptedTerms} />
+			<input type="checkbox" disabled={isWaitingForRandomCode} bind:checked={hasAcceptedTerms} />
 			<span>
 				{@html t('register.terms-acceptance', {
 					interpolation: { escapeValue: false },
@@ -197,10 +185,10 @@
 		</label>
 	</div>
 	<div class="buttons">
-		<Button type="button" disabled={!$isWaitingForRandomCode || isLoading} onClick={cancel}>
+		<Button type="button" disabled={!isWaitingForRandomCode || isLoading} onClick={cancel}>
 			{t('cancel')}
 		</Button>
-		<Button type="submit" primary disabled={!$canSubmit} loading={isLoading} onClick={submit}>
+		<Button type="submit" primary disabled={!canSubmit} loading={isLoading} onClick={submit}>
 			{t('destinations.register')}
 		</Button>
 	</div>

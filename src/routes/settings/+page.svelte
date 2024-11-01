@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
 	import { info } from '$lib/data/urls.json';
 	import { navigate, Destination } from '$lib/destinations';
@@ -13,28 +11,26 @@
 	import EditableAvatar from './editable-avatar.svelte';
 	import TextArea from '$lib/components/inputs/text-area.svelte';
 
-	const isRegistering = writable(false);
-	const token = writable<string | null>(null);
-	let currentUser: User | null = $state(null);
+	let isRegistering = $state(false);
+	let token = $state<string>();
+	let currentUser = $state<User | null>(null);
 	let bio = $state('');
 	let isLoadingAvatar = $state(false);
 
-	onMount(() =>
-		token.subscribe(async ($token) => {
-			if ($token) {
-				await call(
-					async () => {
-						const client = await getUsersClient();
-						currentUser = await client.getCurrentUser();
-						bio = currentUser.bio ?? '';
-					},
-					async () => {}
-				);
-			} else {
-				await navigate($isRegistering ? Destination.Register : Destination.Login);
-			}
-		})
-	);
+	$effect(() => {
+		if (token) {
+			call(
+				async () => {
+					const client = await getUsersClient();
+					currentUser = await client.getCurrentUser();
+					bio = currentUser.bio ?? '';
+				},
+				async () => {}
+			);
+		} else {
+			navigate(isRegistering ? Destination.Register : Destination.Login);
+		}
+	});
 
 	function updateAvatar(file: File) {
 		return call(
@@ -93,15 +89,15 @@
 	}
 
 	async function logout() {
-		$token = '';
+		token = '';
 		await navigate(Destination.Login);
 	}
 </script>
 
-<SavedValue name="account.isRegistering" store={isRegistering} />
-<SavedValue name="connection.token" store={token} />
+<SavedValue name="account.isRegistering" bind:value={isRegistering} />
+<SavedValue name="connection.token" bind:value={token} />
 
-{#if $token}
+{#if token}
 	<div class="destination">
 		<List borderless>
 			{#snippet header()}

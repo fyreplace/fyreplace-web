@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { currentDestination, Destination } from '$lib/destinations';
+	import { Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
+	import CurrentDestination from '$lib/components/current-destination.svelte';
 
 	interface Props {
 		destinations: Destination[];
@@ -10,10 +10,12 @@
 
 	let { destinations }: Props = $props();
 
-	const isWaitingForRandomCode = writable(false);
+	let isWaitingForRandomCode = $state(false);
+	let currentDestination = $state(Destination.Feed);
 </script>
 
-<SavedValue name="account.isWaitingForRandomCode" store={isWaitingForRandomCode} />
+<SavedValue name="account.isWaitingForRandomCode" bind:value={isWaitingForRandomCode} />
+<CurrentDestination bind:destination={currentDestination} />
 
 <div class="segments">
 	<span class="border"></span>
@@ -22,8 +24,8 @@
 			href={destination.route}
 			data-sveltekit-replacestate
 			class="segment"
-			class:selected={destination === $currentDestination}
-			aria-disabled={$isWaitingForRandomCode}
+			class:selected={destination.route === currentDestination.route}
+			aria-disabled={isWaitingForRandomCode}
 		>
 			{t(destination.titleKey)}
 		</a>

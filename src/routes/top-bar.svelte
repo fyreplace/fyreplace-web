@@ -1,14 +1,9 @@
 <script lang="ts">
-	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import {
-		allDestinations,
-		currentDestination,
-		topLevelDestinations,
-		Destination
-	} from '$lib/destinations';
+	import { allDestinations, topLevelDestinations, Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Segments from './segments.svelte';
+	import CurrentDestination from '$lib/components/current-destination.svelte';
 
 	interface Props {
 		sideNavigation?: boolean;
@@ -16,38 +11,35 @@
 
 	let { sideNavigation = false }: Props = $props();
 
-	const token = writable<string | null>(null);
-	const choices = derived([currentDestination, token], ([$destination, $token]) => {
-		const firstDestination = $destination.parent ?? $destination;
-		return [firstDestination]
+	let token = $state<string>();
+	let currentDestination = $state(Destination.Feed);
+	const firstDestination = $derived(currentDestination?.parent ?? currentDestination);
+	const choices = $derived(
+		[firstDestination]
 			.concat(allDestinations.filter((d) => d.parent?.route === firstDestination?.route))
 			.filter(Boolean)
 			.map((d) => d as Destination)
 			.filter((d) =>
-				!$token
-					? d !== Destination.Settings
-					: ![Destination.Login, Destination.Register].includes(d)
-			);
-	});
-	const multiChoice = derived(choices, ($choices) => $choices.length > 1);
-	const mandatoryMultiChoice = derived(
-		choices,
-		($choices) => $choices.filter((d) => !topLevelDestinations.includes(d)).length > 1
+				!token
+					? d.route !== Destination.Settings.route
+					: ![Destination.Login.route, Destination.Register.route].includes(d.route)
+			)
 	);
-	const showSegments = derived(
-		[multiChoice, mandatoryMultiChoice],
-		([$multiChoice, $mandatoryMultiChoice]) =>
-			($multiChoice && !sideNavigation) || $mandatoryMultiChoice
+	const multiChoice = $derived(choices.length > 1);
+	const mandatoryMultiChoice = $derived(
+		choices.filter((d) => !topLevelDestinations.map((d) => d.route).includes(d.route)).length > 1
 	);
+	const showSegments = $derived((multiChoice && !sideNavigation) || mandatoryMultiChoice);
 </script>
 
-<SavedValue name="connection.token" store={token} />
+<SavedValue name="connection.token" bind:value={token} />
+<CurrentDestination bind:destination={currentDestination} />
 
-<div class="top-bar" class:side-navigation={sideNavigation} class:centered={$showSegments}>
-	{#if $showSegments}
-		<Segments destinations={$choices} />
-	{:else}
-		<h1 class="title">{t($currentDestination.titleKey)}</h1>
+<div class="top-bar" class:side-navigation={sideNavigation} class:centered={showSegments}>
+	{#if showSegments}
+		<Segments destinations={choices} />
+	{:else if currentDestination}
+		<h1 class="title">{t(currentDestination.titleKey)}</h1>
 	{/if}
 </div>
 

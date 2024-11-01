@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount, type Snippet } from 'svelte';
-	import { writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { currentDestination, navigate, Destination } from '$lib/destinations';
+	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import EventListener from '$lib/components/event-listener.svelte';
+	import CurrentDestination from '$lib/components/current-destination.svelte';
 	import Navigation from './navigation.svelte';
 	import TopBar from './top-bar.svelte';
 	import Dialog from './dialog.svelte';
@@ -16,17 +16,16 @@
 
 	let { children }: Props = $props();
 
-	const token = writable<string | null>(null);
-	let errors: DisplayableError[] = $state([]);
-	let currentError: DisplayableError | undefined = $state();
+	let token = $state<string>();
+	let currentDestination = $state(Destination.Feed);
+	let errors = $state<DisplayableError[]>([]);
+	let currentError = $state<DisplayableError>();
 
-	onMount(() =>
-		token.subscribe(async ($token) => {
-			if (!$token && $currentDestination.requiresAuthentication) {
-				await navigate(Destination.Settings);
-			}
-		})
-	);
+	$effect(() => {
+		if (!token && currentDestination.requiresAuthentication) {
+			navigate(Destination.Settings);
+		}
+	});
 
 	function addError(error: DisplayableError) {
 		errors = [...errors, error];
@@ -42,11 +41,12 @@
 	}
 </script>
 
-<SavedValue name="connection.token" store={token} />
+<SavedValue name="connection.token" bind:value={token} />
 <EventListener type={DisplayableError} listener={(event) => addError(event.detail)} />
+<CurrentDestination bind:destination={currentDestination} />
 
 <svelte:head>
-	<title>{t($currentDestination.titleKey)} | {t('app.name')}</title>
+	<title>{t(currentDestination.titleKey)} | {t('app.name')}</title>
 </svelte:head>
 
 <div class="layout">

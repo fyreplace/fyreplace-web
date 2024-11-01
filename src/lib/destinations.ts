@@ -1,5 +1,4 @@
-import { derived } from 'svelte/store';
-import { page } from '$app/stores';
+import type { Component } from 'svelte';
 import { goto } from '$app/navigation';
 import BellIcon from '$lib/components/icons/bell.svelte';
 import DocumentIcon from '$lib/components/icons/document.svelte';
@@ -17,7 +16,7 @@ export function useFakeNavigation() {
 export interface Destination {
 	route: string;
 	titleKey: string;
-	icon?: any;
+	icon?: Component;
 	parent?: Destination;
 	requiresAuthentication: boolean;
 }
@@ -87,14 +86,6 @@ export const allDestinations = Object.values(Destination);
 export const topLevelDestinations = Object.values(Destination).filter((d) => d.icon);
 
 export const essentialDestinations = allDestinations.filter((destination) => !destination.parent);
-
-export const currentDestination = derived(page, ($page) =>
-	findDestinationByRoute($page.url.pathname)
-);
-
-export function findDestinationByRoute(route: string | null) {
-	return allDestinations.find((d) => d.route === route) ?? Destination.Feed;
-}
 
 export async function navigate(destination: Destination) {
 	if (!fakeNavigation) {

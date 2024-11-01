@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { derived, writable } from 'svelte/store';
 	import { t } from 'i18next';
-	import { currentDestination, topLevelDestinations, Destination } from '$lib/destinations';
+	import { topLevelDestinations, Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
+	import CurrentDestination from '$lib/components/current-destination.svelte';
 	import Icon from '$lib/components/icon.svelte';
 
 	interface Props {
@@ -12,25 +12,31 @@
 
 	let { destination, sideNavigation = false }: Props = $props();
 
-	const token = writable<string | null>(null);
-	const selected = derived(currentDestination, ($currentDestination) => {
-		const isExactDestination = $currentDestination === destination;
-		const isChildDestination = $currentDestination?.parent === destination;
-		const isTopLevel = topLevelDestinations.includes($currentDestination);
-		return isExactDestination || (isChildDestination && !(isTopLevel && sideNavigation));
-	});
-	const disabled = derived(token, ($token) => destination.requiresAuthentication && !$token);
+	let token = $state<string>();
+	let currentDestination = $state(Destination.Feed);
+
+	const isExactDestination = $derived(currentDestination.route === destination.route);
+	const isChildDestination = $derived(currentDestination?.parent?.route === destination.route);
+	const isTopLevel = $derived(
+		currentDestination &&
+			topLevelDestinations.map((d) => d.route).includes(currentDestination.route)
+	);
+	const selected = $derived(
+		isExactDestination || (isChildDestination && !(isTopLevel && sideNavigation))
+	);
+	const disabled = $derived(destination.requiresAuthentication && !token);
 </script>
 
-<SavedValue name="connection.token" store={token} />
+<SavedValue name="connection.token" bind:value={token} />
+<CurrentDestination bind:destination={currentDestination} />
 
 <a
 	href={destination.route}
 	data-sveltekit-replacestate
 	class="link"
 	class:side-navigation={sideNavigation}
-	class:selected={$selected}
-	aria-disabled={$disabled}
+	class:selected
+	aria-disabled={disabled}
 >
 	<Icon><destination.icon /></Icon>
 	{t(destination.titleKey)}
