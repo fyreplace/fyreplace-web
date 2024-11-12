@@ -2,7 +2,7 @@ import { dev } from '$app/environment';
 import { api } from '$lib/data/urls.json';
 import { getStoredItem, setStoredItem } from '$lib/storage';
 import { DisplayableError, eventBus } from '$lib/events';
-import { sleep } from '$lib/utils';
+import { makeId, sleep } from '$lib/utils';
 import {
 	Configuration,
 	FetchError,
@@ -94,7 +94,7 @@ class RequestIdMiddleware implements Middleware {
 		const headers = { ...context.init.headers } as Record<string, string>;
 
 		if (!headers[RequestIdMiddleware.headerName]) {
-			headers[RequestIdMiddleware.headerName] = Math.random().toString(36).substring(2);
+			headers[RequestIdMiddleware.headerName] = makeId();
 		}
 
 		context.init.headers = headers;

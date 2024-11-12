@@ -1,3 +1,4 @@
+import { makeId } from '$lib/utils';
 import {
 	Rank,
 	type ApiResponse,
@@ -129,9 +130,9 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
-	private makeUser(username: string) {
+	private makeUser(username: string): User {
 		return {
-			id: Math.random().toString(36).substring(2),
+			id: makeId(),
 			dateCreated: new Date(),
 			username: username,
 			rank: Rank.Citizen,
