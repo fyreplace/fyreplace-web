@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from 'i18next';
-	import { allDestinations, topLevelDestinations, Destination } from '$lib/destinations';
+	import { allDestinations, isTopLevelDestination, Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Segments from './segments.svelte';
 	import CurrentDestination from '$lib/components/current-destination.svelte';
@@ -27,7 +27,7 @@
 	);
 	const multiChoice = $derived(choices.length > 1);
 	const mandatoryMultiChoice = $derived(
-		choices.filter((d) => !topLevelDestinations.map((d) => d.route).includes(d.route)).length > 1
+		choices.filter((d) => !isTopLevelDestination(d)).length > 1
 	);
 	const showSegments = $derived((multiChoice && !sideNavigation) || mandatoryMultiChoice);
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from 'i18next';
-	import { topLevelDestinations, Destination } from '$lib/destinations';
+	import { isTopLevelDestination, Destination } from '$lib/destinations';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import CurrentDestination from '$lib/components/current-destination.svelte';
 	import Icon from '$lib/components/icon.svelte';
@@ -16,11 +16,11 @@
 	let currentDestination = $state(Destination.Feed);
 
 	const isExactDestination = $derived(currentDestination.route === destination.route);
-	const isChildDestination = $derived(currentDestination?.parent?.route === destination.route);
-	const isTopLevel = $derived(
-		currentDestination &&
-			topLevelDestinations.map((d) => d.route).includes(currentDestination.route)
+	const isChildDestination = $derived(
+		currentDestination.parent?.route === destination.route ||
+			currentDestination.route.startsWith(destination.route)
 	);
+	const isTopLevel = $derived(isTopLevelDestination(currentDestination));
 	const selected = $derived(
 		isExactDestination || (isChildDestination && !(isTopLevel && sideNavigation))
 	);

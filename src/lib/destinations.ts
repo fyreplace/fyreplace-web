@@ -85,7 +85,13 @@ export const allDestinations = Object.values(Destination);
 
 export const topLevelDestinations = Object.values(Destination).filter((d) => d.icon);
 
-export const essentialDestinations = allDestinations.filter((destination) => !destination.parent);
+export const essentialDestinations = topLevelDestinations.filter(
+	(destination) => !destination.parent
+);
+
+export function isTopLevelDestination(destination: Destination) {
+	return topLevelDestinations.map((d) => d.route).includes(destination.route);
+}
 
 export async function navigate(destination: Destination) {
 	if (!fakeNavigation) {
