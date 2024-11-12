@@ -5,10 +5,12 @@ import { DisplayableError, eventBus } from '$lib/events';
 import { makeId, sleep } from '$lib/utils';
 import {
 	Configuration,
+	EmailsEndpointApi,
 	FetchError,
 	ResponseError,
 	TokensEndpointApi,
 	UsersEndpointApi,
+	type EmailsEndpointApiInterface,
 	type ErrorContext,
 	type FetchParams,
 	type Middleware,
@@ -16,6 +18,7 @@ import {
 	type TokensEndpointApiInterface,
 	type UsersEndpointApiInterface
 } from './generated';
+import FakeEmailsEndpointApi from './fakes/emails-endpoint';
 import FakeTokensEndpointApi from './fakes/tokens-endpoint';
 import FakeUsersEndpointApi from './fakes/users-endpoint';
 
@@ -23,6 +26,10 @@ let useFakes = false;
 
 export function useFakeEndpoints() {
 	useFakes = true;
+}
+
+export async function getEmailsClient(): Promise<EmailsEndpointApiInterface> {
+	return useFakes ? new FakeEmailsEndpointApi() : new EmailsEndpointApi(await makeConfiguration());
 }
 
 export async function getTokensClient(): Promise<TokensEndpointApiInterface> {

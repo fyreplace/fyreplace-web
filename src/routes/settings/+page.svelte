@@ -3,7 +3,7 @@
 	import { info } from '$lib/data/urls.json';
 	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
-	import { call, getUsersClient } from '$lib/openapi';
+	import { call, getEmailsClient, getUsersClient } from '$lib/openapi';
 	import type { User } from '$lib/openapi/generated';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import List from '$lib/components/list.svelte';
@@ -16,6 +16,7 @@
 	let currentUser = $state<User | null>(null);
 	let bio = $state('');
 	let isLoadingAvatar = $state(false);
+	let emailCount = $state(0);
 
 	$effect(() => {
 		if (token) {
@@ -25,7 +26,15 @@
 					currentUser = await client.getCurrentUser();
 					bio = currentUser.bio ?? '';
 				},
-				async () => {}
+				async () => new DisplayableError()
+			);
+
+			call(
+				async () => {
+					const client = await getEmailsClient();
+					emailCount = await client.countEmails();
+				},
+				async () => new DisplayableError()
 			);
 		} else {
 			navigate(isRegistering ? Destination.Register : Destination.Login);
@@ -148,6 +157,12 @@
 								{t('settings.profile.bio.save')}
 							</Button>
 						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>{t('settings.profile.emails.label', { count: emailCount })}</td>
+					<td>
+						<a href={Destination.Emails.route}>{t('settings.profile.emails.manage')}</a>
 					</td>
 				</tr>
 				<tr>

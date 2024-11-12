@@ -4,6 +4,7 @@
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import Segments from './segments.svelte';
 	import CurrentDestination from '$lib/components/current-destination.svelte';
+	import Back from './back.svelte';
 
 	interface Props {
 		sideNavigation?: boolean;
@@ -13,6 +14,7 @@
 
 	let token = $state<string>();
 	let currentDestination = $state(Destination.Feed);
+	const canGoBack = $derived(!isTopLevelDestination(currentDestination));
 	const firstDestination = $derived(currentDestination?.parent ?? currentDestination);
 	const choices = $derived(
 		[firstDestination]
@@ -38,7 +40,10 @@
 <div class="top-bar" class:side-navigation={sideNavigation} class:centered={showSegments}>
 	{#if showSegments}
 		<Segments destinations={choices} />
-	{:else if currentDestination}
+	{:else}
+		{#if canGoBack}
+			<Back />
+		{/if}
 		<h1 class="title">{t(currentDestination.titleKey)}</h1>
 	{/if}
 </div>
@@ -54,6 +59,7 @@
 		padding-right: max(1em, env(safe-area-inset-right));
 		box-sizing: border-box;
 		align-items: center;
+		gap: 1em;
 		border-bottom: 2px solid var(--color-border);
 		transition: 0.3s;
 

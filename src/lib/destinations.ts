@@ -66,6 +66,12 @@ export namespace Destination {
 		requiresAuthentication: false
 	};
 
+	export const Emails: Destination = {
+		route: '/settings/emails',
+		titleKey: 'destinations.emails',
+		requiresAuthentication: true
+	};
+
 	export const Login: Destination = {
 		route: '/login',
 		titleKey: 'destinations.login',

@@ -4,6 +4,7 @@
 			"ok": "OK",
 			"cancel": "Cancel",
 			"loading": "…",
+			"back": "Go back",
 			"app": {
 				"name": "Fyreplace",
 				"description": "Fyreplace social media web app"
@@ -33,6 +34,7 @@
 				"drafts": "Drafts",
 				"published": "Published",
 				"settings": "Settings",
+				"emails": "Emails",
 				"login": "Login",
 				"register": "Sign up"
 			},
@@ -45,6 +47,11 @@
 					},
 					"username": "Username",
 					"dateJoined": "Date joined",
+					"emails": {
+						"label_one": "{{count}} email address",
+						"label_other": "{{count}} email addresses",
+						"manage": "Manage"
+					},
 					"bio": {
 						"label": "Bio",
 						"placeholder": "Tell the community about yourself",
@@ -69,6 +76,9 @@
 						"message": "The type of file you have selected is not supported."
 					}
 				}
+			},
+			"emails": {
+				"main": "Main"
 			},
 			"account": {
 				"randomCode": {

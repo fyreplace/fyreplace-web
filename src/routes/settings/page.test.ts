@@ -1,18 +1,12 @@
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, expect, test } from 'vitest';
-import { eventBus, useNewStoringEventBus, DisplayableError, StoringEventBus } from '$lib/events';
-import { setStoredItem } from '$lib/storage';
-import FakeTokensEndpointApi from '$lib/openapi/fakes/tokens-endpoint';
+import { eventBus, DisplayableError, StoringEventBus } from '$lib/events';
 import FakeUsersEndpointApi from '$lib/openapi/fakes/users-endpoint';
-import { sleep } from '$lib/utils';
+import { setUpTesting, sleep } from '$lib/utils';
 import Page from './+page.svelte';
 
-beforeEach(() => {
-	useNewStoringEventBus();
-	window.localStorage.clear();
-	setStoredItem('connection.token', FakeTokensEndpointApi.token);
-});
+beforeEach(() => setUpTesting({ withToken: true }));
 
 test('Screen retrieves current user', async () => {
 	render(Page);

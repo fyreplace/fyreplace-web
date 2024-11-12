@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, expect, test } from 'vitest';
-import { eventBus, useNewStoringEventBus, DisplayableError, StoringEventBus } from '$lib/events';
+import { eventBus, DisplayableError, StoringEventBus } from '$lib/events';
 import FakeTokensEndpointApi from '$lib/openapi/fakes/tokens-endpoint';
 import FakeUsersEndpointApi from '$lib/openapi/fakes/users-endpoint';
+import { setUpTesting } from '$lib/utils';
 import Page from './+page.svelte';
 
-beforeEach(() => {
-	useNewStoringEventBus();
-	window.localStorage.clear();
-});
+beforeEach(() => setUpTesting({ withToken: false }));
 
 test('Username must have correct length', { timeout: 60000 }, async () => {
 	const user = userEvent.setup();
