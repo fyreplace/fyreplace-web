@@ -29,9 +29,9 @@ test('Updating avatar with too large image produces a failure', async () => {
 	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.largeImageFile);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
 	expect(avatar).not.to.exist;
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 });
 
 test('Updating avatar with invalid image produces a failure', async () => {
@@ -41,9 +41,9 @@ test('Updating avatar with invalid image produces a failure', async () => {
 	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.notImageFile);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
 	expect(avatar).not.to.exist;
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(1);
 });
 
 test('Updating avatar with valid image produces no failures', async () => {
@@ -53,9 +53,9 @@ test('Updating avatar with valid image produces no failures', async () => {
 	const imagePicker = screen.getByTitle('Change avatar');
 
 	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.be.empty;
 	const avatar = screen.getByTitle<HTMLImageElement>('Avatar');
 	expect(avatar.src).to.contain(FakeUsersEndpointApi.normalImageFile.name);
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 });
 
 test('Removing avatar produces no failures', async () => {
@@ -67,9 +67,9 @@ test('Removing avatar produces no failures', async () => {
 	await user.upload(imagePicker, FakeUsersEndpointApi.normalImageFile);
 
 	await user.click(remove);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.be.empty;
 	const avatar = screen.queryByTitle<HTMLImageElement>('Avatar');
 	expect(avatar).not.to.exist;
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
 });
 
 test('Bio must be different', async () => {
@@ -93,5 +93,5 @@ test('Updating bio produces no failures', async () => {
 
 	await user.type(bio, 'Hello');
 	await user.click(save);
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.be.empty;
 });

@@ -99,7 +99,7 @@
 
 {#if token}
 	<div class="destination">
-		<List borderless>
+		<List>
 			{#snippet header()}
 				<tr>
 					<td colspan="2">{t('settings.profile.header')}</td>
@@ -158,7 +158,7 @@
 			{/snippet}
 		</List>
 
-		<List borderless>
+		<List>
 			{#snippet header()}
 				<tr>
 					<td>{t('settings.about.header')}</td>

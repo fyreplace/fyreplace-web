@@ -158,7 +158,7 @@ test('Valid username and email produce no error', async () => {
 
 	await user.type(email, FakeUsersEndpointApi.goodEmail);
 	await user.click(submit);
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.be.empty;
 	const randomCode = screen.queryByRole('textbox', { name: 'One-time code' });
 	expect(randomCode).to.exist;
 });
@@ -237,5 +237,5 @@ test('Valid random code produces no error', async () => {
 
 	await user.type(randomCode, FakeTokensEndpointApi.goodSecret);
 	await user.click(submit);
-	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.have.length(0);
+	expect(bus.events.filter((e) => e instanceof DisplayableError)).to.be.empty;
 });

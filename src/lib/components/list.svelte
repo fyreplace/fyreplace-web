@@ -2,20 +2,19 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
-		borderless?: boolean;
 		header?: Snippet;
-		body?: Snippet;
+		body: Snippet;
 	}
 
-	let { borderless = false, header, body }: Props = $props();
+	let { header, body }: Props = $props();
 </script>
 
-<table class="list" class:borderless>
+<table class="list">
 	<thead>
 		{@render header?.()}
 	</thead>
 	<tbody>
-		{@render body?.()}
+		{@render body()}
 	</tbody>
 </table>
 
@@ -55,19 +54,12 @@
 
 			:global(td) {
 				padding: 1em;
+				border-bottom: 1px solid var(--color-border);
+
+				@include mixins.expanded-width {
+					border-bottom: unset;
+				}
 			}
-		}
-
-		&.borderless thead :global(td) {
-			border-bottom: 1px solid var(--color-border);
-
-			@include mixins.expanded-width {
-				border-bottom: unset;
-			}
-		}
-
-		&:not(.borderless) tbody {
-			@include borders;
 		}
 
 		tbody {
