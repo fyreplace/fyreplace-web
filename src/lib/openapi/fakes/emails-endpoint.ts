@@ -1,26 +1,19 @@
 import { makeId } from '$lib/utils';
 import type {
-	ActivateEmailRequest,
 	ApiResponse,
 	CreateEmailRequest,
 	DeleteEmailRequest,
 	Email,
-	EmailActivation,
 	EmailCreation,
 	EmailsEndpointApiInterface,
+	EmailVerification,
 	InitOverrideFunction,
 	ListEmailsRequest,
-	SetMainEmailRequest
+	SetMainEmailRequest,
+	VerifyEmailRequest
 } from '../generated';
 
 export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface {
-	activateEmail(
-		emailActivation: EmailActivation,
-		initOverrides?: RequestInit | InitOverrideFunction
-	): Promise<void> {
-		throw new Error('Method not implemented.');
-	}
-
 	async countEmails(initOverrides?: RequestInit | InitOverrideFunction): Promise<number> {
 		const emails = await this.listEmails();
 		return emails.length;
@@ -56,6 +49,13 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
+	verifyEmail(
+		emailVerification: EmailVerification,
+		initOverrides?: RequestInit | InitOverrideFunction
+	): Promise<void> {
+		throw new Error('Method not implemented.');
+	}
+
 	private makeEmail(main = false, verified = true): Email {
 		const id = makeId();
 		return {
@@ -67,13 +67,6 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 	}
 
 	// Unimplemented side
-
-	activateEmailRaw(
-		requestParameters: ActivateEmailRequest,
-		initOverrides?: RequestInit | InitOverrideFunction
-	): Promise<ApiResponse<void>> {
-		throw new Error('Method not implemented.');
-	}
 
 	countEmailsRaw(initOverrides?: RequestInit | InitOverrideFunction): Promise<ApiResponse<number>> {
 		throw new Error('Method not implemented.');
@@ -102,6 +95,13 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 
 	setMainEmailRaw(
 		requestParameters: SetMainEmailRequest,
+		initOverrides?: RequestInit | InitOverrideFunction
+	): Promise<ApiResponse<void>> {
+		throw new Error('Method not implemented.');
+	}
+
+	verifyEmailRaw(
+		requestParameters: VerifyEmailRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<void>> {
 		throw new Error('Method not implemented.');
