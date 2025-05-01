@@ -3,7 +3,7 @@
 	"generator-cli": {
 		"version": "7.12.0",
 		"generators": {
-			"mqin": {
+			"main": {
 				"generatorName": "typescript-fetch",
 				"output": "./src/lib/openapi/generated",
 				"glob": "./src/lib/openapi/openapi.yaml",
