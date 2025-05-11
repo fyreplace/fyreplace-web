@@ -11,7 +11,7 @@ const config = {
 		typescript: {
 			config(config) {
 				// The default globs in .svelte-kit/tsconfig.json ignore paths starting with a dot
-				config.include.push('../src/routes/.well-known/**/*.ts');
+				config.include.push('../src/routes/(deep-links)/.well-known/**/*.ts');
 				config.include.push('../src/lib/api/*.ts');
 				return config;
 			}
