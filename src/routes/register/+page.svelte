@@ -90,7 +90,7 @@
 							case 'createUser.input.email':
 								return new DisplayableError('register.errors.createUser.400.email');
 							default:
-								return new DisplayableError('erros.400');
+								return new DisplayableError('errors.400');
 						}
 					case 403:
 						return new DisplayableError('register.errors.createUser.403');
