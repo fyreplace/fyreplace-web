@@ -1,4 +1,4 @@
-FROM node:lts AS build
+FROM node:lts-slim AS build
 
 ENV ADAPTER_NODE=true
 ARG SENTRY_ORG
@@ -8,7 +8,7 @@ ENV SENTRY_PROJECT=$SENTRY_PROJECT
 ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
-RUN apt-get update; apt-get full-upgrade -y; apt-get install -y openjdk-17-jre-headless
+RUN apt-get update; apt-get full-upgrade -y; apt-get install -y openjdk-17-jre-headless git
 WORKDIR /app
 
 COPY package.json package-lock.json ./
