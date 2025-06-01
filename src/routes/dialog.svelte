@@ -1,22 +1,23 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { t } from 'i18next';
 	import Button from '$lib/components/inputs/button.svelte';
 
 	interface Props {
 		visible: boolean;
 		title: string;
-		message: string;
+		content: Snippet;
 		onClickOk: () => void;
 	}
 
-	let { visible, title, message, onClickOk }: Props = $props();
+	let { visible, title, content, onClickOk }: Props = $props();
 </script>
 
 <div class="dialog" class:visible hidden={!visible}>
 	<div class="background"></div>
 	<dialog class="alert">
 		<h2>{title}</h2>
-		<p>{message}</p>
+		<div>{@render content()}</div>
 		<div class="buttons">
 			<Button type="button" primary onClick={onClickOk}>{t('ok')}</Button>
 		</div>

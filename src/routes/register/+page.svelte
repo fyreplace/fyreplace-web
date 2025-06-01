@@ -87,21 +87,26 @@
 						switch (violationReport?.violations?.[0]?.field) {
 							case 'createUser.input.username':
 								return new DisplayableError('register.errors.createUser.400.username');
+
 							case 'createUser.input.email':
 								return new DisplayableError('register.errors.createUser.400.email');
+
 							default:
 								return new DisplayableError('errors.400');
 						}
 					case 403:
 						return new DisplayableError('register.errors.createUser.403');
+
 					case 409:
 						const explainedFailure = (await error.response.json()) as ExplainedFailure;
 
 						switch (explainedFailure.reason) {
 							case 'username_taken':
 								return new DisplayableError('register.errors.createUser.409.username');
+
 							case 'email_taken':
 								return new DisplayableError('register.errors.createUser.409.email');
+
 							default:
 								return new DisplayableError();
 						}
@@ -129,8 +134,10 @@
 				switch (error.response.status) {
 					case 400:
 						return new DisplayableError('account.errors.createToken.400');
+
 					case 404:
 						return new DisplayableError('register.errors.createToken.404');
+
 					default:
 						return new DisplayableError();
 				}
@@ -150,24 +157,24 @@
 	<div class="fields">
 		<TextField
 			label={t('register.username.label')}
-			name="username"
 			placeholder={t('register.username.placeholder')}
+			name="username"
 			autofocus
 			disabled={isWaitingForRandomCode}
 			bind:value={username}
 		/>
 		<TextField
 			label={t('register.email.label')}
-			name="email"
 			placeholder={t('register.email.placeholder')}
+			name="email"
 			disabled={isWaitingForRandomCode}
 			bind:value={email}
 		/>
 		{#if isWaitingForRandomCode}
 			<TextField
 				label={t('account.randomCode.label')}
-				name="one-time-code"
 				placeholder={t('account.randomCode.placeholder')}
+				name="one-time-code"
 				autofocus
 				bind:value={randomCode}
 			/>
@@ -213,6 +220,7 @@
 
 	.fields {
 		width: min-content;
+		min-width: 280px;
 		display: flex;
 		flex-direction: column;
 		gap: 1em;

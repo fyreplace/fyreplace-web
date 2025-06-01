@@ -12,6 +12,9 @@ import type {
 	SetMainEmailRequest,
 	VerifyEmailRequest
 } from '../generated';
+import FakeTokensEndpointApi from './tokens-endpoint';
+import FakeUsersEndpointApi from './users-endpoint';
+import { fail } from './utils';
 
 export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface {
 	async countEmails(initOverrides?: RequestInit | InitOverrideFunction): Promise<number> {
@@ -19,12 +22,26 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		return emails.length;
 	}
 
-	createEmail(
+	async createEmail(
 		emailCreation: EmailCreation,
 		customDeepLinks?: boolean,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<Email> {
-		throw new Error('Method not implemented.');
+		switch (emailCreation.email) {
+			case FakeUsersEndpointApi.badEmail:
+				return fail(400);
+
+			case FakeUsersEndpointApi.usedEmail:
+				return fail(409);
+
+			default:
+				return {
+					id: makeId(),
+					email: emailCreation.email,
+					main: false,
+					verified: false
+				};
+		}
 	}
 
 	deleteEmail(id: string, initOverrides?: RequestInit | InitOverrideFunction): Promise<void> {
@@ -38,7 +55,11 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		switch (page) {
 			case undefined:
 			case 0:
-				return [this.makeEmail(true), this.makeEmail(), this.makeEmail()];
+				return [
+					this.makeEmail(true, true),
+					this.makeEmail(false, true),
+					this.makeEmail(false, false)
+				];
 
 			default:
 				return [];
@@ -49,14 +70,20 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
-	verifyEmail(
+	async verifyEmail(
 		emailVerification: EmailVerification,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<void> {
-		throw new Error('Method not implemented.');
+		switch (emailVerification.code) {
+			case FakeTokensEndpointApi.goodSecret:
+				return;
+
+			default:
+				return fail(404);
+		}
 	}
 
-	private makeEmail(main = false, verified = true): Email {
+	private makeEmail(main: boolean, verified: boolean): Email {
 		const id = makeId();
 		return {
 			id,

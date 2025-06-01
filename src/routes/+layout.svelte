@@ -59,12 +59,11 @@
 		</main>
 	</div>
 	<Navigation />
-	<Dialog
-		visible={errors.length > 0}
-		title={currentError?.title || ''}
-		message={currentError?.message || ''}
-		onClickOk={removeError}
-	/>
+	<Dialog visible={errors.length > 0} title={currentError?.title || ''} onClickOk={removeError}>
+		{#snippet content()}
+			<p>{currentError?.message || ''}</p>
+		{/snippet}
+	</Dialog>
 </div>
 
 <style lang="scss">

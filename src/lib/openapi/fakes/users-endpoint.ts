@@ -93,10 +93,12 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		switch (body) {
 			case FakeUsersEndpointApi.normalImageFile:
 				return FakeUsersEndpointApi.normalImageFile.name;
+
 			case FakeUsersEndpointApi.largeImageFile:
-				fail(413);
+				return fail(413);
+
 			default:
-				fail(415);
+				return fail(415);
 		}
 	}
 

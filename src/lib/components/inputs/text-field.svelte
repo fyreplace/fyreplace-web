@@ -3,20 +3,22 @@
 
 	interface Props {
 		label: string;
-		name: string;
 		placeholder: string;
+		name: string;
 		value?: string;
 		autofocus?: boolean;
 		disabled?: boolean;
+		title?: string;
 	}
 
 	let {
 		label,
-		name,
 		placeholder,
+		name,
 		value = $bindable(''),
 		autofocus = false,
-		disabled = false
+		disabled = false,
+		title = ''
 	}: Props = $props();
 
 	let input: HTMLInputElement | undefined = $state();
@@ -32,14 +34,18 @@
 	}
 </script>
 
-<label class="text-field">
-	<span class="label">{label}</span>
-	<input type="text" {name} {placeholder} {disabled} bind:this={input} bind:value />
+<label class="text-field" {title}>
+	{#if value}
+		<input type="hidden" {name} bind:value />
+	{/if}
+	{#if label}
+		<span class="label">{label}</span>
+	{/if}
+	<input type="text" {placeholder} {name} {disabled} bind:this={input} bind:value />
 </label>
 
 <style lang="scss">
 	.text-field {
-		min-width: 280px;
 		display: flex;
 		flex-direction: column;
 		gap: 0.25em;

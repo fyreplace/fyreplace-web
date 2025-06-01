@@ -59,9 +59,11 @@
 			async (error) => {
 				switch (error.response.status) {
 					case 413:
-						return new DisplayableError('settings.errors.413');
+						return new DisplayableError('settings.errors.updateAvatar.413');
+
 					case 415:
-						return new DisplayableError('settings.errors.415');
+						return new DisplayableError('settings.errors.updateAvatar.415');
+
 					default:
 						return new DisplayableError();
 				}

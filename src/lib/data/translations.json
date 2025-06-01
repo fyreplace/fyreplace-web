@@ -67,18 +67,48 @@
 					"sourceCode": "Source code"
 				},
 				"errors": {
-					"413": {
-						"title": "File too large",
-						"message": "Uploaded files can only go up to 10M."
-					},
-					"415": {
-						"title": "Unsupported file format",
-						"message": "The type of file you have selected is not supported."
+					"updateAvatar": {
+						"413": {
+							"title": "File too large",
+							"message": "Uploaded files can only go up to 10M."
+						},
+						"415": {
+							"title": "Unsupported file format",
+							"message": "The type of file you have selected is not supported."
+						}
 					}
 				}
 			},
 			"emails": {
-				"main": "Main"
+				"main": "Main address",
+				"verification": {
+					"title": "A one-time use code has been sent to this address.",
+					"placeholder": "Verification code"
+				},
+				"verify": "Verify",
+				"new": {
+					"label": "New email",
+					"placeholder": "email@example.org"
+				},
+				"add": "Add",
+				"errors": {
+					"addEmail": {
+						"400": {
+							"title": "Invalid email",
+							"message": "This email address is not valid."
+						},
+						"409": {
+							"title": "Used email",
+							"message": "This email address is already in use."
+						}
+					},
+					"verifyEmail": {
+						"404": {
+							"title": "Email not verified",
+							"message": "This code is not valid. Check the code you received via email."
+						}
+					}
+				}
 			},
 			"account": {
 				"randomCode": {
@@ -103,13 +133,15 @@
 					"placeholder": "Username or email"
 				},
 				"errors": {
-					"403": {
-						"title": "Use a password",
-						"message": "This account does not use an email for logging in. Please use your password instead."
-					},
-					"404": {
-						"title": "User not found",
-						"message": "No user account was found with this username or email."
+					"sendEmail": {
+						"403": {
+							"title": "Use a password",
+							"message": "This account does not use an email for logging in. Please use your password instead."
+						},
+						"404": {
+							"title": "User not found",
+							"message": "No user account was found with this username or email."
+						}
 					}
 				}
 			},

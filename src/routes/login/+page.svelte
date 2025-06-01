@@ -64,11 +64,14 @@
 				switch (error.response.status) {
 					case 400:
 						return new DisplayableError('errors.400');
+
 					case 403:
 						isWaitingForRandomCode = true;
-						return new DisplayableError('login.errors.403');
+						return new DisplayableError('login.errors.sendEmail.403');
+
 					case 404:
-						return new DisplayableError('login.errors.404');
+						return new DisplayableError('login.errors.sendEmail.404');
+
 					default:
 						return new DisplayableError();
 				}
@@ -92,8 +95,10 @@
 				switch (error.response.status) {
 					case 400:
 						return new DisplayableError('account.errors.createToken.400');
+
 					case 404:
 						return new DisplayableError('login.errors.404');
+
 					default:
 						return new DisplayableError();
 				}
@@ -111,8 +116,8 @@
 	<div class="fields">
 		<TextField
 			label={t('login.identifier.label')}
-			name="username"
 			placeholder={t('login.identifier.placeholder')}
+			name="username"
 			autofocus
 			disabled={isWaitingForRandomCode}
 			bind:value={identifier}
@@ -120,8 +125,8 @@
 		{#if isWaitingForRandomCode}
 			<TextField
 				label={t('account.randomCode.label')}
-				name="one-time-code"
 				placeholder={t('account.randomCode.placeholder')}
+				name="one-time-code"
 				autofocus
 				bind:value={randomCode}
 			/>
@@ -157,6 +162,7 @@
 
 	.fields {
 		width: min-content;
+		min-width: 280px;
 		display: flex;
 		flex-direction: column;
 		gap: 1em;
