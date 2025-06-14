@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { onMount, type Snippet } from 'svelte';
+	import { type Snippet } from 'svelte';
 	import { t } from 'i18next';
+	import * as Sentry from '@sentry/sveltekit';
 	import { navigate, Destination } from '$lib/destinations';
 	import { DisplayableError } from '$lib/events';
+	import { getUsersClient } from '$lib/openapi';
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import EventListener from '$lib/components/event-listener.svelte';
 	import CurrentDestination from '$lib/components/current-destination.svelte';
@@ -17,9 +19,14 @@
 	let { children }: Props = $props();
 
 	let token = $state<string>();
+	let currentUserId = $state<string>();
 	let currentDestination = $state(Destination.Feed);
 	let errors = $state<DisplayableError[]>([]);
 	let currentError = $state<DisplayableError>();
+
+	$effect(() => {
+		fetchCurrentUser(token);
+	});
 
 	$effect(() => {
 		if (!token && currentDestination.requiresAuthentication) {
@@ -39,9 +46,22 @@
 			currentError = errors[0];
 		}
 	}
+
+	async function fetchCurrentUser(token?: string) {
+		if (token) {
+			const client = await getUsersClient();
+			let currentUser = await client.getCurrentUser();
+			currentUserId = currentUser.id;
+			Sentry.setUser({ id: currentUserId, username: currentUser.username });
+		} else {
+			currentUserId = '';
+			Sentry.setUser(null);
+		}
+	}
 </script>
 
 <SavedValue name="connection.token" bind:value={token} />
+<SavedValue name="currentUser.id" bind:value={currentUserId} />
 <EventListener type={DisplayableError} listener={(event) => addError(event.detail)} />
 <CurrentDestination bind:destination={currentDestination} />
 

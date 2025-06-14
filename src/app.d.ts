@@ -14,6 +14,7 @@ declare global {
 		'account.email': string;
 		'account.isWaitingForRandomCode': boolean;
 		'account.isRegistering': boolean;
+		'currentUser.id': string;
 	}
 }
 

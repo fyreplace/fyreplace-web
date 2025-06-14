@@ -8,8 +8,8 @@
 	import SavedValue from '$lib/components/saved-value.svelte';
 	import List from '$lib/components/list.svelte';
 	import Button from '$lib/components/inputs/button.svelte';
-	import EditableAvatar from './editable-avatar.svelte';
 	import TextArea from '$lib/components/inputs/text-area.svelte';
+	import EditableAvatar from './editable-avatar.svelte';
 
 	let isRegistering = $state(false);
 	let token = $state<string>();
