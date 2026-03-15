@@ -9,6 +9,7 @@ import {
 	type ListBlockedUsersRequest,
 	type Profile,
 	type ReportUpdate,
+	type RequestOpts,
 	type SetCurrentUserAvatarRequest,
 	type SetCurrentUserBioRequest,
 	type SetUserBannedRequest,
@@ -154,10 +155,20 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
+	countBlockedUsersRequestOpts(): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	createUserRaw(
 		requestParameters: CreateUserRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<User>> {
+		throw new Error('Method not implemented.');
+	}
+
+	createUserRequestOpts(
+		requestParameters: CreateUserRequest
+	): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 
@@ -167,15 +178,27 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
+	deleteCurrentUserRequestOpts(): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	deleteCurrentUserAvatarRaw(
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<void>> {
 		throw new Error('Method not implemented.');
 	}
 
+	deleteCurrentUserAvatarRequestOpts(): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	getCurrentUserRaw(
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<User>> {
+		throw new Error('Method not implemented.');
+	}
+
+	getCurrentUserRequestOpts(): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 
@@ -186,10 +209,20 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
+	getUserRequestOpts(requestParameters: GetUserRequest): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	listBlockedUsersRaw(
 		requestParameters: ListBlockedUsersRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<Array<Profile>>> {
+		throw new Error('Method not implemented.');
+	}
+
+	listBlockedUsersRequestOpts(
+		requestParameters: ListBlockedUsersRequest
+	): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 
@@ -200,10 +233,22 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
+	setCurrentUserAvatarRequestOpts(
+		requestParameters: SetCurrentUserAvatarRequest
+	): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	setCurrentUserBioRaw(
 		requestParameters: SetCurrentUserBioRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<string>> {
+		throw new Error('Method not implemented.');
+	}
+
+	setCurrentUserBioRequestOpts(
+		requestParameters: SetCurrentUserBioRequest
+	): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 
@@ -214,6 +259,12 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
+	setUserBannedRequestOpts(
+		requestParameters: SetUserBannedRequest
+	): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	setUserBlockedRaw(
 		requestParameters: SetUserBlockedRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
@@ -221,10 +272,22 @@ export default class FakeUsersEndpointApi implements UsersEndpointApiInterface {
 		throw new Error('Method not implemented.');
 	}
 
+	setUserBlockedRequestOpts(
+		requestParameters: SetUserBlockedRequest
+	): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	setUserReportedRaw(
 		requestParameters: SetUserReportedRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<void>> {
+		throw new Error('Method not implemented.');
+	}
+
+	setUserReportedRequestOpts(
+		requestParameters: SetUserReportedRequest
+	): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 }

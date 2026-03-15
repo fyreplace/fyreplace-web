@@ -9,6 +9,7 @@ import type {
 	EmailVerification,
 	InitOverrideFunction,
 	ListEmailsRequest,
+	RequestOpts,
 	SetMainEmailRequest,
 	VerifyEmailRequest
 } from '../generated';
@@ -99,10 +100,18 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
+	countEmailsRequestOpts(): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	createEmailRaw(
 		requestParameters: CreateEmailRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<Email>> {
+		throw new Error('Method not implemented.');
+	}
+
+	createEmailRequestOpts(requestParameters: CreateEmailRequest): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 
@@ -113,10 +122,18 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
+	deleteEmailRequestOpts(requestParameters: DeleteEmailRequest): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	listEmailsRaw(
 		requestParameters: ListEmailsRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<Array<Email>>> {
+		throw new Error('Method not implemented.');
+	}
+
+	listEmailsRequestOpts(requestParameters: ListEmailsRequest): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 
@@ -127,10 +144,18 @@ export default class FakeEmailsEndpointApi implements EmailsEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
+	setMainEmailRequestOpts(requestParameters: SetMainEmailRequest): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	verifyEmailRaw(
 		requestParameters: VerifyEmailRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
 	): Promise<ApiResponse<void>> {
+		throw new Error('Method not implemented.');
+	}
+
+	verifyEmailRequestOpts(requestParameters: VerifyEmailRequest): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 }

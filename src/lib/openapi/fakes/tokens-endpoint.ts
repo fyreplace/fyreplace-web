@@ -4,6 +4,7 @@ import {
 	type CreateTokenRequest,
 	type InitOverrideFunction,
 	type NewTokenCreation,
+	type RequestOpts,
 	type TokenCreation,
 	type TokensEndpointApiInterface
 } from '../generated';
@@ -58,6 +59,12 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
+	createNewTokenRequestOpts(
+		requestParameters: CreateNewTokenRequest
+	): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	createTokenRaw(
 		requestParameters: CreateTokenRequest,
 		initOverrides?: RequestInit | InitOverrideFunction
@@ -65,7 +72,17 @@ export default class FakeTokensEndpointApi implements TokensEndpointApiInterface
 		throw new Error('Method not implemented.');
 	}
 
+	createTokenRequestOpts(
+		requestParameters: CreateTokenRequest
+	): Promise<RequestOpts> {
+		throw new Error('Method not implemented.');
+	}
+
 	getNewTokenRaw(initOverrides?: RequestInit | InitOverrideFunction): Promise<ApiResponse<string>> {
+		throw new Error('Method not implemented.');
+	}
+
+	getNewTokenRequestOpts(): Promise<RequestOpts> {
 		throw new Error('Method not implemented.');
 	}
 }
